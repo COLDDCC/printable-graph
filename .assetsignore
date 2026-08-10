@@ -1,0 +1,5 @@
+.git
+.wrangler
+DEPLOY.md
+wrangler.jsonc
+*.zip

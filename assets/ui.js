@@ -52,6 +52,7 @@
     var sp = $('#spacing');
     state.spacing = state.unit === 'in' ? 0.25 : 5;
     if (sp) { sp.step = state.unit === 'in' ? '0.125' : '0.5'; sp.value = state.spacing; }
+    pressPresets();
   });
 
   on('#swatches', 'click', function (e) {
@@ -61,6 +62,13 @@
     draw();
   });
 
+  function pressPresets() {
+    var pr = $('#presets');
+    if (pr) press(pr, function (c) {
+      return parseFloat(c.dataset.s) === state.spacing && c.dataset.u === state.unit;
+    });
+  }
+
   function applyPitch(d) {
     state.spacing = parseFloat(d.s);
     state.unit = d.u;
@@ -69,6 +77,7 @@
     if (sp) { sp.value = state.spacing; sp.step = state.unit === 'in' ? '0.125' : '0.5'; }
     if (mj) mj.value = state.majorEvery;
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
+    pressPresets();
     draw();
   }
 
@@ -83,7 +92,9 @@
   });
 
   on('#paper', 'change', function () { state.paper = this.value; draw(); });
-  on('#spacing', 'input', function () { state.spacing = parseFloat(this.value) || 5; draw(); });
+  on('#spacing', 'input', function () {
+    state.spacing = parseFloat(this.value) || 5; pressPresets(); draw();
+  });
   on('#major', 'input', function () { state.majorEvery = parseInt(this.value, 10) || 0; draw(); });
   on('#calib', 'change', function () { state.calibration = this.checked; draw(); });
 
@@ -105,9 +116,7 @@
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
     if (or) press(or, function (c) { return c.dataset.v === state.orientation; });
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
-    if (pr) press(pr, function (c) {
-      return parseFloat(c.dataset.s) === state.spacing && c.dataset.u === state.unit;
-    });
+    pressPresets();
   }
 
   function draw() {

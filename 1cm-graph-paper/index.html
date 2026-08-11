@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1 cm Graph Paper &mdash; Free Printable PDF, A4 and Letter</title>
+<meta name="description" content="Free printable 1 cm graph paper as a PDF, on A4 or Letter. Large clear centimetre squares for primary maths, area and perimeter work and 1:100 plans, with a measuring bar on every sheet.">
+<link rel="canonical" href="https://printgridpaper.com/1cm-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="1 cm Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Centimetre squares, large enough to write inside, with a measuring bar so you can confirm the print came out at size.">
+<meta property="og:url" content="https://printgridpaper.com/1cm-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>1 cm</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Ten millimetres a square</p>
+    <h1>1 cm graph paper</h1>
+    <p class="lede">Big enough to write a number inside and still read it from across a table. This is the size primary classrooms use for area and perimeter, and <b>the size that makes a 1:100 plan trivial &mdash; one square is one metre</b>, with no arithmetic in between.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">10 mm</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="10" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4" selected>A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="10" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>What a centimetre grid gives you</h2>
+      <p class="sec-lede">Ten squares make 10&nbsp;centimetres and the bold line defaults to every tenth square, so each block is a 10&nbsp;cm reference square. Fewer, larger squares is the whole point here: a page holds under five hundred of them, and every one is big enough to hold a written digit.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole centimetre squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>19 &times; 24</b> &mdash; 456</td><td>19 &times; 25 &mdash; 475</td><td>190 &times; 240 mm</td></tr>
+          <tr><th scope="row">A4</th><td><b>19 &times; 25</b> &mdash; 475</td><td>19 &times; 27 &mdash; 513</td><td>190 &times; 250 mm</td></tr>
+          <tr><th scope="row">Legal</th><td><b>19 &times; 31</b> &mdash; 589</td><td>19 &times; 33 &mdash; 627</td><td>190 &times; 310 mm</td></tr>
+          <tr><th scope="row">A5</th><td><b>12 &times; 17</b> &mdash; 204</td><td>12 &times; 19 &mdash; 228</td><td>120 &times; 170 mm</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>25 &times; 39</b> &mdash; 975</td><td>25 &times; 41 &mdash; 1,025</td><td>250 &times; 390 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>Why 19 columns on A4 and not 21?</b> A 210&nbsp;mm sheet holds 21 centimetres edge to edge, but printers cannot reach the edge. Take a 10&nbsp;mm margin off each side and 19 whole squares remain, centred, with the leftover split between the two margins.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>Where a centimetre grid is the right choice</h2>
+      <p class="sec-lede">Reach for this size when legibility matters more than how much fits on the page.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>Area and perimeter</h3><p>Each square is one square centimetre, so a shape drawn on the grid can be measured by counting rather than calculating. This is the reason it is standard in primary maths.</p></div>
+      <div><h3>Coordinate work with labels</h3><p>A centimetre square holds a two digit number comfortably. For teaching a coordinate plane, that means the axis values can be written on the grid itself rather than squeezed alongside it.</p></div>
+      <div><h3>Plans at 1:100</h3><p>One square to one metre is the metric equivalent of quarter inch to the foot. An A4 sheet at 19 by 25 squares covers 19 by 25 metres, enough for a flat or a small garden on one page.</p></div>
+      <div><h3>Early number work</h3><p>One digit per box keeps columns aligned in long addition and subtraction, which is a common reason a young student gets the method right and the answer wrong.</p></div>
+      <div><h3>Large print and low vision</h3><p>Paired with black or grey lines and the measuring bars switched off, a centimetre grid is far easier to work on than the 5&nbsp;mm default.</p></div>
+      <div><h3>Planting and layout sketches</h3><p>Coarse enough to sketch on freehand while still being a real measurement, which suits garden beds, furniture layouts and seating plans.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes a centimetre grid gets confused with</h2>
+      <p class="sec-lede">The trap here is three eighths of an inch. It sits half a millimetre under a centimetre, which nothing but a ruler will tell you.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">3/8 inch</th><td>9.525</td><td><b>4.8% narrower</b></td><td>US pads; close enough to a centimetre to be mistaken for one</td></tr>
+          <tr><th scope="row">1/2 inch</th><td>12.70</td><td>27% wider</td><td>US classrooms, large clear working</td></tr>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td>exactly half</td><td>Standard metric exercise books</td></tr>
+          <tr><th scope="row">1 inch</th><td>25.40</td><td>2.54 times wider</td><td>Floor plans, tabletop maps</td></tr>
+          <tr><th scope="row">2 cm</th><td>20.00</td><td>exactly double</td><td>Very large print and display work</td></tr>
+          <tr><th scope="row">1/4 inch</th><td>6.35</td><td>36% narrower</td><td>The US classroom default</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">A page shrunk by the usual four to six percent turns a centimetre square into about 9.5&nbsp;mm, which is close enough to three eighths of an inch to pass unnoticed and wrong enough to break a 1:100 plan. Set the scale to 100% or Actual Size and check the 100&nbsp;mm bar with a ruler &mdash; on this grid it should span exactly ten squares.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about centimetre grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is 1 cm graph paper the same as 1/2 inch?</summary>
+        <p>No. Half an inch is 12.7&nbsp;mm, 27 percent wider than a centimetre, and a half inch square has about 61 percent more area. They are the natural large-square choice in their own measurement systems, which is why they get substituted for each other, but they are not interchangeable on a scale drawing.</p>
+      </details>
+      <details>
+        <summary>How many centimetre squares fit on a page?</summary>
+        <p>On A4 with the measuring bars on, 19 across by 25 down. Without the bars it becomes 19 by 27. Letter gives 19 by 24 with the bars and 19 by 25 without, since Letter is a little wider and noticeably shorter than A4.</p>
+      </details>
+      <details>
+        <summary>Can I use it for a 1:100 floor plan?</summary>
+        <p>Yes, and it is the cleanest way to draw one by hand. At 1:100 a centimetre on paper is a metre in reality, so one square is one metre and a room is counted rather than measured. An A4 sheet covers 19 by 25 metres. The plan is only to scale if the page prints at 100 percent.</p>
+      </details>
+      <details>
+        <summary>Should the heavy lines be every 10 squares or every 5?</summary>
+        <p>Every 10 is the default here and gives 10&nbsp;cm reference blocks. Every 5 gives 5&nbsp;cm blocks and is easier to count against on a busy drawing. Set the field to 0 if the bold lines are getting in the way of the work.</p>
+      </details>
+      <details>
+        <summary>Is a centimetre grid too big for secondary school maths?</summary>
+        <p>For plotting a dense function it is, and 5&nbsp;mm is the usual choice there. A centimetre grid earns its place where each square has to carry something written inside it, or where the drawing will be read at a distance.</p>
+      </details>
+      <details>
+        <summary>Can I get centimetre squares on Letter paper?</summary>
+        <p>Yes, change the paper selector and the squares stay exactly 10&nbsp;mm; only the count changes. Choose the paper that is actually loaded, because printing A4 artwork onto Letter forces a resize the scale setting cannot prevent.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "1 cm graph paper",
+          "item": "https://printgridpaper.com/1cm-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is 1 cm graph paper the same as 1/2 inch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Half an inch is 12.7 mm, 27 percent wider than a centimetre, and a half inch square has about 61 percent more area. They are the natural large-square choice in their own measurement systems, which is why they get substituted for each other, but they are not interchangeable on a scale drawing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many centimetre squares fit on a page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On A4 with the measuring bars on, 19 across by 25 down. Without the bars it becomes 19 by 27. Letter gives 19 by 24 with the bars and 19 by 25 without, since Letter is a little wider and noticeably shorter than A4."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it for a 1:100 floor plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it is the cleanest way to draw one by hand. At 1:100 a centimetre on paper is a metre in reality, so one square is one metre and a room is counted rather than measured. An A4 sheet covers 19 by 25 metres. The plan is only to scale if the page prints at 100 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should the heavy lines be every 10 squares or every 5?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every 10 is the default here and gives 10 cm reference blocks. Every 5 gives 5 cm blocks and is easier to count against on a busy drawing. Set the field to 0 if the bold lines are getting in the way of the work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a centimetre grid too big for secondary school maths?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For plotting a dense function it is, and 5 mm is the usual choice there. A centimetre grid earns its place where each square has to carry something written inside it, or where the drawing will be read at a distance."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'a4', spacing:10, unit:'mm', majorEvery:10};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

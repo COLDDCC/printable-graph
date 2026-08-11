@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>5 mm Graph Paper &mdash; Free Printable PDF, A4 and Letter</title>
+<meta name="description" content="Free printable 5 mm graph paper as a PDF, on A4 or Letter. The standard metric squared paper, with a measuring bar on every sheet so you can confirm the squares really are 5 mm.">
+<link rel="canonical" href="https://printgridpaper.com/5mm-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="5 mm Graph Paper — Free Printable PDF">
+<meta property="og:description" content="The standard metric squared paper, sized for A4, with a measuring bar so you can prove the print came out at size.">
+<meta property="og:url" content="https://printgridpaper.com/5mm-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>5 mm</p>
+
+  <div class="hero size">
+    <p class="eyebrow">The metric standard</p>
+    <h1>5 mm graph paper</h1>
+    <p class="lede">The ruling inside almost every school exercise book outside North America. It is standard for a reason that is easy to miss: <b>5 divides both 210 and 297 exactly</b>, so a 5&nbsp;mm grid and an A4 sheet were made for each other.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">5 mm</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4" selected>A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>Why 5 mm became the metric default</h2>
+      <p class="sec-lede">Twenty squares make 10&nbsp;centimetres, so the grid is a ruler you can read without one. Bold every fifth line and each block is 25&nbsp;mm; bold every tenth and each block is 5&nbsp;cm. Both conventions are in use and both are one field change away below.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole 5&nbsp;mm squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>39 &times; 48</b> &mdash; 1,872</td><td>39 &times; 51 &mdash; 1,989</td><td>195 &times; 240 mm</td></tr>
+          <tr><th scope="row">A4</th><td><b>38 &times; 51</b> &mdash; 1,938</td><td>38 &times; 55 &mdash; 2,090</td><td>190 &times; 255 mm</td></tr>
+          <tr><th scope="row">Legal</th><td><b>39 &times; 63</b> &mdash; 2,457</td><td>39 &times; 67 &mdash; 2,613</td><td>195 &times; 315 mm</td></tr>
+          <tr><th scope="row">A5</th><td><b>25 &times; 34</b> &mdash; 850</td><td>25 &times; 38 &mdash; 950</td><td>125 &times; 170 mm</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>51 &times; 78</b> &mdash; 3,978</td><td>51 &times; 82 &mdash; 4,182</td><td>255 &times; 390 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>A4 is its home paper.</b> On Letter the sheet is 5&nbsp;mm wider and 18&nbsp;mm shorter than A4, so you gain a column and lose three rows. Nothing is wrong when the numbers move; the paper changed shape, not the grid.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>Where 5 mm is the size people expect</h2>
+      <p class="sec-lede">Outside the US, this is what "graph paper" means with no further qualification. Most of the uses below assume a square is a fixed physical 5&nbsp;mm rather than an abstract unit.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>School exercise books</h3><p>The default ruling for maths and science across Europe, Japan, China, India and Australia. If a teacher asks for squared paper and does not specify, this is what they picture.</p></div>
+      <div><h3>Lab and science plotting</h3><p>Fine enough to plot a real data range on one page, coarse enough to write a value beside a point. The 25&nbsp;mm bold blocks work as natural axis divisions.</p></div>
+      <div><h3>Bullet journals and planners</h3><p>Squared pages are the usual alternative to dot grid for anyone who wants visible structure. Print it on A5 for a notebook-sized insert.</p></div>
+      <div><h3>Technical sketching</h3><p>Small enough that a freehand line still reads as straight, which is why it is the standard for quick dimensioned sketches before anything gets drawn properly.</p></div>
+      <div><h3>Perler and Hama bead patterns</h3><p>Standard midi beads sit on a 5&nbsp;mm pitch, so one square is exactly one bead and the paper doubles as a full-size template for the finished piece.</p></div>
+      <div><h3>Cross stitch on coarse counts</h3><p>At roughly five stitches to the inch a square lines up closely with 5-count and 6-count fabric. For finer counts an eighth inch chart is the more usual choice.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes 5 mm gets confused with</h2>
+      <p class="sec-lede">The dangerous one here is a fifth of an inch. It is 1.6 percent wider than 5&nbsp;mm, which is invisible on screen and becomes a 3&nbsp;mm error across a single A4 sheet.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1/5 inch</th><td>5.08</td><td><b>1.6% wider</b></td><td>Some US pads; near enough to pass for 5 mm until you measure</td></tr>
+          <tr><th scope="row">6 mm</th><td>6.00</td><td>20% wider</td><td>Occasional imported ruling</td></tr>
+          <tr><th scope="row">1/4 inch</th><td>6.35</td><td>27% wider</td><td>US classrooms, quad ruled pads</td></tr>
+          <tr><th scope="row">4 mm</th><td>4.00</td><td>20% narrower</td><td>Some continental notebooks</td></tr>
+          <tr><th scope="row">2 mm</th><td>2.00</td><td>exactly half</td><td>Fine plotting and detail work</td></tr>
+          <tr><th scope="row">1 cm</th><td>10.00</td><td>exactly double</td><td>Primary school and large clear plotting</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">A default print dialog shrinks the page by four to six percent, which turns a 5&nbsp;mm square into roughly 4.7&nbsp;mm. That is enough to make a bead template the wrong size and a scale sketch a lie. Set the scale to 100% or Actual Size, then check the 100&nbsp;mm bar at the foot of the sheet with a ruler.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about 5 mm grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Why is 5 mm the standard almost everywhere except the US?</summary>
+        <p>Because it fits the paper. A4 is 210 by 297&nbsp;mm and 5 divides both without a remainder, so a 5&nbsp;mm grid tiles the sheet cleanly and 20 squares make exactly 10&nbsp;centimetres. The US settled on Letter and an imperial grid instead, which is why the quarter inch is the American default.</p>
+      </details>
+      <details>
+        <summary>Is 5 mm the same as 1/4 inch?</summary>
+        <p>No. A quarter inch is 6.35&nbsp;mm, which is 27 percent wider than 5&nbsp;mm and about 61 percent more area per square. Swapping one for the other is the most common way a printed chart or template comes out the wrong size.</p>
+      </details>
+      <details>
+        <summary>How many 5 mm squares fit on A4?</summary>
+        <p>With the measuring bars switched on, 38 across by 51 down. Turn the bars off and it becomes 38 by 55. On Letter you get 39 by 48 with the bars and 39 by 51 without, because Letter is slightly wider and noticeably shorter.</p>
+      </details>
+      <details>
+        <summary>Should the heavy lines be every 5 squares or every 10?</summary>
+        <p>Both are standard. Every 5 gives 25&nbsp;mm blocks and suits general working. Every 10 gives 5&nbsp;cm blocks and suits plotting, because each block is a round metric distance. Change the heavy line field above to switch, or set it to 0 for a plain grid.</p>
+      </details>
+      <details>
+        <summary>Is 5 mm right for Perler or Hama bead patterns?</summary>
+        <p>For standard midi beads, yes. They are made on a 5&nbsp;mm pitch, so one square equals one bead and the printed sheet is a full-size template you can lay the finished piece against. Mini beads are half that pitch and need a 2.5&nbsp;mm grid instead.</p>
+      </details>
+      <details>
+        <summary>Can I print 5 mm paper on Letter?</summary>
+        <p>Yes, and the squares stay exactly 5&nbsp;mm; only the number of them changes. Pick whichever paper is actually in the printer, because printing an A4 file onto Letter forces a resize that no scale setting can undo.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "5 mm graph paper",
+          "item": "https://printgridpaper.com/5mm-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is 5 mm the standard almost everywhere except the US?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because it fits the paper. A4 is 210 by 297 mm and 5 divides both without a remainder, so a 5 mm grid tiles the sheet cleanly and 20 squares make exactly 10 centimetres. The US settled on Letter and an imperial grid instead, which is why the quarter inch is the American default."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 5 mm the same as 1/4 inch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A quarter inch is 6.35 mm, which is 27 percent wider than 5 mm and about 61 percent more area per square. Swapping one for the other is the most common way a printed chart or template comes out the wrong size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many 5 mm squares fit on A4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With the measuring bars switched on, 38 across by 51 down. Turn the bars off and it becomes 38 by 55. On Letter you get 39 by 48 with the bars and 39 by 51 without, because Letter is slightly wider and noticeably shorter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should the heavy lines be every 5 squares or every 10?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both are standard. Every 5 gives 25 mm blocks and suits general working. Every 10 gives 5 cm blocks and suits plotting, because each block is a round metric distance. Change the heavy line field above to switch, or set it to 0 for a plain grid."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 5 mm right for Perler or Hama bead patterns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For standard midi beads, yes. They are made on a 5 mm pitch, so one square equals one bead and the printed sheet is a full-size template you can lay the finished piece against. Mini beads are half that pitch and need a 2.5 mm grid instead."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'a4', spacing:5, unit:'mm', majorEvery:5};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>2 mm Graph Paper &mdash; Free Printable Fine Grid PDF</title>
+<meta name="description" content="Free printable 2 mm graph paper as a PDF, on A4 or Letter. A fine metric grid for lab plotting and detail work, with adjustable line weight and colour and a measuring bar on every sheet.">
+<link rel="canonical" href="https://printgridpaper.com/2mm-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="2 mm Graph Paper — Free Printable Fine Grid PDF">
+<meta property="og:description" content="A fine 2 mm metric grid with adjustable line colour, so the grid stays a background instead of a solid tint.">
+<meta property="og:url" content="https://printgridpaper.com/2mm-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>2 mm</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Fine metric grid</p>
+    <h1>2 mm graph paper</h1>
+    <p class="lede">Twelve thousand squares on an A4 sheet. At this density <b>the line colour matters more than the square size does</b> &mdash; pick the default blue and you get a usable grid, pick black and you get a page that reads as a solid tint.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">2 mm</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="2" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4" selected>A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>What changes when the grid gets this fine</h2>
+      <p class="sec-lede">Five squares make a centimetre, so the bold line every fifth square gives 10&nbsp;mm blocks. The counts below are large enough to be worth stating plainly: an A4 sheet carries over twelve thousand squares and around four hundred and fifty printed lines.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole 2&nbsp;mm squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>97 &times; 120</b> &mdash; 11,640</td><td>97 &times; 129 &mdash; 12,513</td><td>194 &times; 240 mm</td></tr>
+          <tr><th scope="row">A4</th><td><b>95 &times; 129</b> &mdash; 12,255</td><td>95 &times; 138 &mdash; 13,110</td><td>190 &times; 258 mm</td></tr>
+          <tr><th scope="row">Legal</th><td><b>97 &times; 158</b> &mdash; 15,326</td><td>97 &times; 167 &mdash; 16,199</td><td>194 &times; 316 mm</td></tr>
+          <tr><th scope="row">A5</th><td><b>64 &times; 86</b> &mdash; 5,504</td><td>64 &times; 95 &mdash; 6,080</td><td>128 &times; 172 mm</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>129 &times; 196</b> &mdash; 25,284</td><td>129 &times; 205 &mdash; 26,445</td><td>258 &times; 392 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>Line weight is the real setting on this page.</b> The minor lines are 0.12&nbsp;mm, which a laser printer resolves cleanly and an inkjet may thicken slightly. If your sheet comes out looking flooded, switch the colour to grey rather than reducing the square size.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>What a 2 mm grid is for</h2>
+      <p class="sec-lede">Every use here has the same shape: the grid needs to be fine enough to read a value off, and quiet enough to disappear under the work.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>Lab and scientific plotting</h3><p>Fine enough to place a point precisely and to interpolate between gridlines by eye, which is the whole reason fine graph paper exists.</p></div>
+      <div><h3>Reading values off a curve</h3><p>With 5 squares to the centimetre, an intermediate reading can be estimated to a fifth of a small division without guessing.</p></div>
+      <div><h3>Fine technical drawing</h3><p>Detail views and sections where a 5&nbsp;mm grid would be too coarse to place anything accurately.</p></div>
+      <div><h3>Scale modelling</h3><p>At 1:50, one square is 10&nbsp;cm of real length. At 1:100 it is 20&nbsp;cm. Useful for laying out small components without redrawing a scale each time.</p></div>
+      <div><h3>Detailed craft charts</h3><p>Beadwork, fine embroidery and miniature knitting charts where a coarser grid would not hold enough cells to describe the piece.</p></div>
+      <div><h3>A quiet background for ink work</h3><p>Set the colour to grey and the grid guides the hand without competing with the drawing, which the default blue will do at this density.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes 2 mm gets confused with</h2>
+      <p class="sec-lede">A tenth of an inch is the near twin here, sitting just over half a millimetre wider. At this scale that half millimetre becomes 50&nbsp;mm of drift across a single sheet.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1/10 inch</th><td>2.54</td><td><b>27% wider</b></td><td>Engineering computation pads</td></tr>
+          <tr><th scope="row">2.5 mm</th><td>2.50</td><td>25% wider</td><td>Mini Perler and Hama bead pitch</td></tr>
+          <tr><th scope="row">1 mm</th><td>1.00</td><td>exactly half</td><td>Millimetre paper, the finest common ruling</td></tr>
+          <tr><th scope="row">1/8 inch</th><td>3.175</td><td>59% wider</td><td>Cross stitch and pixel art charts</td></tr>
+          <tr><th scope="row">4 mm</th><td>4.00</td><td>exactly double</td><td>Some continental exercise books</td></tr>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td>2.5 times wider</td><td>The standard metric school grid</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">Scaling hurts most at this density: a page shrunk by five percent turns a 2&nbsp;mm square into 1.9&nbsp;mm, and the accumulated error across 95 columns is nearly a centimetre. Set the scale to 100% or Actual Size, then check the 100&nbsp;mm bar &mdash; it should span exactly 50 squares.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about 2 mm grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is 2 mm graph paper the same as millimetre paper?</summary>
+        <p>Not quite. Millimetre paper normally means a 1&nbsp;mm grid with heavier lines every 5 and 10&nbsp;mm, which is finer again. A 2&nbsp;mm grid is the practical middle ground: fine enough to interpolate on, coarse enough that a home printer reproduces every line cleanly.</p>
+      </details>
+      <details>
+        <summary>Will my printer actually resolve a 2 mm grid?</summary>
+        <p>A laser printer will, comfortably. An inkjet on plain paper may thicken the lines slightly, which at this density reads as a tint across the page rather than as individual lines. If that happens, switch the line colour to grey, which is the setting that fixes it.</p>
+      </details>
+      <details>
+        <summary>How many 2 mm squares fit on a page?</summary>
+        <p>On A4 with the measuring bars on, 95 across by 129 down &mdash; over twelve thousand squares. Letter gives 97 by 120. Turning the bars off adds nine more rows on either paper.</p>
+      </details>
+      <details>
+        <summary>Why is this PDF larger than the other sizes?</summary>
+        <p>Because it contains far more lines. A 2&nbsp;mm A4 sheet is around 450 vector lines against roughly 70 for a quarter inch sheet, so the file is a few kilobytes bigger. It is still a fraction of the size of any image-based grid, and it stays perfectly sharp at any zoom.</p>
+      </details>
+      <details>
+        <summary>Is 2 mm the same as 1/10 inch?</summary>
+        <p>No. A tenth of an inch is 2.54&nbsp;mm, 27 percent wider. On a grid this fine the two look identical side by side and diverge badly over a full sheet, so it is worth checking which one a template or chart actually assumes.</p>
+      </details>
+      <details>
+        <summary>What line colour works best at 2 mm?</summary>
+        <p>Grey or the default blue. Black turns the sheet into a solid grey block from any distance and makes pencil work hard to distinguish from the grid. Red and green are legible but tiring to work on at this density.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "2 mm graph paper",
+          "item": "https://printgridpaper.com/2mm-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is 2 mm graph paper the same as millimetre paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not quite. Millimetre paper normally means a 1 mm grid with heavier lines every 5 and 10 mm, which is finer again. A 2 mm grid is the practical middle ground: fine enough to interpolate on, coarse enough that a home printer reproduces every line cleanly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my printer actually resolve a 2 mm grid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A laser printer will, comfortably. An inkjet on plain paper may thicken the lines slightly, which at this density reads as a tint across the page rather than as individual lines. If that happens, switch the line colour to grey, which is the setting that fixes it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many 2 mm squares fit on a page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On A4 with the measuring bars on, 95 across by 129 down — over twelve thousand squares. Letter gives 97 by 120. Turning the bars off adds nine more rows on either paper."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is this PDF larger than the other sizes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because it contains far more lines. A 2 mm A4 sheet is around 450 vector lines against roughly 70 for a quarter inch sheet, so the file is a few kilobytes bigger. It is still a fraction of the size of any image-based grid, and it stays perfectly sharp at any zoom."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 2 mm the same as 1/10 inch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A tenth of an inch is 2.54 mm, 27 percent wider. On a grid this fine the two look identical side by side and diverge badly over a full sheet, so it is worth checking which one a template or chart actually assumes."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'a4', spacing:2, unit:'mm', majorEvery:5};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

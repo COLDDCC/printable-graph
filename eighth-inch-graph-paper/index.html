@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1/8 Inch Graph Paper &mdash; Free Printable PDF for Cross Stitch and Pixel Art</title>
+<meta name="description" content="Free printable 1/8 inch graph paper as a PDF, eight squares to the inch, on Letter or A4. The counting grid for cross stitch charts, pixel art and bead patterns, with a measuring bar on every sheet.">
+<link rel="canonical" href="https://printgridpaper.com/eighth-inch-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="1/8 Inch Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Eight squares to the inch. The counting grid for cross stitch charts, pixel art and bead patterns.">
+<meta property="og:url" content="https://printgridpaper.com/eighth-inch-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>1/8 inch</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Eight squares to the inch</p>
+    <h1>1/8 inch graph paper</h1>
+    <p class="lede">The counting grid. One square, one stitch, one bead, one pixel &mdash; this is the size crafts reach for when the paper has to be a chart rather than a background. <b>An eighth of an inch is 3.175&nbsp;mm</b>, and a Letter sheet holds over four and a half thousand of them.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">0.125 in</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">Letter</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.125" value="0.125" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="false">mm</button>
+              <button type="button" data-v="in" aria-pressed="true">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter" selected>Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="8" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>What an eighth inch grid holds</h2>
+      <p class="sec-lede">Eight squares to the inch means 64 to the square inch, and the bold line defaults to every eighth square so each block is one inch. For charting work you may want it every tenth instead, which is the counting convention most published patterns use.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole eighth inch squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>61 &times; 76</b> &mdash; 4,636</td><td>61 &times; 81 &mdash; 4,941</td><td>7.62 &times; 9.5 in</td></tr>
+          <tr><th scope="row">A4</th><td><b>59 &times; 81</b> &mdash; 4,779</td><td>59 &times; 87 &mdash; 5,133</td><td>7.38 &times; 10.13 in</td></tr>
+          <tr><th scope="row">Legal</th><td><b>61 &times; 100</b> &mdash; 6,100</td><td>61 &times; 105 &mdash; 6,405</td><td>7.62 &times; 12.5 in</td></tr>
+          <tr><th scope="row">A5</th><td><b>40 &times; 54</b> &mdash; 2,160</td><td>40 &times; 59 &mdash; 2,360</td><td>5 &times; 6.75 in</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>81 &times; 124</b> &mdash; 10,044</td><td>81 &times; 129 &mdash; 10,449</td><td>10.13 &times; 15.5 in</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>Chart squares are not fabric count.</b> A square on the page stands for one stitch whatever fabric you work on; the fabric count decides how big the finished piece comes out, not how the chart is drawn. A 61 by 76 chart worked on 14-count aida finishes at about 4.4 by 5.4&nbsp;inches.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>What an eighth inch grid is for</h2>
+      <p class="sec-lede">Almost everything here treats the square as a cell to be filled rather than a distance to be measured, which is why this size behaves differently from the rest of the site.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>Cross stitch charts</h3><p>One square, one stitch. Small enough to chart a real design on a single page and still large enough to mark a symbol in each cell by hand.</p></div>
+      <div><h3>Pixel art</h3><p>A Letter sheet is a 61 by 76 pixel canvas. Sketching on paper first is still the fastest way to work out a sprite before committing it to a screen.</p></div>
+      <div><h3>Bead loom and brick stitch</h3><p>Grid cells map directly to beads. Note that most seed beads are not square in profile, so the printed chart plans the pattern rather than the finished proportions.</p></div>
+      <div><h3>Colourwork knitting charts</h3><p>Fair isle and intarsia charts need a lot of cells and a legible symbol in each. Eighth inch is the usual compromise between the two.</p></div>
+      <div><h3>Quilt piecing at eighth inch</h3><p>Draft a block where an eighth inch reads directly off the paper, which suits precise piecing and paper-pieced patterns.</p></div>
+      <div><h3>Lettering and layout practice</h3><p>Fine enough to build letterforms cell by cell, which is how pixel and blackletter grid lettering is usually planned.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes an eighth inch gets confused with</h2>
+      <p class="sec-lede">Three millimetres is the near miss here. It is under two hundredths of a millimetre per square away from being right, and about six millimetres out across a whole chart.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">3 mm</th><td>3.00</td><td><b>5.5% narrower</b></td><td>Metric craft grids; visually identical</td></tr>
+          <tr><th scope="row">1/10 inch</th><td>2.54</td><td>20% narrower</td><td>Engineering pads</td></tr>
+          <tr><th scope="row">2 mm</th><td>2.00</td><td>37% narrower</td><td>Fine metric plotting</td></tr>
+          <tr><th scope="row">1/16 inch</th><td>1.5875</td><td>exactly half</td><td>Very fine charting, rarely printed</td></tr>
+          <tr><th scope="row">1/4 inch</th><td>6.35</td><td>exactly double</td><td>US classroom quad ruled</td></tr>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td>57% wider</td><td>Standard metric exercise books</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">A chart printed at 95 percent still charts correctly &mdash; the cells are only symbols &mdash; but any measurement you take off it will be wrong, and a template you lay against finished work will not line up. Set the scale to 100% or Actual Size, then check the 4&nbsp;in bar at the foot of the sheet: it should span exactly 32 squares.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about eighth inch grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is 1/8 inch graph paper right for cross stitch?</summary>
+        <p>Yes, it is the usual charting size. One square stands for one stitch regardless of what fabric you use. The fabric count only decides the finished dimensions: the same 61 by 76 chart works out at about 4.4 by 5.4&nbsp;inches on 14-count aida, and roughly 3.4 by 4.2&nbsp;inches on 18-count.</p>
+      </details>
+      <details>
+        <summary>How many eighth inch squares fit on a page?</summary>
+        <p>On Letter with the measuring bars on, 61 across by 76 down, which is 4,636 cells. Without the bars it becomes 61 by 81. A4 gives 59 by 81 with the bars and 59 by 87 without.</p>
+      </details>
+      <details>
+        <summary>Is an eighth of an inch the same as 3 mm?</summary>
+        <p>No, it is 3.175&nbsp;mm. The difference is invisible on a single square and reaches about 6&nbsp;mm across a chart 35 squares wide, which matters if you are laying the printed sheet against finished work.</p>
+      </details>
+      <details>
+        <summary>Should the heavy lines be every 8 squares or every 10?</summary>
+        <p>Every 8 makes each block exactly one inch and is the default here. Every 10 matches the counting convention used by most published charts, where bold lines mark tens so you can find your place. For charting work, change the field to 10.</p>
+      </details>
+      <details>
+        <summary>Can I use it for pixel art?</summary>
+        <p>Yes. Treat the sheet as a canvas of that pixel size &mdash; 61 by 76 on Letter, 59 by 81 on A4 &mdash; and each square as one pixel. For a specific canvas size, switch to landscape or a larger paper until the counts cover what you need.</p>
+      </details>
+      <details>
+        <summary>How do I get more cells on one page?</summary>
+        <p>Three options, in order of how much they give you: turn the measuring bars off once you have confirmed your printer setting, switch to landscape, or move to Legal or Tabloid paper. Tabloid holds 81 by 124 cells.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "1/8 inch graph paper",
+          "item": "https://printgridpaper.com/eighth-inch-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is 1/8 inch graph paper right for cross stitch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it is the usual charting size. One square stands for one stitch regardless of what fabric you use. The fabric count only decides the finished dimensions: the same 61 by 76 chart works out at about 4.4 by 5.4 inches on 14-count aida, and roughly 3.4 by 4.2 inches on 18-count."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many eighth inch squares fit on a page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On Letter with the measuring bars on, 61 across by 76 down, which is 4,636 cells. Without the bars it becomes 61 by 81. A4 gives 59 by 81 with the bars and 59 by 87 without."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an eighth of an inch the same as 3 mm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, it is 3.175 mm. The difference is invisible on a single square and reaches about 6 mm across a chart 35 squares wide, which matters if you are laying the printed sheet against finished work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should the heavy lines be every 8 squares or every 10?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every 8 makes each block exactly one inch and is the default here. Every 10 matches the counting convention used by most published charts, where bold lines mark tens so you can find your place. For charting work, change the field to 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it for pixel art?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Treat the sheet as a canvas of that pixel size — 61 by 76 on Letter, 59 by 81 on A4 — and each square as one pixel. For a specific canvas size, switch to landscape or a larger paper until the counts cover what you need."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'letter', spacing:0.125, unit:'in', majorEvery:8};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

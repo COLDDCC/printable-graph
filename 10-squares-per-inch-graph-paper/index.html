@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>10 Squares Per Inch Graph Paper &mdash; Free Printable 1/10 Inch PDF</title>
+<meta name="description" content="Free printable 10 squares per inch graph paper as a PDF, also sold as 1/10 inch or engineering grid. Ten to the inch on Letter or A4, with a measuring bar on every sheet.">
+<link rel="canonical" href="https://printgridpaper.com/10-squares-per-inch-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="10 Squares Per Inch Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Ten to the inch, the decimal engineering grid. Also called 1/10 inch graph paper — the same grid, named from the other end.">
+<meta property="og:url" content="https://printgridpaper.com/10-squares-per-inch-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>10 per inch</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Also sold as 1/10 inch</p>
+    <h1>10 squares per inch graph paper</h1>
+    <p class="lede">Ten to the inch, so each square is a tenth and ten squares are one inch. <b>"10 squares per inch" and "1/10 inch graph paper" are the same paper</b>, described from opposite ends &mdash; the naming causes far more confusion than the grid ever does.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">0.1 in</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">Letter</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.125" value="0.1" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="false">mm</button>
+              <button type="button" data-v="in" aria-pressed="true">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter" selected>Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="10" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>Same grid, two names</h2>
+      <p class="sec-lede">Counting squares per inch gives ten; measuring one square gives a tenth of an inch, which is 2.54&nbsp;mm exactly. Suppliers use whichever phrasing suits their catalogue, so a pad labelled 10&times;10 and a file labelled 1/10 inch will lay on top of each other perfectly. The bold line defaults to every tenth square, making each block one inch.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole tenth inch squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>77 &times; 95</b> &mdash; 7,315</td><td>77 &times; 102 &mdash; 7,854</td><td>7.7 &times; 9.5 in</td></tr>
+          <tr><th scope="row">A4</th><td><b>74 &times; 101</b> &mdash; 7,474</td><td>74 &times; 109 &mdash; 8,066</td><td>7.4 &times; 10.1 in</td></tr>
+          <tr><th scope="row">Legal</th><td><b>77 &times; 125</b> &mdash; 9,625</td><td>77 &times; 132 &mdash; 10,164</td><td>7.7 &times; 12.5 in</td></tr>
+          <tr><th scope="row">A5</th><td><b>50 &times; 67</b> &mdash; 3,350</td><td>50 &times; 74 &mdash; 3,700</td><td>5 &times; 6.7 in</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>102 &times; 155</b> &mdash; 15,810</td><td>102 &times; 162 &mdash; 16,524</td><td>10.2 &times; 15.5 in</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>The decimal is the point.</b> With ten squares to the inch, a reading of 3.7&nbsp;inches is three bold blocks and seven squares &mdash; no fractions, no mental conversion. That is why it became the standard for engineering computation, where everything else on the page is already decimal.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>What ten to the inch is for</h2>
+      <p class="sec-lede">This grid exists for work where numbers are decimal and the paper should not force you back into fractions.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>Engineering computation</h3><p>The traditional ruling of engineering computation pads. Calculations, sketches and plots share one sheet and one decimal grid.</p></div>
+      <div><h3>Decimal drafting scales</h3><p>Civil and site drawing uses scales like one inch to ten, twenty or fifty feet. A tenth inch grid steps directly in those units instead of fighting them.</p></div>
+      <div><h3>Lab plotting</h3><p>Data recorded to one or two decimal places lands on gridlines rather than between them, which makes plotting faster and reading back more reliable.</p></div>
+      <div><h3>Interpolating between points</h3><p>Fine enough that a value between gridlines can be estimated confidently, without the sheet becoming a tint the way a 2&nbsp;mm grid can.</p></div>
+      <div><h3>Statistics and charting</h3><p>Ten to the inch divides cleanly into tens and hundreds, so axis scaling rarely needs an awkward interval.</p></div>
+      <div><h3>Detail sketching</h3><p>Small enough for a dimensioned detail on part of a page while leaving room for notes beside it.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes ten to the inch gets confused with</h2>
+      <p class="sec-lede">Two and a half millimetres is the trap. It is four hundredths of a millimetre off per square, and about 3&nbsp;mm off across a full sheet.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">2.5 mm</th><td>2.50</td><td><b>1.6% narrower</b></td><td>Metric fine grids and mini bead pitch</td></tr>
+          <tr><th scope="row">2 mm</th><td>2.00</td><td>21% narrower</td><td>Fine metric plotting</td></tr>
+          <tr><th scope="row">1/8 inch</th><td>3.175</td><td>25% wider</td><td>Cross stitch and pixel art charts</td></tr>
+          <tr><th scope="row">1/16 inch</th><td>1.5875</td><td>37% narrower</td><td>Very fine imperial ruling</td></tr>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td>97% wider</td><td>Standard metric exercise books</td></tr>
+          <tr><th scope="row">1/4 inch</th><td>6.35</td><td>2.5 times wider</td><td>US classroom quad ruled</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">On a decimal grid, scaling is quietly corrosive: a five percent shrink means ten squares no longer measure an inch, and every value you read off the sheet inherits the error. Set the scale to 100% or Actual Size and check the 4&nbsp;in bar &mdash; it should span exactly 40 squares.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about ten to the inch</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is 10 squares per inch the same as 1/10 inch graph paper?</summary>
+        <p>Yes. They are two ways of describing one grid: count the squares in an inch and you get ten, measure a single square and you get a tenth of an inch. A pad labelled 10&times;10 to the inch and a file labelled 1/10 inch produce identical paper.</p>
+      </details>
+      <details>
+        <summary>Is this the same as engineering paper?</summary>
+        <p>The grid is. A traditional engineering computation pad is this ruling, usually printed faintly and often on a green or buff tinted sheet with a ruled border. What you get here is the grid itself in whatever colour you pick, on plain paper.</p>
+      </details>
+      <details>
+        <summary>How many squares fit on a page?</summary>
+        <p>On Letter with the measuring bars on, 77 across by 95 down, which is 7,315 squares. Without the bars it becomes 77 by 102. A4 gives 74 by 101 with the bars and 74 by 109 without.</p>
+      </details>
+      <details>
+        <summary>Why 77 columns and not 85?</summary>
+        <p>An 8.5&nbsp;inch sheet holds 85 tenths edge to edge, but the printable area is smaller than the paper. After a 10&nbsp;mm margin each side, 77 whole squares remain and the leftover fraction is split between the two margins so the grid sits centred.</p>
+      </details>
+      <details>
+        <summary>What line colour and weight work best?</summary>
+        <p>Grey or the default blue at the standard weight. At 2.54&nbsp;mm a black grid reads as a solid tone from any distance and competes with pencil work. If you intend to photocopy the sheet, grey reproduces better than a pale blue.</p>
+      </details>
+      <details>
+        <summary>Is a tenth of an inch the same as 2.5 mm?</summary>
+        <p>No, it is 2.54&nbsp;mm. The 1.6 percent difference is undetectable on one square and reaches about 3&nbsp;mm across a full sheet, which is enough to matter if you are overlaying the printout on something else.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "10 squares per inch graph paper",
+          "item": "https://printgridpaper.com/10-squares-per-inch-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is 10 squares per inch the same as 1/10 inch graph paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. They are two ways of describing one grid: count the squares in an inch and you get ten, measure a single square and you get a tenth of an inch. A pad labelled 10x10 to the inch and a file labelled 1/10 inch produce identical paper."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the same as engineering paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The grid is. A traditional engineering computation pad is this ruling, usually printed faintly and often on a green or buff tinted sheet with a ruled border. What you get here is the grid itself in whatever colour you pick, on plain paper."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many squares fit on a page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On Letter with the measuring bars on, 77 across by 95 down, which is 7,315 squares. Without the bars it becomes 77 by 102. A4 gives 74 by 101 with the bars and 74 by 109 without."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why 77 columns and not 85?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An 8.5 inch sheet holds 85 tenths edge to edge, but the printable area is smaller than the paper. After a 10 mm margin each side, 77 whole squares remain and the leftover fraction is split between the two margins so the grid sits centred."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What line colour and weight work best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Grey or the default blue at the standard weight. At 2.54 mm a black grid reads as a solid tone from any distance and competes with pencil work. If you intend to photocopy the sheet, grey reproduces better than a pale blue."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'letter', spacing:0.1, unit:'in', majorEvery:10};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

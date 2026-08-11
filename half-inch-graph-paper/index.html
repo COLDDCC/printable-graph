@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1/2 Inch Graph Paper &mdash; Free Printable Large Square PDF</title>
+<meta name="description" content="Free printable 1/2 inch graph paper as a PDF, two squares to the inch, on Letter or A4. Large clear squares for early maths, handwriting alignment and large print, with a measuring bar on every sheet.">
+<link rel="canonical" href="https://printgridpaper.com/half-inch-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="1/2 Inch Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Two squares to the inch. Large clear squares for early maths, number alignment and large-print work.">
+<meta property="og:url" content="https://printgridpaper.com/half-inch-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>1/2 inch</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Two squares to the inch</p>
+    <h1>1/2 inch graph paper</h1>
+    <p class="lede">Large squares, deliberately. Wide enough for a young hand to put one digit in one box and for a sketch plan to stay readable at arm's length. <b>A Letter sheet holds 285 squares</b> &mdash; that is not an error, it is the size doing its job.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">0.5 in</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">Letter</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.125" value="0.5" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="false">mm</button>
+              <button type="button" data-v="in" aria-pressed="true">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter" selected>Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="2" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>What half inch squares give up, and what they buy</h2>
+      <p class="sec-lede">Two squares to the inch means four to the square inch, and the bold line defaults to every second square so each block is one inch. You get roughly a quarter as many squares as a quarter inch sheet, and in exchange every one of them can hold something written.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole half inch squares per sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>15 &times; 19</b> &mdash; 285</td><td>15 &times; 20 &mdash; 300</td><td>7.5 &times; 9.5 in</td></tr>
+          <tr><th scope="row">A4</th><td><b>14 &times; 20</b> &mdash; 280</td><td>14 &times; 21 &mdash; 294</td><td>7 &times; 10 in</td></tr>
+          <tr><th scope="row">Legal</th><td><b>15 &times; 25</b> &mdash; 375</td><td>15 &times; 26 &mdash; 390</td><td>7.5 &times; 12.5 in</td></tr>
+          <tr><th scope="row">A5</th><td><b>10 &times; 13</b> &mdash; 130</td><td>10 &times; 14 &mdash; 140</td><td>5 &times; 6.5 in</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>20 &times; 31</b> &mdash; 620</td><td>20 &times; 32 &mdash; 640</td><td>10 &times; 15.5 in</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>A4 loses a column here.</b> A4 is 6&nbsp;mm narrower than Letter, which is not enough to matter on a fine grid but is enough to drop a whole column when each one is 12.7&nbsp;mm wide. Big squares make the paper choice visible.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>Where large squares are the right answer</h2>
+      <p class="sec-lede">The common thread is that something has to fit inside the square &mdash; a digit, a symbol, a hand-drawn mark &mdash; rather than beside it.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>Early maths and place value</h3><p>One digit per box keeps columns lined up in long addition, subtraction and multiplication, which is where a lot of arithmetic quietly goes wrong.</p></div>
+      <div><h3>Handwriting and letter formation</h3><p>A half inch box is close to the ruling of early handwriting paper, so the same sheet can serve for both letters and numbers.</p></div>
+      <div><h3>Large print and low vision</h3><p>Combined with black lines and the measuring bars switched off, this is the most legible grid on the site for anyone who finds a 5&nbsp;mm sheet unusable.</p></div>
+      <div><h3>Room sketches at 1/2 inch to the foot</h3><p>One square is one foot at double the usual architectural scale. A Letter sheet covers 15 by 19 feet &mdash; one generous room, drawn large.</p></div>
+      <div><h3>Quilt block drafting</h3><p>Coarse enough to draft a block quickly and mark seam positions clearly without the grid crowding the drawing.</p></div>
+      <div><h3>Grid games and puzzle prototypes</h3><p>Board layouts, nonograms and grid puzzles need cells big enough to write in and few enough to count. This is that size.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes a half inch gets confused with</h2>
+      <p class="sec-lede">A centimetre is the substitution that happens most, usually because someone had metric paper to hand. It is a fifth narrower, which shows up immediately at this scale.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against this grid</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1 cm</th><td>10.00</td><td><b>21% narrower</b></td><td>Metric primary school grids</td></tr>
+          <tr><th scope="row">12 mm</th><td>12.00</td><td>5.5% narrower</td><td>Occasional imported ruling</td></tr>
+          <tr><th scope="row">1/4 inch</th><td>6.35</td><td>exactly half</td><td>US classroom quad ruled</td></tr>
+          <tr><th scope="row">15 mm</th><td>15.00</td><td>18% wider</td><td>Large metric display grids</td></tr>
+          <tr><th scope="row">1 inch</th><td>25.40</td><td>exactly double</td><td>Floor plans and tabletop maps</td></tr>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td>exactly two fifths</td><td>Standard metric exercise books</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">Scaling is easier to spot on a big grid, which is the one advantage of working this coarse: a five percent shrink turns a half inch square into about 12&nbsp;mm and two squares no longer measure an inch. Set the scale to 100% or Actual Size and check the 4&nbsp;in bar &mdash; it should span exactly 8 squares.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about half inch grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Why are there so few squares on the page?</summary>
+        <p>Because each one is 12.7&nbsp;mm across. A Letter sheet holds 15 by 19 of them with the measuring bars on, against 30 by 38 at quarter inch. Nothing has been cropped or scaled; four times fewer squares is exactly what doubling the square size does.</p>
+      </details>
+      <details>
+        <summary>Is 1/2 inch the same as 1 cm?</summary>
+        <p>No. Half an inch is 12.7&nbsp;mm, so it is about 27 percent wider than a centimetre and has roughly 61 percent more area. At this square size the difference is obvious the moment you put the two sheets side by side.</p>
+      </details>
+      <details>
+        <summary>Is this a good size for handwriting practice?</summary>
+        <p>Yes, and for number alignment in particular. One digit per box forces columns to line up in written arithmetic, which removes a common source of error that has nothing to do with whether the student understands the method.</p>
+      </details>
+      <details>
+        <summary>Can I use it for a floor plan?</summary>
+        <p>At half an inch to the foot, one square is one foot and a Letter sheet covers 15 by 19 feet &mdash; a single large room. For a whole floor on one page, quarter inch to the foot is the standard scale and doubles the coverage in each direction.</p>
+      </details>
+      <details>
+        <summary>Where should the heavy lines go?</summary>
+        <p>Every second square, which is the default and makes each bold block one inch. Set the field to 0 for a plain grid, which is usually better for handwriting work where the bold lines just add visual noise.</p>
+      </details>
+      <details>
+        <summary>Is it suitable for large print or low vision use?</summary>
+        <p>It is the most legible grid here. Switch the line colour to black for maximum contrast, and turn the measuring bars off once you have confirmed the printer setting, so the sheet is nothing but the grid.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; &copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Graph paper",
+          "item": "https://printgridpaper.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "1/2 inch graph paper",
+          "item": "https://printgridpaper.com/half-inch-graph-paper/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why are there so few squares on the page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because each one is 12.7 mm across. A Letter sheet holds 15 by 19 of them with the measuring bars on, against 30 by 38 at quarter inch. Nothing has been cropped or scaled; four times fewer squares is exactly what doubling the square size does."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 1/2 inch the same as 1 cm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Half an inch is 12.7 mm, so it is about 27 percent wider than a centimetre and has roughly 61 percent more area. At this square size the difference is obvious the moment you put the two sheets side by side."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a good size for handwriting practice?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and for number alignment in particular. One digit per box forces columns to line up in written arithmetic, which removes a common source of error that has nothing to do with whether the student understands the method."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it for a floor plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At half an inch to the foot, one square is one foot and a Letter sheet covers 15 by 19 feet — a single large room. For a whole floor on one page, quarter inch to the foot is the standard scale and doubles the coverage in each direction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should the heavy lines go?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every second square, which is the default and makes each bold block one inch. Set the field to 0 for a plain grid, which is usually better for handwriting work where the bold lines just add visual noise."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'letter', spacing:0.5, unit:'in', majorEvery:2};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

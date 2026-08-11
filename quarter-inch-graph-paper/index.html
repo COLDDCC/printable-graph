@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>1/4 Inch Graph Paper &mdash; Free Printable PDF, Letter and A4</title>
+<meta name="description" content="Free printable 1/4 inch graph paper as a PDF, four squares to the inch, on Letter or A4. Every sheet carries a measuring bar so you can check the squares really are a quarter inch.">
+<link rel="canonical" href="https://printgridpaper.com/quarter-inch-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="1/4 Inch Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Quarter inch grid, four squares to the inch, with a measuring bar so you can prove your printer printed it at size.">
+<meta property="og:url" content="https://printgridpaper.com/quarter-inch-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>1/4 inch</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Four squares to the inch</p>
+    <h1>1/4 inch graph paper</h1>
+    <p class="lede">The square size US classrooms mean when they say graph paper, and the one architects
+      mean when they draw at a quarter inch to the foot. The sheet below is already set to it &mdash;
+      <b>a quarter inch is exactly 6.35&nbsp;mm</b>, and the bar at the bottom lets you check your printer agreed.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">0.25 in</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">Letter</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.125" value="0.25" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="false">mm</button>
+              <button type="button" data-v="in" aria-pressed="true">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter" selected>Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="4" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="measures">
+    <div class="sec-hd">
+      <h2>What a quarter inch square actually measures</h2>
+      <p class="sec-lede">A quarter inch is 6.35&nbsp;mm exactly, so four squares make an inch and sixteen
+        make a square inch. That is why the heavy line on this sheet defaults to every fourth square:
+        each bold block is one inch, and you can count inches off the page without a ruler.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole squares that fit on one sheet, 10&nbsp;mm margins, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">With measuring bars</th><th scope="col">Clean sheet</th><th scope="col">Grid area</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td><b>30 &times; 38</b> &mdash; 1,140</td><td>30 &times; 40 &mdash; 1,200</td><td>7.5 &times; 10 in</td></tr>
+          <tr><th scope="row">A4</th><td><b>29 &times; 40</b> &mdash; 1,160</td><td>29 &times; 43 &mdash; 1,247</td><td>7.25 &times; 10 in</td></tr>
+          <tr><th scope="row">Legal</th><td><b>30 &times; 50</b> &mdash; 1,500</td><td>30 &times; 52 &mdash; 1,560</td><td>7.5 &times; 12.5 in</td></tr>
+          <tr><th scope="row">A5</th><td><b>20 &times; 27</b> &mdash; 540</td><td>20 &times; 29 &mdash; 580</td><td>5 &times; 6.75 in</td></tr>
+          <tr><th scope="row">Tabloid</th><td><b>40 &times; 62</b> &mdash; 2,480</td><td>40 &times; 64 &mdash; 2,560</td><td>10 &times; 15.5 in</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:20px"><b>Why not 34 columns on Letter?</b>
+      An 8.5&nbsp;in sheet holds 34 quarter inches, but no printer can put ink on the outer few millimetres,
+      so the grid is inset and then centred. The leftover fraction is split evenly between the two edges
+      rather than dumped on one side, which is why the sheet reads as deliberate instead of cropped.</p>
+  </section>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>Where a quarter inch is the size people expect</h2>
+      <p class="sec-lede">Most of these carry an unspoken assumption that one square equals one unit.
+        Print at the wrong scale and the unit quietly stops being a unit.</p>
+    </div>
+
+    <div class="uses">
+      <div><h3>US classroom</h3><p>Quad ruled notebooks and loose leaf sold for American schools are almost
+        always four squares to the inch. If a worksheet says "use graph paper" without saying which, this is it.</p></div>
+      <div><h3>Coordinate graphing</h3><p>Large enough to write a number inside a square, small enough that a
+        first-quadrant plot with a sensible range still fits on one page. The inch-wide heavy blocks make a
+        natural axis interval.</p></div>
+      <div><h3>Architectural scale</h3><p>The standard US floor plan scale is a quarter inch to the foot, which
+        makes one square exactly one foot. A 12&nbsp;&times;&nbsp;15&nbsp;ft room is 12 &times; 15 squares, counted
+        off with no arithmetic at all.</p></div>
+      <div><h3>Sketching and thumbnails</h3><p>Four to the inch is coarse enough to draw over without the grid
+        fighting the drawing, which is why it is the usual ruling for perspective grids and layout thumbnails.</p></div>
+      <div><h3>Quilting and sewing</h3><p>The quarter inch seam allowance is the standard in patchwork, so a
+        quarter inch grid lets you draft a block and read the allowance straight off the paper.</p></div>
+      <div><h3>Knitting and crochet charts</h3><p>Big enough for a symbol to stay legible in pencil. For a finer
+        chart, or for cross stitch, an eighth inch grid is usually the better fit.</p></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-hd">
+      <h2>Sizes a quarter inch gets confused with</h2>
+      <p class="sec-lede">Two of these are close enough to look right on screen and be wrong on paper.
+        The difference compounds: across the 30 columns of a Letter sheet, a 5&nbsp;mm grid ends up
+        40&nbsp;mm narrower than a quarter inch grid.</p>
+    </div>
+
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Against 1/4 in</th><th scope="col">Where you meet it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">5 mm</th><td>5.00</td><td><b>21% narrower</b></td><td>European and Asian exercise books</td></tr>
+          <tr><th scope="row">1/5 inch</th><td>5.08</td><td>20% narrower</td><td>Occasional US ruling, close enough to 5 mm to pass</td></tr>
+          <tr><th scope="row">6 mm</th><td>6.00</td><td>5.5% narrower</td><td>Imported pads, near enough to look identical</td></tr>
+          <tr><th scope="row">1/8 inch</th><td>3.175</td><td>exactly half</td><td>Cross stitch, pixel art, bead patterns</td></tr>
+          <tr><th scope="row">1/10 inch</th><td>2.54</td><td>exactly two fifths</td><td>Engineering computation pads</td></tr>
+          <tr><th scope="row">1/2 inch</th><td>12.70</td><td>exactly double</td><td>Younger students, large clear working</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="printing">
+    <div class="sec-hd">
+      <h2>Before you print</h2>
+    </div>
+    <p class="pointer">Print dialogs shrink pages by roughly four to six percent by default, which turns a
+      quarter inch square into about 6.0&nbsp;mm and quietly breaks any drawing where one square meant one foot
+      or one stitch. Set the scale to 100% or Actual Size, then lay a ruler on the bars at the bottom of the
+      sheet: the upper bar must read 100&nbsp;mm and the lower one 4&nbsp;in.
+      <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about quarter inch grids</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Is 1/4 inch graph paper the same as quad ruled?</summary>
+        <p>Usually yes. Quad ruled is the US stationery term for a square grid, and the common ruling is four
+          squares to the inch, which is a quarter inch square. It is worth checking the packet though, because
+          a few products sold as quad ruled are five squares to the inch instead, and five to the inch is a fifth
+          of an inch rather than a quarter.</p>
+      </details>
+      <details>
+        <summary>Is a quarter inch the same as 5 mm?</summary>
+        <p>No, and this is the mistake that ruins the most printouts. A quarter inch is 6.35&nbsp;mm, so a
+          quarter inch square has about 61 percent more area than a 5&nbsp;mm one. They look similar in a
+          preview and diverge fast on paper: 30 squares of one is 190.5&nbsp;mm, 30 squares of the other
+          is 150&nbsp;mm.</p>
+      </details>
+      <details>
+        <summary>How many quarter inch squares fit on a page?</summary>
+        <p>On Letter with the measuring bars switched on, 30 across by 38 down. Turn the bars off and the grid
+          grows to 30 by 40. On A4 it is 29 by 40 with the bars, 29 by 43 without. The counts differ because A4
+          is narrower and taller than Letter, not because anything was scaled.</p>
+      </details>
+      <details>
+        <summary>Where should the heavy lines go?</summary>
+        <p>Every fourth square, which is the default here. That makes each bold block exactly one inch, so you can
+          read inches off the sheet directly and use the bold lines as axis intervals when graphing. Set the field
+          to 0 if you want a plain grid with no emphasis at all.</p>
+      </details>
+      <details>
+        <summary>Can I use this for a floor plan at 1/4 inch to the foot?</summary>
+        <p>Yes, and that is the neatest use of this size. At quarter inch scale one square is one foot, so a room
+          is measured in squares with no conversion. A Letter sheet at 30 by 38 squares covers 30 by 38 feet,
+          which is most of a small house on a single page. Print at 100% or the scale is no longer a scale.</p>
+      </details>
+      <details>
+        <summary>Can I get the same grid on A4?</summary>
+        <p>Yes, change the paper selector above and the sheet rebuilds. Quarter inch on A4 is slightly unusual
+          outside North America, but it is the right choice if you are working to an imperial scale on paper
+          bought outside the US. Just make sure the paper you choose is the paper actually loaded in the printer.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/#sizes"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/#sizes"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/#sizes"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/#sizes"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+      <a href="/#sizes"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/#sizes"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>&copy; 2026</span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Graph paper","item":"https://printgridpaper.com/"},
+        {"@type":"ListItem","position":2,"name":"1/4 inch graph paper","item":"https://printgridpaper.com/quarter-inch-graph-paper/"}
+      ]
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Is 1/4 inch graph paper the same as quad ruled?","acceptedAnswer":{"@type":"Answer","text":"Usually yes. Quad ruled is the US term for a square grid and the common ruling is four squares to the inch, which is a quarter inch square. A few products sold as quad ruled are five squares to the inch, which is a fifth of an inch rather than a quarter."}},
+        {"@type":"Question","name":"Is a quarter inch the same as 5 mm?","acceptedAnswer":{"@type":"Answer","text":"No. A quarter inch is 6.35 mm, so a quarter inch square has about 61 percent more area than a 5 mm square. Thirty squares of one measures 190.5 mm and thirty of the other measures 150 mm."}},
+        {"@type":"Question","name":"How many quarter inch squares fit on a page?","acceptedAnswer":{"@type":"Answer","text":"On Letter with the measuring bars on, 30 across by 38 down, or 30 by 40 without the bars. On A4 it is 29 by 40 with the bars and 29 by 43 without."}},
+        {"@type":"Question","name":"Where should the heavy lines go on quarter inch graph paper?","acceptedAnswer":{"@type":"Answer","text":"Every fourth square, so each bold block is exactly one inch. That lets you read inches straight off the sheet and use the bold lines as axis intervals when graphing."}},
+        {"@type":"Question","name":"Can I use quarter inch graph paper for a floor plan at 1/4 inch to the foot?","acceptedAnswer":{"@type":"Answer","text":"Yes. At quarter inch scale one square is one foot, so rooms are measured in squares with no conversion. A Letter sheet at 30 by 38 squares covers 30 by 38 feet, provided the page is printed at 100 percent."}}
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'letter', spacing:0.25, unit:'in', majorEvery:4};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

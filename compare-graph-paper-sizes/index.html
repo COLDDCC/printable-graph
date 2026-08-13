@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Graph Paper Size Comparison — See 5mm vs 1/4 inch Side by Side</title>
+<meta name="description" content="Compare graph paper square sizes side by side before you print. Pick any sizes, preview them together, and check squares per sheet, typical uses and the best pen or pencil for each.">
+<link rel="canonical" href="https://printgridpaper.com/compare-graph-paper-sizes/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Graph Paper Size Comparison Tool">
+<meta property="og:description" content="See graph paper sizes side by side, compare squares per sheet and pick the right grid first time.">
+<meta property="og:url" content="https://printgridpaper.com/compare-graph-paper-sizes/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.cmp{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.cmp select{flex:1 1 150px;min-width:140px;font:400 14px var(--mono);padding:8px}
+.cmp-hint{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:0 0 8px}
+.previews{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.prev{background:var(--paper);padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px}
+.prev .p-name{font:500 14px/1.2 var(--mono)}
+.prev .p-prev{background:#fff;border:1px solid var(--line);padding:8px}
+.prev .p-prev svg{display:block;width:100%;height:auto}
+.prev .p-meta{font:400 11px var(--mono);color:var(--ink-2);letter-spacing:.03em}
+.prev .p-dl{width:100%;padding:9px;background:var(--ink);color:#fff;border:0;cursor:pointer;font:700 11px/1 var(--display);letter-spacing:.08em;text-transform:uppercase}
+.prev .p-dl:hover{background:var(--rule)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#compare">Compare</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>size comparison</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Pick the right grid first time</p>
+    <h1>Graph paper size comparison</h1>
+    <p class="lede">5&nbsp;mm and 1/4&nbsp;inch look almost identical in a thumbnail and are 21&nbsp;% apart on paper. Put the sizes you are torn between side by side, see the actual squares, and check how many fit on a sheet before you download.</p>
+  </div>
+
+  <section id="compare">
+    <div class="sec-hd">
+      <h2>Compare up to four sizes</h2>
+      <p class="sec-lede">Every preview is the real sheet geometry at the same zoom &mdash; so the size difference you see is the size difference you get.</p>
+    </div>
+
+    <p class="cmp-hint">Pick the sizes to compare</p>
+    <div class="cmp" id="pickers"></div>
+
+    <div class="previews" id="previews"></div>
+
+    <div class="tscroll" style="margin-top:26px">
+      <table class="facts" id="specs">
+        <caption>Whole squares per sheet, measuring bars on, portrait</caption>
+        <thead>
+          <tr><th scope="col">Size</th><th scope="col">In mm</th><th scope="col">Squares on A4</th><th scope="col">Squares on Letter</th><th scope="col">Typical use</th><th scope="col">Best tool</th></tr>
+        </thead>
+        <tbody id="specBody"></tbody>
+      </table>
+    </div>
+
+    <p class="pointer" style="margin-top:18px"><b>Still torn?</b> Print one sheet of each at Actual Size and hold them together. The bars at the bottom confirm both are true to size, then you can compare for real.</p>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Jump straight to a size</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>
+  </footer>
+</main>
+
+<script src="/assets/grid-engine.js"></script>
+<script>
+(function () {
+  var SIZES = [
+    { label: '2 mm',     spacing: 2,     unit: 'mm', major: 5,  mm: '2.00',  use: 'Precision plotting, fine drafting', tool: 'Technical pen 0.1–0.3' },
+    { label: '5 mm',     spacing: 5,     unit: 'mm', major: 5,  mm: '5.00',  use: 'School notes, sketching, journaling', tool: 'Ballpoint or fountain pen' },
+    { label: '1 cm',     spacing: 10,    unit: 'mm', major: 10, mm: '10.00', use: 'Coordinate geometry, planning',      tool: 'Pencil or any pen' },
+    { label: '1/8 inch', spacing: 0.125, unit: 'in', major: 8,  mm: '3.18',  use: 'Cross stitch, pixel art, beads',     tool: 'Fineliner 0.4' },
+    { label: '1/4 inch', spacing: 0.25,  unit: 'in', major: 4,  mm: '6.35',  use: 'Quad-ruled classwork, floor plans',  tool: 'Pencil or any pen' },
+    { label: '1/2 inch', spacing: 0.5,   unit: 'in', major: 2,  mm: '12.70', use: 'Young learners, big writing',       tool: 'Crayon / thick marker' },
+    { label: '10/in',    spacing: 0.1,   unit: 'in', major: 10, mm: '2.54',  use: 'Engineering computation',           tool: 'Technical pen 0.3' },
+    { label: '1 inch',   spacing: 1,     unit: 'in', major: 0,  mm: '25.40', use: 'Floor plans, scale models',         tool: 'Any, rooms fit in squares' }
+  ];
+
+  function clamp(i) { return Math.min(Math.max(0, i | 0), SIZES.length - 1); }
+
+  var picks = [1, 4, 2, 5];   // indices into SIZES: 5mm, 1/4in, 1cm, 1/2in
+
+  function selEl(idx) {
+    var s = document.createElement('select');
+    s.setAttribute('aria-label', 'Compare size ' + (idx + 1));
+    SIZES.forEach(function (z, i) {
+      var o = document.createElement('option');
+      o.value = i; o.textContent = z.label;
+      if (i === picks[idx]) o.selected = true;
+      s.appendChild(o);
+    });
+    s.addEventListener('change', function () { picks[idx] = parseInt(s.value, 10); render(); });
+    return s;
+  }
+
+  function render() {
+    var picksEl = document.getElementById('pickers');
+    picksEl.innerHTML = '';
+    picks.forEach(function (_, i) { picksEl.appendChild(selEl(i)); });
+
+    var prev = document.getElementById('previews');
+    prev.innerHTML = '';
+    var specBody = document.getElementById('specBody');
+    specBody.innerHTML = '';
+
+    picks.forEach(function (pi, idx) {
+      var z = SIZES[clamp(pi)];
+      var o = { paper: 'a4', spacing: z.spacing, unit: z.unit, majorEvery: z.major, calibration: false };
+      var gA = GridEngine.computeGrid({ paper: 'a4', spacing: z.spacing, unit: z.unit, majorEvery: z.major, calibration: true });
+      var gL = GridEngine.computeGrid({ paper: 'letter', spacing: z.spacing, unit: z.unit, majorEvery: z.major, calibration: true });
+
+      var box = document.createElement('div');
+      box.className = 'prev';
+      var name = document.createElement('span');
+      name.className = 'p-name'; name.textContent = z.label;
+      var sh = document.createElement('div');
+      sh.className = 'p-prev';
+      sh.innerHTML = GridEngine.renderSVG(o);
+      var meta = document.createElement('span');
+      meta.className = 'p-meta';
+      meta.textContent = z.mm + ' mm squares \u00B7 ' + (gA.cols * gA.rows) + ' on A4 \u00B7 ' + (gL.cols * gL.rows) + ' on Letter';
+      var dl = document.createElement('button');
+      dl.type = 'button'; dl.className = 'p-dl';
+      dl.textContent = 'Download ' + z.label;
+      dl.addEventListener('click', function () {
+        GridEngine.download({ paper: 'a4', spacing: z.spacing, unit: z.unit, majorEvery: z.major, calibration: true, color: '#4A7FB5' });
+      });
+      box.appendChild(name); box.appendChild(sh); box.appendChild(meta); box.appendChild(dl);
+      prev.appendChild(box);
+
+      var tr = document.createElement('tr');
+      var cells = [
+        '<th scope="row">' + z.label + '</th>',
+        '<td>' + z.mm + '</td>',
+        '<td><b>' + (gA.cols * gA.rows) + '</b></td>',
+        '<td><b>' + (gL.cols * gL.rows) + '</b></td>',
+        '<td>' + z.use + '</td>',
+        '<td>' + z.tool + '</td>'
+      ].join('');
+      tr.innerHTML = cells;
+      specBody.appendChild(tr);
+    });
+  }
+
+  render();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Graph paper","item":"https://printgridpaper.com/"},
+    {"@type":"ListItem","position":2,"name":"Graph paper size comparison","item":"https://printgridpaper.com/compare-graph-paper-sizes/"}
+  ]
+}
+</script>
+
+</body>
+</html>

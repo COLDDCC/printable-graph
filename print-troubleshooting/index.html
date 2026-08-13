@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Print Troubleshooting — My Graph Paper PDF Won't Print True to Size</title>
+<meta name="description" content="Your printable graph paper is the wrong size, skewed or the colour is missing? Here is the step-by-step fix for every symptom, in Chrome, Edge, Safari, Firefox and Acrobat.">
+<link rel="canonical" href="https://printgridpaper.com/print-troubleshooting/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Print Troubleshooting — Fix your graph paper PDF">
+<meta property="og:description" content="Step-by-step fixes when your printable grid comes out too small, skewed or colourless.">
+<meta property="og:url" content="https://printgridpaper.com/print-troubleshooting/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.trouble{border:1px solid var(--line);background:var(--paper);margin-top:14px}
+.trouble>summary{list-style:none;cursor:pointer;font:500 16px/1.4 var(--body);padding:15px 18px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.trouble>summary::-webkit-details-marker{display:none}
+.trouble>summary::after{content:'+';font:400 20px/1 var(--mono);color:var(--rule)}
+.trouble[open]>summary::after{content:'\2212'}
+.trouble[open]>div{padding:0 18px 16px}
+.trouble h3{font:500 13px/1 var(--mono);letter-spacing:.06em;color:var(--ink);margin:14px 0 6px}
+.trouble p,.trouble li{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.trouble ul{margin:4px 0 10px;padding-left:18px}
+.trouble code{font:400 12.5px var(--mono);background:var(--field);padding:1px 5px;color:var(--ink);white-space:nowrap}
+.symp{font:400 12px var(--mono);color:var(--ink-2);margin:0 0 2px;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>print troubleshooting</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Print help &middot; everything goes wrong here</p>
+    <h1>Your graph paper PDF is wrong &mdash; fix it in one setting</h1>
+    <p class="lede">Almost every "the squares aren't the right size" report is the same root cause: the print dialog shrank the page to fit the printer's margin. It scales everything down by roughly 4&ndash;6&nbsp;%, silently, by default. Pick your symptom below &mdash; each fix is two clicks.</p>
+  </div>
+
+  <div class="flag"><b>Verify first:</b> every sheet on this site has two bars in the bottom margin. Lay a ruler on them &mdash; the upper bar must read <b>100&nbsp;mm</b>, the lower one <b>4&nbsp;inches</b>. If both are short by the same fraction, the page was scaled. That one check tells you which symptom you have.</div>
+
+  <section id="troubles">
+    <div class="sec-hd">
+      <h2>Symptom by symptom</h2>
+    </div>
+
+    <details class="trouble" open>
+      <summary>The squares come out smaller than they should be</summary>
+      <div>
+        <p class="symp">Cause: the print dialog scaled the page to fit the hardware margin</p>
+        <h3>Chrome / Edge</h3>
+        <p>In the print dialog open <code>More settings</code>, find <code>Scale</code>, switch it from <code>Default</code> to <code>Custom</code> and type <code>100</code>. Then check <code>Paper size</code> matches the paper in your tray.</p>
+        <h3>Safari / macOS Preview</h3>
+        <p>In the print dialog set <code>Scale</code> to <code>100%</code> and make sure <code>Scale to Fit</code> is <b>unchecked</b>.</p>
+        <h3>Firefox</h3>
+        <p>Open <code>More settings</code> and set <code>Scale</code> to <code>100</code> instead of <code>Fit to page width</code>.</p>
+        <h3>Adobe Acrobat / Acrobat Reader</h3>
+        <p>Under <code>Page Sizing &amp; Handling</code> choose <code>Actual size</code>. Do <b>not</b> leave it on <code>Fit</code> or <code>Shrink oversized pages</code>.</p>
+        <h3>Every app &mdash; the same trap</h3>
+        <p>If the dialog offers <code>Fit</code>, <code>Shrink</code> or <code>Scale to Fit</code>, that is the thing breaking your sheet. It is on by default because printers cannot print to the physical edge, so the software shrinks the whole page inside the margins. Set it to <code>Actual size</code> / <code>100%</code> and your grid will be exact.</p>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>The grid is cut off at the edge or not centred</summary>
+      <div>
+        <p class="symp">Cause: paper size or margins mismatch</p>
+        <ul>
+          <li>Confirm the <code>Paper size</code> in the dialog is the size <b>actually loaded</b> in the printer. Printing a Letter PDF onto A4 forces a resize no setting can prevent, because the sheets are different shapes.</li>
+          <li>Turn off <code>Borderless</code> or <code>Full-bleed</code> printing if your printer offers it &mdash; it changes the effective printable area.</li>
+          <li>If the sheet has no visible margins at all, your driver may be expanding the page; set margins back to the driver default.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>The page prints fine but the black or cream background is missing</summary>
+      <div>
+        <p class="symp">Cause: the printer is in greyscale or economy mode</p>
+        <ul>
+          <li>In the print dialog choose <code>Color</code> instead of <code>Black &amp; white</code> or <code>Grayscale</code>.</li>
+          <li>Turn off <code>Fast</code>, <code>Draft</code> or <code>Eco</code> modes &mdash; they often drop backgrounds.</li>
+          <li>Some inkjets skip large dark fills in <code>Fast</code> mode; switch to <code>Best</code> for a black sheet.</li>
+          <li>A full black page uses a lot of ink. If you only need the tint, print the <a href="/5mm-graph-paper-cream/">cream version</a> instead &mdash; far cheaper and easier to check.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>The PDF won't download, or opens damaged</summary>
+      <div>
+        <p class="symp">Cause: browser cache, extension or a stalled download</p>
+        <ul>
+          <li>Hard-refresh the page (<code>Ctrl</code>+<code>F5</code> / <code>Cmd</code>+<code>Shift</code>+<code>R</code>) and download again.</li>
+          <li>Try the download in a private/incognito window &mdash; a bad cache entry is the usual culprit.</li>
+          <li>Disable PDF browser extensions temporarily and retry.</li>
+          <li>Check the file opens in a real PDF viewer (Acrobat, Preview, Edge PDF) rather than a webmail preview.</li>
+          <li>Still failing? Email <a href="mailto:hello@printgridpaper.com">hello@printgridpaper.com</a> and we&rsquo;ll look.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>I need ten identical sheets</summary>
+      <div>
+        <p class="symp">Cause: nothing is broken &mdash; this is a convenience tip</p>
+        <ul>
+          <li>Set <b>Copies per PDF</b> on the generator to <code>10</code>. One PDF, ten identical pages, print the whole file once.</li>
+          <li>Or print the same PDF <code>10</code> times from your viewer &mdash; works, but slower.</li>
+          <li>For hundreds of sheets, generate the PDF once and let your printer driver handle the run count.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions people ask when it still looks wrong</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>My bars read 96 mm, not 100 mm. What does that mean?</summary>
+        <p>Your page was printed at 96% scale &mdash; the metric bar read 96 instead of 100. Every square is 4% small, and on a 5&nbsp;mm grid that turns each square into 4.8&nbsp;mm. Fix the scale setting above and reprint; do not try to "compensate" with a bigger grid, because your drawing will still be off by a consistent factor.</p>
+      </details>
+      <details>
+        <summary>One bar is right but the other is wrong</summary>
+        <p>That means the two bars are measuring differently, which is nearly impossible from a scale error &mdash; scaling shrinks both by the same ratio. Double-check the ruler unit: the upper bar is millimetres, the lower one inches. If one reads exactly 100&nbsp;mm and the other exactly 4&nbsp;in, your printer is spot on.</p>
+      </details>
+      <details>
+        <summary>Does mobile printing work?</summary>
+        <p>Usually badly. Phone print flows scale pages without asking and give you no control. For anything you intend to measure with a ruler, print from a computer. If you only need a rough grid for notes, phone printing is fine.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>If the sheet is fine and you just need paper</h2>
+    </div>
+    <div class="related">
+      <a href="/#setup"><strong>Print settings</strong><span>The setting-by-setting guide</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; <a href="/#sizes">All sizes</a></span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Graph paper","item":"https://printgridpaper.com/"},
+        {"@type":"ListItem","position":2,"name":"Print troubleshooting","item":"https://printgridpaper.com/print-troubleshooting/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"My bars read 96 mm, not 100 mm. What does that mean?","acceptedAnswer":{"@type":"Answer","text":"Your page was printed at 96% scale, so every square is 4% small. Fix the print scale to 100% / Actual Size and reprint."}},
+        {"@type":"Question","name":"One bar is right but the other is wrong","acceptedAnswer":{"@type":"Answer","text":"Scaling shrinks both bars by the same ratio. Check the ruler unit: the upper bar is millimetres, the lower one inches."}},
+        {"@type":"Question","name":"Does mobile printing work?","acceptedAnswer":{"@type":"Answer","text":"Phone print flows usually scale without asking. Print from a computer for anything you intend to measure."}}
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

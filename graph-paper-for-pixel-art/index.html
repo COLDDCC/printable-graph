@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Graph Paper for Pixel Art — Free Printable Pixel Grid</title>
+<meta name="description" content="Free printable pixel-art graph paper. One square = one pixel. Use 1/8 inch for 8-bit sprites and 1/4 inch for chunky 16-bit work, then fill with your pixel palette.">
+<link rel="canonical" href="https://printgridpaper.com/graph-paper-for-pixel-art/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Graph Paper for Pixel Art — Free Printable Pixel Grid">
+<meta property="og:description" content="Free printable pixel-art graph paper. One square = one pixel. Use 1/8 inch for 8-bit sprites and 1/4 inch for chunky 16-bit work, then fill with your pixel palette.">
+<meta property="og:url" content="https://printgridpaper.com/graph-paper-for-pixel-art/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>Graph Paper for Pixel Art — Free Printable Pixel Grid</p>
+
+  <div class="hero size">
+    <p class="eyebrow">One square = one pixel</p>
+    <h1>Graph paper for pixel art</h1>
+    <p class="lede">Pixel art needs a grid where every square is exactly one pixel. On 1/8 inch paper, 100 squares are 12.5 inches, so most sprites and icons fit a single sheet &mdash; and the heavy line every 8 squares gives you natural 8&times;8 tiles.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="preset-chips" id="presetChips" hidden></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">1/8 inch</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">Letter</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.125" value="0.125" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="false">mm</button>
+              <button type="button" data-v="in" aria-pressed="true">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="8" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <div class="row">
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+        </div>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="pick">
+    <div class="sec-hd">
+      <h2>Which size to choose</h2>
+    </div>
+    <div class="uses">
+      <div><h3>1/8 inch &mdash; sprites &amp; icons</h3><p>64&times;64 or smaller sprites map cleanly. 1/8 in is 3.2 mm, fine enough for a sheet of pixels, coarse enough to see.</p></div>
+      <div><h3>1/4 inch &mdash; chunky 16-bit</h3><p>Bigger pixels for 16-bit characters and tiles, easier on the eyes when you fill with pencil or marker. <a href="/quarter-inch-graph-paper/">Open 1/4 inch</a>.</p></div>
+      <div><h3>1 cm &mdash; room-scale scenes</h3><p>Whole scenes and level maps with one square per metre of in-game space. <a href="/1cm-graph-paper/">Open 1 cm</a>.</p></div>
+    </div>
+  </section>
+
+  <section id="howto">
+    <div class="sec-hd"><h2>How to use it</h2></div>
+    <div class="faq">
+      <details open><summary>Plan the sprite before drawing</summary><p>Sketch your palette in a corner first. Then outline the character on the grid, treating each square as one pixel. The heavy lines every 8 squares keep your tile sizes honest.</p></details>
+      <details><summary>Fill in light order</summary><p>Do outlines first, then flat fills, then dithering or shading last. Erasing is easier on paper than in software, so pencil in, then ink what survives.</p></details>
+      <details><summary>Scan or photograph to digitise</summary><p>Photograph straight-on in even light, or scan at 300 dpi. The measuring bar proves the grid is true to size if you later trace over the scan.</p></details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd"><h2>Ready-made sheets</h2></div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Graph paper","item":"https://printgridpaper.com/"},
+    {"@type":"ListItem","position":2,"name":"Graph Paper for Pixel Art — Free Printable Pixel Grid","item":"https://printgridpaper.com/graph-paper-for-pixel-art/"}
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'letter', spacing:0.125, unit:'in', majorEvery:8};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

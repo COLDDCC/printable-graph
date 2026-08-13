@@ -39,7 +39,10 @@
     minorWeight: 0.12,      // mm
     majorWeight: 0.30,      // mm
     color: '#4A7FB5',
-    calibration: true       // print the measuring strip in the bottom margin
+    calibration: true,      // print the measuring strip in the bottom margin
+    bg: null,               // page background hex; null = plain white paper
+    calibInk: '#14181C',    // calibration strip + label ink (light on dark bg)
+    pages: 1                // number of identical pages in the PDF
   };
 
   function opts(o) {
@@ -156,7 +159,7 @@
     s.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' +
            g.page.w.toFixed(3) + ' ' + g.page.h.toFixed(3) +
            '" width="100%" height="100%" role="img" aria-label="Grid preview">');
-    s.push('<rect width="100%" height="100%" fill="#fff"/>');
+    s.push('<rect width="100%" height="100%" fill="' + (g.opts.bg || '#fff') + '"/>');
     s.push('<g stroke="' + g.opts.color + '" stroke-linecap="square" shape-rendering="crispEdges">');
     for (i = 0; i < g.lines.length; i++) {
       L = g.lines[i];
@@ -166,7 +169,7 @@
     }
     s.push('</g>');
     if (c.ticks.length) {
-      s.push('<g stroke="#14181C" stroke-linecap="butt">');
+      s.push('<g stroke="' + g.opts.calibInk + '" stroke-linecap="butt">');
       for (i = 0; i < c.ticks.length; i++) {
         L = c.ticks[i];
         s.push('<line x1="' + L.x1.toFixed(3) + '" y1="' + L.y1.toFixed(3) +
@@ -177,7 +180,7 @@
       for (i = 0; i < c.labels.length; i++) {
         L = c.labels[i];
         s.push('<text x="' + L.x.toFixed(3) + '" y="' + L.y.toFixed(3) +
-               '" font-size="' + L.size + '" font-family="Helvetica, sans-serif" fill="#14181C">' +
+               '" font-size="' + L.size + '" font-family="Helvetica, sans-serif" fill="' + g.opts.calibInk + '">' +
                L.text + '</text>');
       }
     }
@@ -201,11 +204,21 @@
 
   function contentStream(g) {
     var c = calibrationMarks(g), out = [], i, L, rgb = hex2rgb(g.opts.color);
+    var bg = g.opts.bg, bgrgb;
     var H = g.page.h;
     var flip = function (y) { return mm2pt(H - y); };
     var lastW = null;
 
     out.push('1 J 1 j');                                   // square caps/joins
+
+    if (bg) {
+      // Paint the page background before any line work. Flattened in RGB, so
+      // the sheet reads as a solid tint even on printers without colour mgmt.
+      bgrgb = hex2rgb(bg);
+      out.push(n(bgrgb[0]) + ' ' + n(bgrgb[1]) + ' ' + n(bgrgb[2]) + ' rg');
+      out.push('0 0 ' + n(mm2pt(g.page.w)) + ' ' + n(mm2pt(g.page.h)) + ' re f');
+    }
+
     out.push(n(rgb[0]) + ' ' + n(rgb[1]) + ' ' + n(rgb[2]) + ' RG');
 
     // minor lines first, then major, so heavy lines sit on top
@@ -218,7 +231,8 @@
     }
 
     if (c.ticks.length) {
-      out.push('0.078 0.094 0.110 RG');                    // #14181C
+      var ckrgb = hex2rgb(g.opts.calibInk);
+      out.push(n(ckrgb[0]) + ' ' + n(ckrgb[1]) + ' ' + n(ckrgb[2]) + ' RG');
       lastW = null;
       for (i = 0; i < c.ticks.length; i++) {
         L = c.ticks[i];
@@ -226,7 +240,7 @@
         out.push(n(mm2pt(L.x1)) + ' ' + n(flip(L.y1)) + ' m ' +
                  n(mm2pt(L.x2)) + ' ' + n(flip(L.y2)) + ' l S');
       }
-      out.push('0.078 0.094 0.110 rg');
+      out.push(n(ckrgb[0]) + ' ' + n(ckrgb[1]) + ' ' + n(ckrgb[2]) + ' rg');
       for (i = 0; i < c.labels.length; i++) {
         L = c.labels[i];
         out.push('BT /F1 ' + n(L.size * PT_PER_IN / MM_PER_IN) + ' Tf ' +
@@ -243,21 +257,33 @@
   function bytelen(s) { return s.length; }
 
   function buildPDF(o) {
+    o = opts(o);
     var g = computeGrid(o);
     var stream = contentStream(g);
     var W = n(mm2pt(g.page.w)), H = n(mm2pt(g.page.h));
-    var title = 'Printable grid — ' + g.page.label + ' ' + g.opts.orientation +
-                ' — ' + g.opts.spacing + g.opts.unit;
+    var title = 'Printable grid — ' + g.page.label + ' ' + o.orientation +
+                ' — ' + o.spacing + o.unit;
+    var pages = Math.max(1, Math.floor(o.pages) || 1), i;
+
+    // Every page is identical, so they all share one content stream and one
+    // font object. That keeps the file small no matter how many copies you ask
+    // for. Object layout: 1 Catalog, 2 Pages, 3..(2+n) Pages, stream, font, info.
+    var kids = [];
+    for (i = 0; i < pages; i++) kids.push((3 + i) + ' 0 R');
+    var streamRef = (3 + pages) + ' 0 R';
+    var fontRef = (4 + pages) + ' 0 R';
 
     var objs = [
       '<< /Type /Catalog /Pages 2 0 R >>',
-      '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + W + ' ' + H + '] ' +
-        '/Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>',
-      '<< /Length ' + bytelen(stream) + ' >>\nstream\n' + stream + '\nendstream',
-      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>',
-      '<< /Title (' + esc(title) + ') /Producer (grid-engine) >>'
+      '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages + ' >>'
     ];
+    for (i = 0; i < pages; i++) {
+      objs.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + W + ' ' + H + '] ' +
+        '/Resources << /Font << /F1 ' + fontRef + ' >> >> /Contents ' + streamRef + ' >>');
+    }
+    objs.push('<< /Length ' + bytelen(stream) + ' >>\nstream\n' + stream + '\nendstream');
+    objs.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
+    objs.push('<< /Title (' + esc(title) + ') /Producer (grid-engine) >>');
 
     var head = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';
     var body = '', offsets = [], pos = bytelen(head), i, chunk;
@@ -284,7 +310,11 @@
   function filename(o) {
     o = opts(o);
     var p = typeof o.paper === 'string' ? o.paper : 'custom';
-    return ['grid', o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
+    var f = ['grid', o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
+    if (Math.max(1, Math.floor(o.pages) || 1) > 1) {
+      f = f.replace(/\.pdf$/, '-x' + (Math.floor(o.pages) || 1) + '.pdf');
+    }
+    return f;
   }
 
   function download(o) {

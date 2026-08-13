@@ -40,6 +40,15 @@
 
 <main class="wrap">
 
+  <div class="print-banner" id="printBanner" role="note">
+    <div class="pb-copy">
+      <strong>First time here? Verify your printer in 3 steps</strong>
+      <span class="pb-steps">1&nbsp;&#8680;&nbsp;Download the PDF &nbsp;&middot;&nbsp; 2&nbsp;&#8680;&nbsp;Print one sheet &nbsp;&middot;&nbsp; 3&nbsp;&#8680;&nbsp;Lay a ruler on the two bars at the bottom</span>
+      <span class="pb-note">The upper bar must read <b>100&nbsp;mm</b>, the lower one <b>4&nbsp;in</b>. If both come up short by the same amount, your print dialog is scaling the page &mdash; set it to 100% / Actual Size and print again. <a href="#setup">Full guide &rarr;</a></span>
+    </div>
+    <button type="button" class="pb-done" id="pbDone">I&rsquo;ve verified it</button>
+  </div>
+
   <div class="hero">
     <p class="eyebrow">Free &middot; no signup &middot; no watermark</p>
     <h1>Printable graph paper that prints true to size</h1>
@@ -55,6 +64,7 @@
 
     <div class="block">
       <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="preset-chips" id="presetChips" hidden></div>
       <div class="cells">
         <div class="cell"><label>Square</label><output id="oPitch">5 mm</output></div>
         <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
@@ -119,10 +129,79 @@
         <label class="check"><input type="checkbox" id="calib" checked>
           <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
 
+                <div class="row">
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+        </div>
         <button class="dl" id="dl" type="button">Download PDF</button>
       </div>
     </div>
   </div>
+
+  <section id="presets-card">
+    <div class="sec-hd">
+      <h2>Pick a sheet for the job</h2>
+      <p class="sec-lede">Every size below has its own page with the exact measurements, what it is normally used for, and a sheet pre-set to that size.</p>
+    </div>
+    <div class="pcards">
+      <a class="pcard" href="/quarter-inch-graph-paper/">
+        <span class="pcard-ic">&#128218;</span>
+        <strong>Student homework</strong>
+        <em>1/4 inch</em>
+        <p>Quad ruled &mdash; what US classrooms default to.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/1-inch-graph-paper/">
+        <span class="pcard-ic">&#127961;&#65039;</span>
+        <strong>Floor plans &amp; architecture</strong>
+        <em>1 inch</em>
+        <p>1:100 or 1:200 layouts, one square = one foot.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/5mm-graph-paper/">
+        <span class="pcard-ic">&#9999;&#65039;</span>
+        <strong>Sketching &amp; drawing</strong>
+        <em>5 mm</em>
+        <p>The European standard, medium density, pen-friendly.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/10-squares-per-inch-graph-paper/">
+        <span class="pcard-ic">&#128209;</span>
+        <strong>Engineering computation</strong>
+        <em>10 per inch</em>
+        <p>Fine grid for precise calculation work.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/eighth-inch-graph-paper/">
+        <span class="pcard-ic">&#129525;</span>
+        <strong>Cross stitch &amp; pixel art</strong>
+        <em>1/8 inch</em>
+        <p>Bead, pixel and knit chart pattern sheets.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/1cm-graph-paper/">
+        <span class="pcard-ic">&#127891;</span>
+        <strong>Coordinate geometry</strong>
+        <em>1 cm</em>
+        <p>Large, clear squares for plotting graphs.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/half-inch-graph-paper/">
+        <span class="pcard-ic">&#128118;</span>
+        <strong>Young learners</strong>
+        <em>1/2 inch</em>
+        <p>Big squares for handwriting and chunky drawings.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+      <a class="pcard" href="/2mm-graph-paper/">
+        <span class="pcard-ic">&#128300;</span>
+        <strong>Fine detail work</strong>
+        <em>2 mm</em>
+        <p>Dense grid for detailed charts and drafting.</p>
+        <span class="pcard-go">See this size &rarr;</span>
+      </a>
+    </div>
+  </section>
 
   <section id="setup">
     <div class="sec-hd">
@@ -213,8 +292,9 @@
 
   <footer>
     <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
     <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
-      &nbsp;&middot;&nbsp; &copy; 2026</span>
+      &nbsp;&middot;&nbsp; <a href="#" id="fbLink">Found a bug? Report it</a></span>
   </footer>
 </main>
 
@@ -247,5 +327,24 @@
 <script src="/assets/grid-engine.js"></script>
 <script>window.PAGE_PRESET = {paper:'a4', spacing:5, unit:'mm', majorEvery:5};</script>
 <script src="/assets/ui.js"></script>
+<script>
+(function () {
+  try {
+    var b = document.getElementById('printBanner');
+    if (b && localStorage.getItem('graphpaper_verified') === '1') b.remove();
+    var d = document.getElementById('pbDone');
+    if (d) d.addEventListener('click', function () {
+      try { localStorage.setItem('graphpaper_verified', '1'); } catch (e) {}
+      b.remove();
+    });
+  } catch (e) {}
+  var fb = document.getElementById('fbLink');
+  if (fb) fb.addEventListener('click', function (e) {
+    e.preventDefault();
+    var msg = prompt('What went wrong? Tell us in one or two lines so we can fix it:');
+    if (msg) location.href = 'mailto:hello@printgridpaper.com?subject=Feedback%20from%20printgridpaper.com&body=' + encodeURIComponent(msg);
+  });
+})();
+</script>
 </body>
 </html>

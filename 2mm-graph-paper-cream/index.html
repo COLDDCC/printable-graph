@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Cream 2 mm Graph Paper — Free Printable PDF</title>
+<meta name="description" content="Free printable cream graph paper, 2 mm squares, on A4 or Letter. Every sheet carries a measuring bar so you can check the squares really are 2 mm.">
+<link rel="canonical" href="https://printgridpaper.com/2mm-graph-paper-cream/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cream 2 mm Graph Paper — Free Printable PDF">
+<meta property="og:description" content="Free printable cream graph paper, 2 mm squares, on A4 or Letter. Every sheet carries a measuring bar so you can check the squares really are 2 mm.">
+<meta property="og:url" content="https://printgridpaper.com/2mm-graph-paper-cream/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cg stroke='%234A7FB5' stroke-width='1'%3E%3Cpath d='M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16'/%3E%3C/g%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <nav>
+      <a href="/#setup">Print settings</a>
+      <a href="/#sizes">Square sizes</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="/">Graph paper</a><span>/</span>cream 2 mm</p>
+
+  <div class="hero size">
+    <p class="eyebrow">Fine × 5 mm accent &middot; cream background</p>
+    <h1>Cream 2 mm graph paper</h1>
+    <p class="lede">Cream graph paper is the softer, warmer version: an easy-on-the-eyes tint that suits long writing sessions, vintage journals and any project where plain white feels harsh. Precision charts, technical cross-hatching and detailed drafting where a coarse grid would get in the way.</p>
+  </div>
+
+  <div class="tool">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><span id="oBytes">&mdash;</span></div>
+      <div class="preset-chips" id="presetChips" hidden></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">2 mm</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
+      </div>
+
+      <div class="ctrls">
+        <div class="f">
+          <span>Square size</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="2" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4" selected>A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+        </div>
+
+        <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#FFFFFF" style="background:#FFFFFF;border:1px solid #C3CDD2" aria-pressed="false" aria-label="White"></button>
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="false" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+
+        <div class="row">
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+        </div>
+
+        <button class="dl" id="dl" type="button">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="uses">
+    <div class="sec-hd">
+      <h2>What a cream 2 mm grid is for</h2>
+      <p class="sec-lede">Same 2 mm squares as every other version here — the background just changes how the finished sheet reads.</p>
+    </div>
+    <div class="uses">
+      <div><h3>Long writing & note-taking</h3><p>The warm tint reduces glare compared with pure white, so it is kinder over long study sessions.</p></div>
+      <div><h3>Vintage & analog aesthetic</h3><p>Cream paper reads as classic stationery — a natural fit for journaling, lettering and printed planners.</p></div>
+      <div><h3>Works with warm inks</h3><p>Dark brown-ink lines pair with sepia and amber pens far better than cold blue on white.</p></div>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="sec-hd">
+      <h2>Sheet specs</h2>
+    </div>
+    <div class="tscroll">
+      <table class="facts">
+        <caption>Whole 2 mm squares that fit, with the measuring bars on, portrait</caption>
+        <thead>
+          <tr><th scope="col">Paper</th><th scope="col">Grid</th><th scope="col">Squares</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Letter</th><td>97 &times; 120</td><td><b>11640</b></td></tr>
+          <tr><th scope="row">A4</th><td>95 &times; 129</td><td><b>12255</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul style="margin-top:16px">
+        <li>Dark warm grid lines, cream background (#F7F1E3).</li>
+        <li>Gentler contrast (≈75%) than white, tuned for reading not glare.</li>
+        <li>Slightly more ink than a blank white page, less than black.</li>
+      <li>Downloaded PDF is only 10.9 KB — pure vector line work.</li>
+    </ul>
+  </section>
+
+  <section id="colours">
+    <div class="sec-hd">
+      <h2>2 mm in white, black or cream</h2>
+      <p class="sec-lede">The grid geometry never changes between these versions — only the background. Pick the tint to match the job.</p>
+    </div>
+    <div class="tscroll">
+      <table class="facts">
+        <thead>
+          <tr><th scope="col">Background</th><th scope="col">Look</th><th scope="col">Compare</th><th scope="col"></th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">⚪ White</th><td>Standard, bright clean paper.</td><td>— blank base</td><td><a href="https://printgridpaper.com/2mm-graph-paper/">Open white</a></td></tr>
+          <tr><th scope="row">⬜ Black</th><td>White grid on a near-black page.</td><td>~95%</td><td><a href="https://printgridpaper.com/2mm-graph-paper-black/">Open black</a></td></tr>
+          <tr><th scope="row">὾8 Cream</th><td>Warm tint, dark grid.</td><td>~75%</td><td><a href="https://printgridpaper.com/2mm-graph-paper-cream/">Open cream</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions about cream graph paper</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Why is cream easier on the eyes than white?</summary>
+        <p>Plain white reflects the most light. The cream tint (#F7F1E3) cuts that glare a little, which helps over long writing and reading sessions where your eyes are close to the page.</p>
+      </details>
+      <details>
+        <summary>Does the cream background use more ink to print?</summary>
+        <p>A little — the whole page is tinted rather than left blank. It is far cheaper than the black version. Print one sheet to confirm your printer handles the tint before running a stack.</p>
+      </details>
+      <details>
+        <summary>Is the cream version the same grid as the white one?</summary>
+        <p>Identical lines and identical measuring bars; only the paper colour differs. You can switch between white, black and cream versions with no change in measurements.</p>
+      </details>
+      <details>
+        <summary>How do I verify this prints at the true size?</summary>
+        <p>Lay a ruler on the two bars in the bottom margin — the upper must read 100 mm and the lower 4 inches. If both are short by the same amount, the print dialog scaled the page: set it to 100% / Actual Size and print again.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="related">
+    <div class="sec-hd">
+      <h2>Other square sizes</h2>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>
+  </footer>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Graph paper","item":"https://printgridpaper.com/"},
+        {"@type":"ListItem","position":2,"name":"Cream 2 mm Graph Paper — Free Printable PDF","item":"https://printgridpaper.com/2mm-graph-paper-cream/"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+          {"@type":"Question","name":"Why is cream easier on the eyes than white?","acceptedAnswer":{"@type":"Answer","text":"Plain white reflects the most light. The cream tint (#F7F1E3) cuts that glare a little, which helps over long writing and reading sessions where your eyes are close to the page."}},
+          {"@type":"Question","name":"Does the cream background use more ink to print?","acceptedAnswer":{"@type":"Answer","text":"A little — the whole page is tinted rather than left blank. It is far cheaper than the black version. Print one sheet to confirm your printer handles the tint before running a stack."}},
+          {"@type":"Question","name":"Is the cream version the same grid as the white one?","acceptedAnswer":{"@type":"Answer","text":"Identical lines and identical measuring bars; only the paper colour differs. You can switch between white, black and cream versions with no change in measurements."}},
+          {"@type":"Question","name":"How do I verify this prints at the true size?","acceptedAnswer":{"@type":"Answer","text":"Lay a ruler on the two bars in the bottom margin — the upper must read 100 mm and the lower 4 inches. If both are short by the same amount, the print dialog scaled the page: set it to 100% / Actual Size and print again."}}
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {paper:'a4', spacing:2, unit:'mm', majorEvery:5, bg:'#F7F1E3', color:'#6B5B41', calibInk:'#4A4238'};</script>
+<script src="/assets/ui.js"></script>
+</body>
+</html>

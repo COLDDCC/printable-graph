@@ -172,7 +172,9 @@ function page(size, col) {
 '<meta property="og:title" content="' + title + '">\n' +
 '<meta property="og:description" content="' + desc + '">\n' +
 '<meta property="og:url" content="' + url + '">\n' +
-'<meta name="twitter:card" content="summary">\n' +
+'<meta property="og:image" content="https://printgridpaper.com/assets/og-image.png">\n' +
+'<meta name="twitter:card" content="summary_large_image">\n' +
+'<meta name="twitter:image" content="https://printgridpaper.com/assets/og-image.png">\n' +
 '\n' +
 '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23fff\'/%3E%3Cg stroke=\'%234A7FB5\' stroke-width=\'1\'%3E%3Cpath d=\'M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16\'/%3E%3C/g%3E%3C/svg%3E">\n' +
 '\n' +

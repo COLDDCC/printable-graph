@@ -1,0 +1,26 @@
+{
+  "name": "printable-graph",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Maintainer tooling for printgridpaper.com. The site itself is static/zero-build (see DEPLOY.md) — this package.json only backs the scripts under tools/.",
+  "main": "index.js",
+  "scripts": {
+    "gen:previews": "node tools/gen-previews.js",
+    "gen:sitemap": "node tools/gen-sitemap.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COLDDCC/printable-graph.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COLDDCC/printable-graph/issues"
+  },
+  "homepage": "https://github.com/COLDDCC/printable-graph#readme",
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

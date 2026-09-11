@@ -1,0 +1,162 @@
+{
+  "": {
+    "file": "assets/previews/home.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "1-inch-graph-paper": {
+    "file": "assets/previews/1-inch-graph-paper.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "1-inch-graph-paper-black": {
+    "file": "assets/previews/1-inch-graph-paper-black.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "1-inch-graph-paper-cream": {
+    "file": "assets/previews/1-inch-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "10-squares-per-inch-graph-paper": {
+    "file": "assets/previews/10-squares-per-inch-graph-paper.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "10-squares-per-inch-graph-paper-black": {
+    "file": "assets/previews/10-squares-per-inch-graph-paper-black.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "10-squares-per-inch-graph-paper-cream": {
+    "file": "assets/previews/10-squares-per-inch-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "1cm-graph-paper": {
+    "file": "assets/previews/1cm-graph-paper.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "1cm-graph-paper-black": {
+    "file": "assets/previews/1cm-graph-paper-black.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "1cm-graph-paper-cream": {
+    "file": "assets/previews/1cm-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "2mm-graph-paper": {
+    "file": "assets/previews/2mm-graph-paper.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "2mm-graph-paper-black": {
+    "file": "assets/previews/2mm-graph-paper-black.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "2mm-graph-paper-cream": {
+    "file": "assets/previews/2mm-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "5mm-graph-paper": {
+    "file": "assets/previews/5mm-graph-paper.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "5mm-graph-paper-black": {
+    "file": "assets/previews/5mm-graph-paper-black.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "5mm-graph-paper-cream": {
+    "file": "assets/previews/5mm-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "a3-graph-paper": {
+    "file": "assets/previews/a3-graph-paper.png",
+    "width": 1184,
+    "height": 1709
+  },
+  "eighth-inch-graph-paper": {
+    "file": "assets/previews/eighth-inch-graph-paper.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "eighth-inch-graph-paper-black": {
+    "file": "assets/previews/eighth-inch-graph-paper-black.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "eighth-inch-graph-paper-cream": {
+    "file": "assets/previews/eighth-inch-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "graph-paper-for-architecture": {
+    "file": "assets/previews/graph-paper-for-architecture.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "graph-paper-for-dnd-maps": {
+    "file": "assets/previews/graph-paper-for-dnd-maps.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "graph-paper-for-knitting": {
+    "file": "assets/previews/graph-paper-for-knitting.png",
+    "width": 1184,
+    "height": 1710
+  },
+  "graph-paper-for-pixel-art": {
+    "file": "assets/previews/graph-paper-for-pixel-art.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "half-inch-graph-paper": {
+    "file": "assets/previews/half-inch-graph-paper.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "half-inch-graph-paper-black": {
+    "file": "assets/previews/half-inch-graph-paper-black.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "half-inch-graph-paper-cream": {
+    "file": "assets/previews/half-inch-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "legal-size-graph-paper": {
+    "file": "assets/previews/legal-size-graph-paper.png",
+    "width": 1184,
+    "height": 1971
+  },
+  "quarter-inch-graph-paper": {
+    "file": "assets/previews/quarter-inch-graph-paper.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "quarter-inch-graph-paper-black": {
+    "file": "assets/previews/quarter-inch-graph-paper-black.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "quarter-inch-graph-paper-cream": {
+    "file": "assets/previews/quarter-inch-graph-paper-cream.png",
+    "width": 1184,
+    "height": 1575
+  },
+  "tabloid-graph-paper": {
+    "file": "assets/previews/tabloid-graph-paper.png",
+    "width": 1184,
+    "height": 1857
+  }
+}

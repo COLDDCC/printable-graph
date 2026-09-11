@@ -3,3 +3,6 @@
 DEPLOY.md
 wrangler.jsonc
 *.zip
+node_modules
+package.json
+package-lock.json

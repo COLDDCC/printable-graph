@@ -165,7 +165,12 @@
   });
 
   on('#dl', 'click', function () {
-    try { GridEngine.download(state); }
+    try {
+      GridEngine.download(state);
+      if (window.gtag) gtag('event', 'download_pdf', {
+        paper: state.paper, spacing: state.spacing, unit: state.unit, color: state.color
+      });
+    }
     catch (err) { alert('That sheet cannot be built: ' + err.message); }
   });
 

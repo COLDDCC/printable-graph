@@ -180,6 +180,7 @@
       dl.textContent = 'Download ' + z.label;
       dl.addEventListener('click', function () {
         GridEngine.download({ paper: 'a4', spacing: z.spacing, unit: z.unit, majorEvery: z.major, calibration: true, color: '#4A7FB5' });
+        if (window.gtag) gtag('event', 'download_pdf', { paper: 'a4', spacing: z.spacing, unit: z.unit });
       });
       box.appendChild(name); box.appendChild(sh); box.appendChild(meta); box.appendChild(dl);
       prev.appendChild(box);

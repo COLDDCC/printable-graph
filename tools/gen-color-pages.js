@@ -181,6 +181,15 @@ function page(size, col) {
 '<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">\n' +
 '\n' +
 '<link rel="stylesheet" href="/assets/site.css">\n' +
+'\n' +
+'<!-- Google tag (gtag.js) -->\n' +
+'<script async src="https://www.googletagmanager.com/gtag/js?id=G-WFH3F9TQCN"></script>\n' +
+'<script>\n' +
+'  window.dataLayer = window.dataLayer || [];\n' +
+'  function gtag(){dataLayer.push(arguments);}\n' +
+'  gtag(\'js\', new Date());\n' +
+'  gtag(\'config\', \'G-WFH3F9TQCN\');\n' +
+'</script>\n' +
 '</head>\n' +
 '<body>\n' +
 '\n' +

@@ -14,6 +14,7 @@ var ROOT = path.join(__dirname, '..');
 var SITE = 'https://printgridpaper.com';
 
 function shell(opts) {
+  var crumb = opts.crumb || opts.title;
   return [
 '<!DOCTYPE html>',
 '<html lang="en">',
@@ -66,7 +67,7 @@ function shell(opts) {
 '',
 '<main class="wrap">',
 '',
-'  <p class="crumb"><a href="/">Graph paper</a><span>/</span>' + opts.title + '</p>',
+'  <p class="crumb"><a href="/">Graph paper</a><span>/</span>' + crumb + '</p>',
 '',
 '  <div class="hero size">',
 '    <p class="eyebrow">' + opts.eyebrow + '</p>',
@@ -83,6 +84,17 @@ opts.sections,
 '      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>',
 '  </footer>',
 '</main>',
+'',
+'<script type="application/ld+json">',
+'{',
+'  "@context": "https://schema.org",',
+'  "@type": "BreadcrumbList",',
+'  "itemListElement": [',
+'    {"@type":"ListItem","position":1,"name":"Graph paper","item":"' + SITE + '/"},',
+'    {"@type":"ListItem","position":2,"name":"' + crumb + '","item":"' + SITE + opts.urlPath + '"}',
+'  ]',
+'}',
+'</script>',
 '',
 '<script type="application/ld+json">',
 opts.ld,
@@ -305,12 +317,21 @@ function faqJson(items) {
   var parts = items.map(function (q) {
     return '      {"@type":"Question","name":"' + q[0] + '","acceptedAnswer":{"@type":"Answer","text":"' + q[1] + '"}}';
   });
-  return '[\n' + parts.join(',\n') + '\n    ]';
+  return [
+    '{',
+    '  "@context": "https://schema.org",',
+    '  "@type": "FAQPage",',
+    '  "mainEntity": [',
+    parts.join(',\n'),
+    '  ]',
+    '}'
+  ].join('\n');
 }
 
 var PAGES = [
   {
     slug: 'how-to-print-graph-paper',
+    crumb: 'How to print graph paper',
     title: 'How to Print Graph Paper: Complete Guide for Students & Teachers',
     desc: 'Learn how to print graph paper for math, engineering, and design projects. Step-by-step guide with tips for best results.',
     eyebrow: 'Guide &middot; printing that is actually to size',
@@ -330,6 +351,7 @@ var PAGES = [
   },
   {
     slug: 'graph-paper-templates',
+    crumb: 'All templates',
     title: 'Free Graph Paper Templates - 10 Types for Different Uses',
     desc: 'Download free printable graph paper templates: 5 mm, 1 cm, 1/4 inch, engineering (10 per inch) and more, in multiple colours and paper sizes. All printable online, no signup required.',
     eyebrow: 'Templates &middot; every size, one click to print',
@@ -343,6 +365,7 @@ var PAGES = [
   },
   {
     slug: 'graph-paper-for-teachers',
+    crumb: 'For teachers',
     title: 'Graph Paper for Teachers - Free Printable Lesson Resources',
     desc: 'Free printable graph paper for classroom use. Perfect for math lessons, design projects, and student activities. Print unlimited sheets.',
     eyebrow: 'For teachers &middot; classroom-ready, free, unlimited',
@@ -362,7 +385,7 @@ PAGES.forEach(function (p) {
   var html = shell({
     title: p.title, desc: p.desc, urlPath: '/' + p.slug + '/',
     eyebrow: p.eyebrow, h1: p.h1, lede: p.lede,
-    sections: p.sections, ld: p.ld
+    sections: p.sections, ld: p.ld, crumb: p.crumb
   });
   fs.writeFileSync(path.join(dir, 'index.html'), html);
   console.log('  ' + p.slug);

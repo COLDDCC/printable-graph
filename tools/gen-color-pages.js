@@ -341,7 +341,7 @@ function page(size, col) {
 '        <tbody>\n' +
 '          <tr><th scope="row">\u26AA White</th><td>' + COLORS.white.tag + '</td><td>' + COLORS.white.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '/">Open white</a></td></tr>\n' +
 '          <tr><th scope="row">\u2B1C Black</th><td>' + COLORS.black.tag + '</td><td>' + COLORS.black.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-black/">Open black</a></td></tr>\n' +
-'          <tr><th scope="row">\u1F7E8 Cream</th><td>' + COLORS.cream.tag + '</td><td>' + COLORS.cream.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-cream/">Open cream</a></td></tr>\n' +
+'          <tr><th scope="row">\u{1F7E8} Cream</th><td>' + COLORS.cream.tag + '</td><td>' + COLORS.cream.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-cream/">Open cream</a></td></tr>\n' +
 '        </tbody>\n' +
 '      </table>\n' +
 '    </div>\n' +

@@ -7,6 +7,7 @@
 'use strict';
 var fs = require('fs');
 var path = require('path');
+var execFileSync = require('child_process').execFileSync;
 var ROOT = path.join(__dirname, '..');
 var SITE = 'https://printgridpaper.com';
 
@@ -15,6 +16,23 @@ var EXCLUDE_DIRS = ['.git', '.wrangler', 'tools', 'assets', 'node_modules'];
 // Preview screenshots keyed by slug ('' = home), written by tools/gen-previews.js.
 var previewManifestPath = path.join(ROOT, 'assets', 'previews', 'manifest.json');
 var previews = fs.existsSync(previewManifestPath) ? JSON.parse(fs.readFileSync(previewManifestPath, 'utf8')) : {};
+
+
+// Last real edit date for a file: the date of the commit that last touched it,
+// so a fresh clone (which resets every mtime to checkout time) does not stamp
+// the whole sitemap with today. Files with uncommitted edits fall back to mtime.
+function lastModified(file) {
+  try {
+    var dirty = execFileSync('git', ['status', '--porcelain', '--', file],
+      { cwd: ROOT, encoding: 'utf8' }).trim();
+    if (!dirty) {
+      var committed = execFileSync('git', ['log', '-1', '--format=%cs', '--', file],
+        { cwd: ROOT, encoding: 'utf8' }).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(committed)) return committed;
+    }
+  } catch (e) { /* not a git checkout - fall through to mtime */ }
+  return fs.statSync(file).mtime.toISOString().slice(0, 10);
+}
 
 // Priority tiers by URL path.
 function priority(urlPath) {
@@ -25,14 +43,14 @@ function priority(urlPath) {
   return '0.6';                                                // tool + paper + use pages
 }
 
-var urls = [{ path: '/', slug: '', lastmod: fs.statSync(path.join(ROOT, 'index.html')).mtime.toISOString().slice(0, 10) }];
+var urls = [{ path: '/', slug: '', lastmod: lastModified(path.join(ROOT, 'index.html')) }];
 
 fs.readdirSync(ROOT, { withFileTypes: true }).forEach(function (d) {
   if (!d.isDirectory()) return;
   if (EXCLUDE_DIRS.indexOf(d.name) !== -1) return;
   var idx = path.join(ROOT, d.name, 'index.html');
   if (!fs.existsSync(idx)) return;
-  var lastmod = fs.statSync(idx).mtime.toISOString().slice(0, 10);
+  var lastmod = lastModified(idx);
   urls.push({ path: '/' + d.name + '/', slug: d.name, lastmod: lastmod });
 });
 

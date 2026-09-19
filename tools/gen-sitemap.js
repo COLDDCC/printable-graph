@@ -44,12 +44,19 @@ function priority(urlPath) {
 }
 
 var urls = [{ path: '/', slug: '', lastmod: lastModified(path.join(ROOT, 'index.html')) }];
+var skipped = [];
 
 fs.readdirSync(ROOT, { withFileTypes: true }).forEach(function (d) {
   if (!d.isDirectory()) return;
   if (EXCLUDE_DIRS.indexOf(d.name) !== -1) return;
   var idx = path.join(ROOT, d.name, 'index.html');
   if (!fs.existsSync(idx)) return;
+  // A sitemap asks Google to index a URL, so never list one that says noindex.
+  // Those pages are still reachable (and crawlable) through their parent size page.
+  if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(fs.readFileSync(idx, 'utf8'))) {
+    skipped.push(d.name);
+    return;
+  }
   var lastmod = lastModified(idx);
   urls.push({ path: '/' + d.name + '/', slug: d.name, lastmod: lastmod });
 });
@@ -72,3 +79,4 @@ out += '</urlset>\n';
 
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), out);
 console.log('sitemap.xml written with ' + urls.length + ' URLs');
+if (skipped.length) console.log('  skipped ' + skipped.length + ' noindex pages');

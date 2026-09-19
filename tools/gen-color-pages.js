@@ -167,6 +167,13 @@ function page(size, col) {
 '<title>' + title + '</title>\n' +
 '<meta name="description" content="' + desc + '">\n' +
 '<link rel="canonical" href="' + url + '">\n' +
+// These 16 size x colour pages exist for visitors who want a tinted sheet, but
+// their copy varies only by the size numbers - any two pages of the same colour
+// are ~96% identical. Keeping them out of the index avoids 16 near-duplicates on
+// a small site; "follow" still passes their links on to the main size pages.
+// To chase "black graph paper" style queries, build one consolidated page per
+// colour rather than re-indexing these.
+'<meta name="robots" content="noindex, follow">\n' +
 '\n' +
 '<meta property="og:type" content="website">\n' +
 '<meta property="og:title" content="' + title + '">\n' +
@@ -339,8 +346,8 @@ function page(size, col) {
 '          <tr><th scope="col">Background</th><th scope="col">Look</th><th scope="col">Compare</th><th scope="col"></th></tr>\n' +
 '        </thead>\n' +
 '        <tbody>\n' +
-'          <tr><th scope="row">\u26AA White</th><td>' + COLORS.white.tag + '</td><td>' + COLORS.white.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '/">Open white</a></td></tr>\n' +
-'          <tr><th scope="row">\u2B1C Black</th><td>' + COLORS.black.tag + '</td><td>' + COLORS.black.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-black/">Open black</a></td></tr>\n' +
+'          <tr><th scope="row">\u2B1C White</th><td>' + COLORS.white.tag + '</td><td>' + COLORS.white.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '/">Open white</a></td></tr>\n' +
+'          <tr><th scope="row">\u2B1B Black</th><td>' + COLORS.black.tag + '</td><td>' + COLORS.black.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-black/">Open black</a></td></tr>\n' +
 '          <tr><th scope="row">\u{1F7E8} Cream</th><td>' + COLORS.cream.tag + '</td><td>' + COLORS.cream.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-cream/">Open cream</a></td></tr>\n' +
 '        </tbody>\n' +
 '      </table>\n' +
@@ -374,7 +381,7 @@ function page(size, col) {
 '\n' +
 '  <footer>\n' +
 '    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>\n' +
-'    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>\n' +
+'    <span>Free to use, no signup, no watermark &nbsp;&middot;&nbsp; &copy; 2026</span>\n' +
 '    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>\n' +
 '      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>\n' +
 '  </footer>\n' +

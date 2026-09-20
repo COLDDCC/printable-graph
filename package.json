@@ -5,6 +5,7 @@
   "description": "Maintainer tooling for printgridpaper.com. The site itself is static/zero-build (see DEPLOY.md) — this package.json only backs the scripts under tools/.",
   "main": "index.js",
   "scripts": {
+    "gen:favicons": "node tools/gen-favicons.js",
     "gen:previews": "node tools/gen-previews.js",
     "gen:sitemap": "node tools/gen-sitemap.js",
     "test": "echo \"Error: no test specified\" && exit 1"

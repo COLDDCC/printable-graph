@@ -174,7 +174,11 @@ function page(size, col) {
 '<meta property="og:url" content="' + url + '">\n' +
 '<meta name="twitter:card" content="summary">\n' +
 '\n' +
-'<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\'%3E%3Crect width=\'16\' height=\'16\' fill=\'%23fff\'/%3E%3Cg stroke=\'%234A7FB5\' stroke-width=\'1\'%3E%3Cpath d=\'M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16\'/%3E%3C/g%3E%3C/svg%3E">\n' +
+'<link rel="icon" href="/favicon.ico" sizes="any">\n' +
+'<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">\n' +
+'<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">\n' +
+'<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">\n' +
+'<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n' +
 '\n' +
 '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +

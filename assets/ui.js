@@ -11,8 +11,9 @@
    page does not have (the homepage size grid, for example) are simply skipped,
    so one file drives both the homepage and the per-size pages.
 
-   Still no URL parameters anywhere: every combination of settings would
-   otherwise be a crawlable URL with near-identical content.
+   The pages themselves take no URL parameters: every combination of settings
+   would otherwise be a crawlable URL with near-identical content. Parameters
+   live on /api/pdf instead (worker/index.js), which returns a PDF, not a page.
    ========================================================================== */
 (function () {
   'use strict';
@@ -172,6 +173,27 @@
       });
     }
     catch (err) { alert('That sheet cannot be built: ' + err.message); }
+  });
+
+  /* Hero quick download: the page's default sheet on the chosen paper,
+     whatever the controls below are set to. The link's href points at
+     /api/pdf, for people without JavaScript and for agents reading the HTML;
+     here the same PDF is built in the browser instead. */
+  var initial = {};
+  for (k in state) initial[k] = state[k];
+  [].forEach.call(document.querySelectorAll('.quick-dl a[data-paper]'), function (a) {
+    a.addEventListener('click', function (e) {
+      var o = {}, j;
+      for (j in initial) o[j] = initial[j];
+      o.paper = a.dataset.paper;
+      try {
+        GridEngine.download(o);
+        e.preventDefault();
+        if (window.gtag) gtag('event', 'download_pdf', {
+          paper: o.paper, spacing: o.spacing, unit: o.unit, color: o.color, source: 'hero'
+        });
+      } catch (err) { /* follow the link to /api/pdf instead */ }
+    });
   });
 
   /* Reflect the starting state into the controls, so a size page opens with

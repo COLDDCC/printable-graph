@@ -21,8 +21,15 @@
 `engine-test.html` 和 `sample-*.pdf` 是内部测试用的，**不要上传**。
 
 ## 3. 部署方式
-纯静态、零构建、无后端。Cloudflare Pages / Netlify / Vercel 任选，
-拖文件夹上去就行。必须是 HTTPS。
+静态页面，加一个 Cloudflare Worker（`worker/index.js`）提供 `/api/pdf`。
+必须用 Cloudflare Workers 部署（`npx wrangler deploy`，或在 Cloudflare 后台把仓库
+接到 Workers Builds），配置在 `wrangler.jsonc`。拖文件夹上传的方式没有 Worker，
+`/api/pdf` 会 404。必须是 HTTPS。
+
+上线后检查：打开 https://printgridpaper.com/api/pdf?size=1cm 应该直接显示 PDF。
+
+改动 API 后先跑 `npm test`。重新运行 `tools/gen-*.js` 生成页面后，
+要再跑一次 `npm run patch:layout`，把一屏布局补回去。
 
 ## 4. 上线后立刻做
 - Google Search Console 验证域名所有权

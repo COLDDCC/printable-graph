@@ -58,34 +58,18 @@
 
 <main class="wrap">
 
-  <div class="print-banner" id="printBanner" role="note">
-    <div class="pb-copy">
-      <strong>First time here? Verify your printer in 3 steps</strong>
-      <span class="pb-steps">1&nbsp;&#8680;&nbsp;Download the PDF &nbsp;&middot;&nbsp; 2&nbsp;&#8680;&nbsp;Print one sheet &nbsp;&middot;&nbsp; 3&nbsp;&#8680;&nbsp;Lay a ruler on the two bars at the bottom</span>
-      <span class="pb-note">The upper bar must read <b>100&nbsp;mm</b>, the lower one <b>4&nbsp;in</b>. If both come up short by the same amount, your print dialog is scaling the page &mdash; set it to 100% / Actual Size and print again. <a href="#setup">Full guide &rarr;</a></span>
+  <div class="hero size compact">
+    <div>
+      <h1>Free Online Graph Paper Generator</h1>
+      <p class="sub">Free &middot; no signup &middot; no watermark &middot; true to size</p>
     </div>
-    <button type="button" class="pb-done" id="pbDone">I&rsquo;ve verified it</button>
+    <div class="quick-dl">
+      <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Download 5 mm PDF &middot; A4</a>
+      <a class="quick-alt" href="/api/pdf?size=5mm&amp;paper=letter" data-paper="letter">US Letter</a>
+    </div>
   </div>
 
-  <div class="hero">
-    <p class="eyebrow">Free &middot; no signup &middot; no watermark</p>
-    <h1>Free Online Graph Paper Generator</h1>
-    <p class="lede">Pick a square size, get a print-ready PDF in seconds. Every sheet carries a measuring bar in the bottom margin, so you can
-      put a ruler on it and <b>prove your printer didn't shrink the page</b> &mdash; which, by default, most of them do.</p>
-    <ul class="ticks">
-      <li>No signup required &mdash; start printing in seconds</li>
-      <li>Free forever &mdash; unlimited downloads</li>
-      <li>Multiple sizes &mdash; 1&nbsp;cm, 1/4&nbsp;inch, engineering paper &amp; more</li>
-    </ul>
-    <a class="cta" href="#dl">Generate &amp; Print Free Now</a>
-  </div>
-
-  <figure class="preview-shot">
-    <img src="/assets/previews/home.png" width="1184" height="1710" loading="lazy" alt="Free Online Graph Paper Generator — printable PDF sheet preview">
-    <figcaption>Example sheet at the default settings below — size, colour and paper all change live.</figcaption>
-  </figure>
-
-  <div class="tool">
+  <div class="tool compact">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
       <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
@@ -122,7 +106,8 @@
           </div>
         </div>
 
-        <div class="f">
+                <div class="row">
+          <div class="f">
           <span>Paper</span>
           <select id="paper" aria-label="Paper size">
             <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
@@ -133,18 +118,21 @@
             <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
           </select>
         </div>
-
-        <div class="row">
           <div class="f"><span>Orientation</span>
             <div class="seg" id="orient">
               <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
               <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
             </div>
           </div>
-          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
         </div>
 
-        <div class="f">
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
+
+        <div class="row">
+          <div class="f">
           <span>Line colour</span>
           <div class="swatches" id="swatches">
             <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
@@ -154,18 +142,41 @@
             <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
           </div>
         </div>
-
-        <label class="check"><input type="checkbox" id="calib" checked>
-          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
-
-                <div class="row">
-          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
         <button class="dl" id="dl" type="button">Download PDF</button>
       </div>
     </div>
   </div>
+
+  <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?size=5mm&amp;paper=a4</a></p>
+
+  <div class="print-banner" id="printBanner" role="note">
+    <div class="pb-copy">
+      <strong>First time here? Verify your printer in 3 steps</strong>
+      <span class="pb-steps">1&nbsp;&#8680;&nbsp;Download the PDF &nbsp;&middot;&nbsp; 2&nbsp;&#8680;&nbsp;Print one sheet &nbsp;&middot;&nbsp; 3&nbsp;&#8680;&nbsp;Lay a ruler on the two bars at the bottom</span>
+      <span class="pb-note">The upper bar must read <b>100&nbsp;mm</b>, the lower one <b>4&nbsp;in</b>. If both come up short by the same amount, your print dialog is scaling the page &mdash; set it to 100% / Actual Size and print again. <a href="#setup">Full guide &rarr;</a></span>
+    </div>
+    <button type="button" class="pb-done" id="pbDone">I&rsquo;ve verified it</button>
+  </div>
+
+  <div class="intro">
+    <p class="lede">Pick a square size, get a print-ready PDF in seconds. Every sheet carries a measuring bar in the bottom margin, so you can
+      put a ruler on it and <b>prove your printer didn't shrink the page</b> &mdash; which, by default, most of them do.</p>
+    <ul class="ticks">
+      <li>No signup required &mdash; start printing in seconds</li>
+      <li>Free forever &mdash; unlimited downloads</li>
+      <li>Multiple sizes &mdash; 1&nbsp;cm, 1/4&nbsp;inch, engineering paper &amp; more</li>
+    </ul>
+  </div>
+
+  <figure class="preview-shot">
+    <img src="/assets/previews/home.png" width="1184" height="1710" loading="lazy" alt="Free Online Graph Paper Generator — printable PDF sheet preview">
+    <figcaption>Example sheet at the default settings — size, colour and paper all change live in the generator above.</figcaption>
+  </figure>
 
   <section class="why">
     <div class="why-ic">&#128230;</div>

@@ -216,7 +216,7 @@ footer a:hover{color:var(--rule)}
 /* compact size-page hero: title and one-click download on one row, so the
    whole generator fits in the first screen */
 .hero.compact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px;padding:12px 0 0}
-.hero.compact h1{font-size:clamp(28px,3.4vw,36px);margin:0;max-width:none}
+.hero.compact h1{font-size:clamp(28px,3.2vw,34px);margin:0;max-width:none}
 .hero.compact .sub{margin:6px 0 0;font-size:14px;color:var(--ink-2)}
 .quick-dl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .quick-dl .cta{margin-top:0}
@@ -233,3 +233,6 @@ footer a:hover{color:var(--rule)}
 }
 main:has(.hero.compact) .crumb{margin:0;padding-top:14px}
 .tool.compact .cells{display:none}
+.intro{margin-top:26px}
+.intro .lede{margin:0}
+main > .hero.compact:first-child{padding-top:22px}

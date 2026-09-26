@@ -59,18 +59,18 @@
 
   <p class="crumb"><a href="/">Graph paper</a><span>/</span>1 inch</p>
 
-  <div class="hero size">
-    <p class="eyebrow">One square, one inch &middot; also called 1 inch grid paper</p>
-    <h1>1 inch graph paper</h1>
-    <p class="lede">The largest square that still counts as graph paper. Seven columns by nine rows on Letter sounds like too few until you are laying out a room, a quilt or a battle map &mdash; <b>the entire point is that one square is one whole unit</b>, and there are not supposed to be many of them.</p>
+  <div class="hero size compact">
+    <div>
+      <h1>1 inch graph paper</h1>
+      <p class="sub">One square, one inch &middot; also called 1 inch grid paper &middot; free, true to size, no sign-up</p>
+    </div>
+    <div class="quick-dl">
+      <a class="cta" href="/api/pdf?size=1-inch&amp;paper=letter" data-paper="letter">Download 1 in PDF &middot; Letter</a>
+      <a class="quick-alt" href="/api/pdf?size=1-inch&amp;paper=a4" data-paper="a4">A4</a>
+    </div>
   </div>
 
-  <figure class="preview-shot">
-    <img src="/assets/previews/1-inch-graph-paper.png" width="1184" height="1575" loading="lazy" alt="1 inch grid paper — printable PDF sheet preview">
-    <figcaption>Example sheet at the default settings below — size, colour and paper all change live.</figcaption>
-  </figure>
-
-  <div class="tool">
+  <div class="tool compact">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
       <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
@@ -107,7 +107,8 @@
           </div>
         </div>
 
-        <div class="f">
+                <div class="row">
+          <div class="f">
           <span>Paper</span>
           <select id="paper" aria-label="Paper size">
             <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
@@ -118,18 +119,21 @@
             <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
           </select>
         </div>
-
-        <div class="row">
           <div class="f"><span>Orientation</span>
             <div class="seg" id="orient">
               <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
               <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
             </div>
           </div>
-          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="0" aria-label="Heavy line every N squares"></div>
         </div>
 
-        <div class="f">
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="0" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
+
+        <div class="row">
+          <div class="f">
           <span>Line colour</span>
           <div class="swatches" id="swatches">
             <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
@@ -139,18 +143,26 @@
             <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
           </div>
         </div>
-
-        <label class="check"><input type="checkbox" id="calib" checked>
-          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
-
-                <div class="row">
-          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
+
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
         <button class="dl" id="dl" type="button">Download PDF</button>
       </div>
     </div>
   </div>
+
+  <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=1-inch&amp;paper=letter">printgridpaper.com/api/pdf?size=1-inch&amp;paper=letter</a></p>
+
+  <div class="intro">
+    <p class="lede">The largest square that still counts as graph paper. Seven columns by nine rows on Letter sounds like too few until you are laying out a room, a quilt or a battle map &mdash; <b>the entire point is that one square is one whole unit</b>, and there are not supposed to be many of them.</p>
+  </div>
+
+  <figure class="preview-shot">
+    <img src="/assets/previews/1-inch-graph-paper.png" width="1184" height="1575" loading="lazy" alt="1 inch grid paper — printable PDF sheet preview">
+    <figcaption>Example sheet at the default settings — size, colour and paper all change live in the generator above.</figcaption>
+  </figure>
 
   <section id="measures">
     <div class="sec-hd">
@@ -255,7 +267,6 @@
       </details>
     </div>
   </section>
-
 
   <div class="sibcol">
     <strong>This size also comes in</strong>

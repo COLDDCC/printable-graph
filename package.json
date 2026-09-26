@@ -8,6 +8,7 @@
     "gen:favicons": "node tools/gen-favicons.js",
     "gen:previews": "node tools/gen-previews.js",
     "gen:sitemap": "node tools/gen-sitemap.js",
+    "patch:layout": "node tools/patch-compact-layout.js",
     "test": "node --test worker/api.test.js"
   },
   "repository": {

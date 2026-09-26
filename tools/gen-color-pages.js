@@ -378,7 +378,7 @@ function page(size, col) {
 '\n' +
 '  <footer>\n' +
 '    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>\n' +
-'    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>\n' +
+'    <span>&copy; 2026</span>\n' +
 '    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>\n' +
 '      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>\n' +
 '  </footer>\n' +

@@ -1,0 +1,63 @@
+# printgridpaper.com
+
+> Free printable graph paper (also called grid paper or squared paper) as true-to-size vector PDFs. No sign-up, no watermark. Every sheet has a measuring bar in the bottom margin (100 mm and 4 in) so the printed scale can be checked with a ruler.
+
+Humans use the generator on each page. Scripts and AI agents can fetch the same PDF directly from `GET /api/pdf`. It needs no key or sign-up, allows cross-origin requests, and returns the same bytes as the page's Download button.
+
+## Get a PDF
+
+`GET https://printgridpaper.com/api/pdf?size=1cm&paper=a4`
+
+Returns `application/pdf`. A link to that URL is also fine to give to a person: it opens the sheet in the browser.
+
+Examples:
+
+- 1 cm squares on A4: https://printgridpaper.com/api/pdf?size=1cm&paper=a4
+- 1/4 inch (quad ruled) on US Letter: https://printgridpaper.com/api/pdf?size=quarter-inch&paper=letter
+- 5 mm squares, 10-page pad: https://printgridpaper.com/api/pdf?size=5mm&pages=10
+- Custom 7 mm squares, landscape, black lines: https://printgridpaper.com/api/pdf?spacing=7&unit=mm&orientation=landscape&color=black
+- Black paper with white lines: https://printgridpaper.com/api/pdf?size=1cm&background=black
+
+## Parameters
+
+All parameters are optional. With none, you get 5 mm squares on A4.
+
+- `size`: a named square size. Each one also sets a default paper and heavy-line interval.
+  - `2mm`: A4, heavy line every 5 squares
+  - `5mm`: A4, every 5
+  - `1cm`: A4, every 10
+  - `10-per-inch` (1/10 inch, engineering paper): Letter, every 10
+  - `eighth-inch` (1/8 inch, 8 per inch): Letter, every 8
+  - `quarter-inch` (1/4 inch, quad ruled): Letter, every 4
+  - `half-inch` (1/2 inch): Letter, every 2
+  - `1-inch`: Letter, no heavy lines
+- `spacing` + `unit`: a custom square size instead of `size` (do not send both). `unit` is `mm` (1–50, the default) or `in` (0.04–2).
+- `paper`: `a4`, `letter`, `a5`, `a3`, `legal`, `tabloid`.
+- `orientation`: `portrait` (default) or `landscape`.
+- `major`: heavy line every N squares, 0–20. Use 0 for none.
+- `color`: line colour. One of `blue` (default), `green`, `grey`, `black`, `red`, or a hex value such as `4A7FB5`.
+- `background`: `white` (default), `black` (white lines) or `cream` (brown lines).
+- `pages`: identical pages in one PDF, 1–25.
+- `calibration`: `true` (default) prints the measuring bars; `false` gives a clean sheet with a few more rows.
+
+Response headers `X-Grid-Columns`, `X-Grid-Rows` and `X-Square-Size-Mm` describe the sheet. Invalid input returns HTTP 400 with JSON `{"error": "...", "docs": "..."}`.
+
+Machine-readable spec: https://printgridpaper.com/openapi.json
+
+## Printing true to size
+
+Tell the person to print at 100% / "Actual size", not "Fit to page". Then a ruler laid on the bottom bar should read exactly 100 mm. If it reads short, the print dialog scaled the page.
+
+## Pages
+
+- [Graph paper generator](https://printgridpaper.com/): every size and option in one tool
+- [2 mm graph paper](https://printgridpaper.com/2mm-graph-paper/)
+- [5 mm graph paper](https://printgridpaper.com/5mm-graph-paper/)
+- [1 cm graph paper](https://printgridpaper.com/1cm-graph-paper/)
+- [10 squares per inch graph paper](https://printgridpaper.com/10-squares-per-inch-graph-paper/)
+- [1/8 inch graph paper](https://printgridpaper.com/eighth-inch-graph-paper/)
+- [1/4 inch graph paper](https://printgridpaper.com/quarter-inch-graph-paper/)
+- [1/2 inch graph paper](https://printgridpaper.com/half-inch-graph-paper/)
+- [1 inch graph paper](https://printgridpaper.com/1-inch-graph-paper/)
+- [Graph paper sizes and types compared](https://printgridpaper.com/compare-graph-paper-sizes/)
+- [Print troubleshooting](https://printgridpaper.com/print-troubleshooting/)

@@ -1,0 +1,209 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "printgridpaper.com graph paper API",
+    "version": "1.0.0",
+    "description": "Free printable graph paper (grid paper, squared paper) as true-to-size vector PDFs. No key needed. Returns the same PDF as the Download button on printgridpaper.com. Human-readable guide: https://printgridpaper.com/llms.txt"
+  },
+  "servers": [
+    {
+      "url": "https://printgridpaper.com"
+    }
+  ],
+  "paths": {
+    "/api/pdf": {
+      "get": {
+        "operationId": "getGraphPaperPdf",
+        "summary": "Generate a printable graph paper PDF",
+        "description": "All parameters are optional; with none you get 5 mm squares on A4. Use either `size` or `spacing` (with `unit`), not both. Tell the user to print at 100% / Actual size.",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Named square size. Sets a default paper and heavy-line interval.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "2mm",
+                "5mm",
+                "1cm",
+                "10-per-inch",
+                "eighth-inch",
+                "quarter-inch",
+                "half-inch",
+                "1-inch"
+              ]
+            }
+          },
+          {
+            "name": "spacing",
+            "in": "query",
+            "required": false,
+            "description": "Custom square size in `unit`: 1-50 for mm, 0.04-2 for in.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "unit",
+            "in": "query",
+            "required": false,
+            "description": "Unit for `spacing`.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "mm",
+                "in"
+              ],
+              "default": "mm"
+            }
+          },
+          {
+            "name": "paper",
+            "in": "query",
+            "required": false,
+            "description": "Paper size.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "a4",
+                "letter",
+                "a5",
+                "a3",
+                "legal",
+                "tabloid"
+              ]
+            }
+          },
+          {
+            "name": "orientation",
+            "in": "query",
+            "required": false,
+            "description": "Page orientation.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "portrait",
+                "landscape"
+              ],
+              "default": "portrait"
+            }
+          },
+          {
+            "name": "major",
+            "in": "query",
+            "required": false,
+            "description": "Heavy line every N squares; 0 for none.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          {
+            "name": "color",
+            "in": "query",
+            "required": false,
+            "description": "Line colour: blue, green, grey, black, red, or a 6-digit hex such as 4A7FB5.",
+            "schema": {
+              "type": "string",
+              "default": "blue"
+            }
+          },
+          {
+            "name": "background",
+            "in": "query",
+            "required": false,
+            "description": "Paper colour. black gives white lines; cream gives brown lines.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "white",
+                "black",
+                "cream"
+              ],
+              "default": "white"
+            }
+          },
+          {
+            "name": "pages",
+            "in": "query",
+            "required": false,
+            "description": "Number of identical pages in the PDF.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 25,
+              "default": 1
+            }
+          },
+          {
+            "name": "calibration",
+            "in": "query",
+            "required": false,
+            "description": "Print the 100 mm / 4 in measuring bars in the bottom margin.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The PDF.",
+            "headers": {
+              "X-Grid-Columns": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Whole squares across."
+              },
+              "X-Grid-Rows": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Whole squares down."
+              },
+              "X-Square-Size-Mm": {
+                "schema": {
+                  "type": "number"
+                },
+                "description": "Square size in millimetres."
+              }
+            },
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameter.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "docs": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

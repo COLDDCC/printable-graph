@@ -30,7 +30,6 @@
 
 <link rel="stylesheet" href="/assets/site.css">
 
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WFH3F9TQCN"></script>
 <script>
@@ -60,18 +59,18 @@
 
   <p class="crumb"><a href="/">Graph paper</a><span>/</span>Graph Paper for Knitting & Crochet — Free Printable Charts</p>
 
-  <div class="hero size">
-    <p class="eyebrow">One square = one stitch</p>
-    <h1>Graph paper for knitting &amp; crochet</h1>
-    <p class="lede">Charts turn a stitch repeat into squares you can read. 5 mm squares leave room for a pencil symbol, while the heavy line every 5 squares matches common repeat widths.</p>
+  <div class="hero size compact">
+    <div>
+      <h1>Graph paper for knitting &amp; crochet</h1>
+      <p class="sub">One square = one stitch &middot; free, true to size, no sign-up</p>
+    </div>
+    <div class="quick-dl">
+      <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Download 5 mm PDF &middot; A4</a>
+      <a class="quick-alt" href="/api/pdf?size=5mm&amp;paper=letter" data-paper="letter">US Letter</a>
+    </div>
   </div>
 
-  <figure class="preview-shot">
-    <img src="/assets/previews/graph-paper-for-knitting.png" width="1184" height="1710" loading="lazy" alt="Graph paper for knitting & crochet — printable PDF sheet preview">
-    <figcaption>Example sheet at the default settings below — size, colour and paper all change live.</figcaption>
-  </figure>
-
-  <div class="tool">
+  <div class="tool compact">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
       <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
@@ -108,7 +107,8 @@
           </div>
         </div>
 
-        <div class="f">
+                <div class="row">
+          <div class="f">
           <span>Paper</span>
           <select id="paper" aria-label="Paper size">
             <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
@@ -119,29 +119,40 @@
             <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
           </select>
         </div>
-
-        <div class="row">
           <div class="f"><span>Orientation</span>
             <div class="seg" id="orient">
               <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
               <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
             </div>
           </div>
-          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
         </div>
 
-        <label class="check"><input type="checkbox" id="calib" checked>
-          <span>Include the measuring bars. Turn this off once you've confirmed your printer setting and want a clean sheet.</span></label>
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
 
         <div class="row">
-          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
 
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
         <button class="dl" id="dl" type="button">Download PDF</button>
       </div>
     </div>
   </div>
+
+  <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?size=5mm&amp;paper=a4</a></p>
+
+  <div class="intro">
+    <p class="lede">Charts turn a stitch repeat into squares you can read. 5 mm squares leave room for a pencil symbol, while the heavy line every 5 squares matches common repeat widths.</p>
+  </div>
+
+  <figure class="preview-shot">
+    <img src="/assets/previews/graph-paper-for-knitting.png" width="1184" height="1710" loading="lazy" alt="Graph paper for knitting & crochet — printable PDF sheet preview">
+    <figcaption>Example sheet at the default settings — size, colour and paper all change live in the generator above.</figcaption>
+  </figure>
 
   <section id="pick">
     <div class="sec-hd"><h2>Which size to choose</h2></div>
@@ -177,7 +188,7 @@
 
   <footer>
     <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
-    <span>Trusted by 800,000+ people who printed true-to-size sheets &nbsp;&middot;&nbsp; &copy; 2026</span>
+    <span>&copy; 2026</span>
     <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
       &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a></span>
   </footer>

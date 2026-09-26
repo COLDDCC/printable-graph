@@ -213,9 +213,23 @@ footer a:hover{color:var(--rule)}
 .foot-links{flex-basis:100%}
 @media(max-width:520px){footer{flex-direction:column;gap:6px}}
 
-/* one-click download in the size-page hero */
-.quick-dl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:20px}
+/* compact size-page hero: title and one-click download on one row, so the
+   whole generator fits in the first screen */
+.hero.compact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px;padding:12px 0 0}
+.hero.compact h1{font-size:clamp(28px,3.4vw,36px);margin:0;max-width:none}
+.hero.compact .sub{margin:6px 0 0;font-size:14px;color:var(--ink-2)}
+.quick-dl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .quick-dl .cta{margin-top:0}
 .quick-alt{font:500 14px/1 var(--mono);color:var(--ink);text-decoration:underline;text-underline-offset:3px}
-.quick-note{margin:12px 0 0;font-size:13px;color:var(--ink-2)}
+.quick-note{margin:14px 0 0;font-size:13px;color:var(--ink-2)}
 .quick-note a{color:var(--ink-2)}
+.tool.compact{margin-top:18px;grid-template-columns:auto minmax(330px,560px);justify-content:center}
+.tool.compact .sheet{width:auto;height:clamp(356px,calc(100vh - 270px),520px)}
+.tool.compact .ctrls{gap:10px;padding:12px 12px 14px}
+.crumb + .hero.compact{padding-top:8px}
+@media(max-width:880px){
+  .tool.compact{grid-template-columns:1fr}
+  .tool.compact .sheet{width:100%;height:auto}
+}
+main:has(.hero.compact) .crumb{margin:0;padding-top:14px}
+.tool.compact .cells{display:none}

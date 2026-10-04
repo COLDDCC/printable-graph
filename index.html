@@ -64,8 +64,8 @@
       <p class="sub">Free &middot; no signup &middot; no watermark &middot; true to size</p>
     </div>
     <div class="quick-dl">
-      <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Default 5 mm PDF &middot; A4</a>
-      <a class="quick-alt" href="/api/pdf?size=5mm&amp;paper=letter" data-paper="letter">Default 5 mm &middot; US Letter</a>
+      <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Download 5 mm PDF &middot; A4</a>
+      <a class="quick-alt" href="/api/pdf?size=5mm&amp;paper=letter" data-paper="letter">US Letter</a>
     </div>
   </div>
 
@@ -84,7 +84,6 @@
       </div>
 
       <div class="ctrls">
-        <div class="f"><span>Paper type</span><select id="style" aria-label="Paper type"><option value="square">Square grid</option><option value="dot">Dot grid</option><option value="coordinate">Coordinate grid (four quadrants)</option></select></div>
         <div class="f">
           <span>Square size</span>
           <div class="presets" id="presets">
@@ -127,7 +126,6 @@
           </div>
         </div>
 
-<details class="advanced"><summary>Advanced settings</summary>
         <div class="row">
           <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
           <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
@@ -147,15 +145,17 @@
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
 
-        <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
-        <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>
         <label class="check"><input type="checkbox" id="calib" checked>
           <span>Include the measuring bars (turn off for a clean sheet)</span></label>
-        </details>
         <button class="dl" id="dl" type="button">Download PDF</button>
-        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+        <details class="extra-tools"><summary>More paper types &amp; export options</summary>
+          <div class="f"><span>Paper type</span><select id="style" aria-label="Paper type"><option value="square">Square grid</option><option value="dot">Dot grid</option><option value="coordinate">Coordinate grid (four quadrants)</option></select></div>
+          <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
+          <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>
+          <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+          <p><a href="/dot-grid-paper/">Dot grid paper</a> · <a href="/coordinate-graph-paper/">Coordinate graph paper</a></p>
+        </details>
         <p id="toolStatus" role="status" aria-live="polite"></p>
-        <p class="print-hint">For accurate measurements, print the PDF at 100% / Actual Size.</p>
       </div>
     </div>
   </div>
@@ -173,7 +173,7 @@
 
   <div class="intro">
     <p class="lede">Pick a square size, get a print-ready PDF in seconds. Every sheet carries a measuring bar in the bottom margin, so you can
-      put a ruler on it and <b>prove your printer didn't shrink the page</b> &mdash; if the print dialog uses Fit to page.</p>
+      put a ruler on it and <b>prove your printer didn't shrink the page</b> &mdash; which, by default, most of them do.</p>
     <ul class="ticks">
       <li>No signup required &mdash; start printing in seconds</li>
       <li>Free forever &mdash; unlimited downloads</li>
@@ -222,7 +222,7 @@
         <span class="pcard-ic">&#127961;&#65039;</span>
         <strong>Floor plans &amp; architecture</strong>
         <em>1 inch</em>
-        <p>Choose a drawing scale, then assign a real-world distance to each square.</p>
+        <p>1:100 or 1:200 layouts, one square = one foot.</p>
         <span class="pcard-go">See this size &rarr;</span>
       </a>
       <a class="pcard" href="/5mm-graph-paper/">
@@ -273,7 +273,8 @@
   <section id="setup">
     <div class="sec-hd">
       <h2>Your printer is probably shrinking the page</h2>
-      <p class="sec-lede">Print dialogs may use Fit to page, which changes the size of the grid. The amount depends on your paper and printer settings. On a 5&nbsp;mm grid that turns every square into 4.7&nbsp;mm.
+      <p class="sec-lede">Most print dialogs default to fitting the page inside the printer's hardware margin, which
+        scales everything down by roughly 4 to 6 percent. On a 5&nbsp;mm grid that turns every square into 4.7&nbsp;mm.
         It is small enough to go unnoticed and large enough to ruin a scale drawing, a knitting chart, or a floor plan.
         Change this one setting before you print.</p>
     </div>
@@ -283,16 +284,16 @@
       <div><h3>Adobe Acrobat</h3><p>Under <code>Page Sizing &amp; Handling</code> choose <code>Actual size</code>. Do not leave it on Fit or Shrink oversized pages.</p></div>
       <div><h3>Safari / macOS Preview</h3><p>Expand the dialog, set <code>Scale</code> to <code>100%</code>, and make sure <code>Scale to Fit</code> is unchecked.</p></div>
       <div><h3>Firefox</h3><p>Open <code>More settings</code> and set <code>Scale</code> to <code>100</code> instead of Fit to page width.</p></div>
-      <div><h3>Paper must match</h3><p>Printing a Letter PDF onto A4 may scale or crop the page, depending on your settings. Pick the paper you actually have loaded.</p></div>
+      <div><h3>Paper must match</h3><p>Printing a Letter PDF onto A4 forces a resize no matter what the scale box says. Pick the paper you actually have loaded.</p></div>
       <div><h3>Phone printing</h3><p>Mobile print flows usually scale without asking and give you no control. For anything you intend to measure, print from a computer.</p></div>
     </div>
 
     <p class="flag"><b>How to check it worked:</b> lay a ruler on the two bars at the bottom of the sheet.
       The upper one must read 100&nbsp;mm and the lower one 4&nbsp;inches. If both are short by the same
-      proportion, the page was scaled &mdash; fix the setting and print again. The bars help you verify the physical size before using a sheet for measured work.</p>
+      proportion, the page was scaled &mdash; fix the setting and print again. No other free graph paper tells you this,
+      which is why so many printed grids are quietly wrong.</p>
   </section>
 
-  <section><h2>More paper types</h2><p><a href="/dot-grid-paper/">Dot grid paper for journaling</a> &middot; <a href="/coordinate-graph-paper/">Coordinate graph paper with axes</a></p></section>
   <section id="sizes">
     <div class="sec-hd">
       <h2>Which square size do you need?</h2>
@@ -319,7 +320,9 @@
     <div class="faq">
       <details open>
         <summary>Why doesn't my printed graph paper measure correctly?</summary>
-        <p>Check print scaling first. Fit to page may shrink the grid, depending on your printer, paper and settings.</p>
+        <p>Almost always print scaling rather than the file. Printers cannot print to the very edge of a sheet, so print
+          dialogs shrink the page to fit inside that hardware margin, typically by 4 to 6 percent. The setting is on by
+          default in most browsers and it is applied silently.</p>
         <p>The measuring bars on every sheet here exist to catch exactly this. If the metric bar reads 96&nbsp;mm instead
           of 100, your page was scaled to 96 percent and every square is 4 percent small.</p>
       </details>
@@ -332,7 +335,8 @@
       <details>
         <summary>Should I choose A4 or Letter?</summary>
         <p>Choose whichever is loaded in your printer. A4 is standard in Europe, Asia, Australia and most of the world;
-          Letter is standard in the US and Canada. Printing on a different paper size may scale or crop the sheet, depending on the settings.</p>
+          Letter is standard in the US and Canada. Printing one onto the other forces a resize that the scale setting
+          cannot prevent, because the sheets are genuinely different shapes.</p>
       </details>
       <details>
         <summary>Is it free, and can I use it for work?</summary>
@@ -384,9 +388,9 @@
     {
       "@type":"FAQPage",
       "mainEntity":[
-        {"@type":"Question","name":"Why doesn't my printed graph paper measure correctly?","acceptedAnswer":{"@type":"Answer","text":"Almost always print scaling rather than the file. Fit to page can scale the grid; the amount depends on your printer, paper and settings. The measuring bars on each sheet let you detect this with a ruler."}},
+        {"@type":"Question","name":"Why doesn't my printed graph paper measure correctly?","acceptedAnswer":{"@type":"Answer","text":"Almost always print scaling rather than the file. Print dialogs shrink the page to fit inside the printer's hardware margin, typically by 4 to 6 percent, and the setting is applied silently by default. The measuring bars on each sheet let you detect this with a ruler."}},
         {"@type":"Question","name":"What is the difference between graph paper, grid paper and quad paper?","acceptedAnswer":{"@type":"Answer","text":"They describe the same thing. Quad paper is the common US name for a square grid, usually a quarter inch. Graphing paper and squared paper are used interchangeably elsewhere."}},
-        {"@type":"Question","name":"Should I choose A4 or Letter?","acceptedAnswer":{"@type":"Answer","text":"Choose whichever paper is loaded in your printer. A4 is standard in most of the world and Letter in the US and Canada. Printing on a different paper size may scale or crop the sheet, depending on the settings."}},
+        {"@type":"Question","name":"Should I choose A4 or Letter?","acceptedAnswer":{"@type":"Answer","text":"Choose whichever paper is loaded in your printer. A4 is standard in most of the world and Letter in the US and Canada. Printing one onto the other forces a resize that the scale setting cannot prevent."}},
         {"@type":"Question","name":"Is it free, and can I use it for work?","acceptedAnswer":{"@type":"Answer","text":"Yes. There is no signup, no watermark and no limit on the number of sheets. The PDFs are plain vector line work and may be used for schoolwork or client work."}}
       ]
     }

@@ -104,7 +104,17 @@
     if (tool) tool.scrollIntoView({ block: 'center' });
   });
 
-  on('#style', 'change', function () { state.style = this.value; draw(); });
+  on('#paperTypes', 'click', function (e) {
+    var button = e.target.closest('button[data-style]');
+    if (!button) return;
+    state.style = button.dataset.style;
+    syncPaperTypes();
+    draw();
+  });
+  function syncPaperTypes() {
+    var host = $('#paperTypes');
+    if (host) press(host, function (button) { return button.dataset.style === state.style; });
+  }
   on('#margin', 'input', function () { state.margin = Number(this.value); draw(); });
   on('#weight', 'input', function () { state.minorWeight = Number(this.value); draw(); });
   on('#customColor', 'input', function () { state.color = this.value; draw(); });
@@ -266,6 +276,7 @@
     if (or) press(or, function (c) { return c.dataset.v === state.orientation; });
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
     [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });
+    syncPaperTypes();
     pressPresets();
   }
 

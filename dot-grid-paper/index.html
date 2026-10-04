@@ -84,7 +84,8 @@
       </div>
 
       <div class="ctrls">
-        <div class="f"><span>Paper type</span><select id="style" aria-label="Paper type"><option value="square">Square grid</option><option value="dot">Dot grid</option><option value="coordinate">Coordinate grid (four quadrants)</option></select></div>
+        <div class="f"><span>Paper type</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button></div></div>
+
         <div class="f">
           <span>Square size</span>
           <div class="presets" id="presets">

@@ -241,3 +241,6 @@ main > .hero.compact:first-child{padding-top:22px}
 .extra-tools{margin-top:8px;font-size:12px}.extra-tools summary{cursor:pointer;padding:4px 0}.extra-tools .f,.extra-tools .row{margin-top:10px}
 .export-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.export-actions button{padding:8px 12px;background:white;border:1px solid #c3cdd2;border-radius:5px;cursor:pointer;font:inherit;font-size:12px}
 #toolStatus{font-size:12px;line-height:1.5;color:#53616b;margin:0}#toolStatus:empty{display:none}button:disabled{opacity:.5;cursor:not-allowed}
+
+.paper-types{display:flex;flex-wrap:wrap;gap:6px}.paper-types button{font:inherit;font-size:14px;padding:9px 12px;min-height:40px;border:1px solid var(--line);border-radius:4px;background:white;color:var(--ink);cursor:pointer}.paper-types button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:white}.paper-types button:focus-visible{outline:2px solid #4A7FB5;outline-offset:2px}
+.export-actions button{font-size:14px;min-height:40px}.extra-tools summary{font-size:14px;padding:8px 0}

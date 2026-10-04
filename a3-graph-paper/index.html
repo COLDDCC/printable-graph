@@ -139,8 +139,9 @@
         <label class="check"><input type="checkbox" id="calib" checked>
           <span>Include the measuring bars (turn off for a clean sheet)</span></label>
         <button class="dl" id="dl" type="button">Download PDF</button>
-          <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+          <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="downloadSVG">Download SVG</button><button type="button" id="shareSheet">Share settings</button></div>
         <details class="extra-tools"><summary>Advanced settings</summary>
+          <button type="button" id="resetSheet">Reset settings</button>
 
           <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
           <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>

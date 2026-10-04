@@ -129,6 +129,7 @@
         </div>
 
 <details class="advanced"><summary>Advanced settings</summary>
+          <button type="button" id="resetSheet">Reset settings</button>
         <div class="row">
           <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
           <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
@@ -154,7 +155,7 @@
           <span>Include the measuring bars (turn off for a clean sheet)</span></label>
         </details>
         <button class="dl" id="dl" type="button">Download PDF</button>
-        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="downloadSVG">Download SVG</button><button type="button" id="shareSheet">Share settings</button></div>
         <p id="toolStatus" role="status" aria-live="polite"></p>
         <p class="print-hint">For accurate measurements, print the PDF at 100% / Actual Size.</p>
       </div>

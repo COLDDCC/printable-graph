@@ -150,6 +150,26 @@
       img.src = url;
     } catch (err) { status(err.message); }
   });
+  on('#downloadSVG', 'click', function () {
+    try {
+      var g = GridEngine.computeGrid(state);
+      // Physical dimensions survive import into vector editors.
+      var svg = GridEngine.renderSVG(state).replace('width="100%" height="100%"', 'width="' + g.page.w + 'mm" height="' + g.page.h + 'mm"');
+      var url = URL.createObjectURL(new Blob([svg], {type: 'image/svg+xml'}));
+      var link = document.createElement('a');
+      link.href = url; link.download = GridEngine.filename(state).replace('.pdf', '.svg');
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      status('SVG downloaded with physical page dimensions.');
+      if (window.gtag) gtag('event', 'download_svg', {style: state.style});
+    } catch (err) { status(err.message); }
+  });
+  on('#resetSheet', 'click', function () {
+    applyPreset(preset);
+    // Drop a shared-settings fragment, keeping ordinary section navigation.
+    if (location.hash.startsWith('#%7B')) history.replaceState(null, '', location.pathname + location.search);
+    status('Restored this page’s default settings. Your saved presets are kept.');
+  });
   on('#shareSheet', 'click', async function () {
     try {
       GridEngine.computeGrid(state);
@@ -285,13 +305,13 @@
     if (!host) return;
     try { g = GridEngine.computeGrid(state); svg = GridEngine.renderSVG(state); }
     catch (err) {
-      ['dl','printSheet','downloadPNG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = true; });
+      ['dl','printSheet','downloadPNG','downloadSVG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = true; });
       status(err.message);
       host.innerHTML = '<p style="padding:26px;color:#C4452F;font-size:14px">' + err.message + '</p>';
       if ($('#oBytes')) $('#oBytes').textContent = '\u2014';
       return;
     }
-    ['dl','printSheet','downloadPNG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
+    ['dl','printSheet','downloadPNG','downloadSVG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
     status('');
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;

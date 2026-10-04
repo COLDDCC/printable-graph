@@ -147,6 +147,37 @@
               "type": "boolean",
               "default": true
             }
+          },
+          {
+            "name": "style",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "square",
+                "dot",
+                "coordinate"
+              ],
+              "default": "square"
+            }
+          },
+          {
+            "name": "margin",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 50
+            }
+          },
+          {
+            "name": "weight",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "minimum": 0.05,
+              "maximum": 1
+            }
           }
         ],
         "responses": {

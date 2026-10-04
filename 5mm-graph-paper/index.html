@@ -85,6 +85,7 @@
       </div>
 
       <div class="ctrls">
+        <div class="f"><span>Paper type</span><select id="style" aria-label="Paper type"><option value="square">Square grid</option><option value="dot">Dot grid</option><option value="coordinate">Coordinate grid (four quadrants)</option></select></div>
         <div class="f">
           <span>Square size</span>
           <div class="presets" id="presets">
@@ -127,6 +128,7 @@
           </div>
         </div>
 
+<details class="advanced"><summary>Advanced settings</summary>
         <div class="row">
           <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
           <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
@@ -146,9 +148,15 @@
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
 
+        <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
+        <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>
         <label class="check"><input type="checkbox" id="calib" checked>
           <span>Include the measuring bars (turn off for a clean sheet)</span></label>
+        </details>
         <button class="dl" id="dl" type="button">Download PDF</button>
+        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+        <p id="toolStatus" role="status" aria-live="polite"></p>
+        <p class="print-hint">For accurate measurements, print the PDF at 100% / Actual Size.</p>
       </div>
     </div>
   </div>
@@ -156,7 +164,7 @@
   <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?size=5mm&amp;paper=a4</a></p>
 
   <div class="intro">
-    <p class="lede">The ruling inside almost every school exercise book outside North America. It is standard for a reason that is easy to miss: <b>5 divides both 210 and 297 exactly</b>, so a 5&nbsp;mm grid and an A4 sheet were made for each other.</p>
+    <p class="lede">The ruling inside almost every school exercise book outside North America. It is standard for a reason that is easy to miss: <b>5 mm makes convenient, easily counted divisions</b>, so a 5&nbsp;mm grid and an A4 sheet were made for each other.</p>
   </div>
 
   <figure class="preview-shot">
@@ -232,7 +240,7 @@
     <div class="sec-hd">
       <h2>Before you print</h2>
     </div>
-    <p class="pointer">A default print dialog shrinks the page by four to six percent, which turns a 5&nbsp;mm square into roughly 4.7&nbsp;mm. That is enough to make a bead template the wrong size and a scale sketch a lie. Set the scale to 100% or Actual Size, then check the 100&nbsp;mm bar at the foot of the sheet with a ruler.
+    <p class="pointer">Fit to page can shrink a 5&nbsp;mm square; the amount depends on your settings. That is enough to make a bead template the wrong size and a scale sketch a lie. Set the scale to 100% or Actual Size, then check the 100&nbsp;mm bar at the foot of the sheet with a ruler.
       <a href="/#setup">The full setting-by-setting guide is on the home page.</a></p>
   </section>
 
@@ -263,7 +271,7 @@
       </details>
       <details>
         <summary>Can I print 5 mm paper on Letter?</summary>
-        <p>Yes, and the squares stay exactly 5&nbsp;mm; only the number of them changes. Pick whichever paper is actually in the printer, because printing an A4 file onto Letter forces a resize that no scale setting can undo.</p>
+        <p>Yes, and the squares stay exactly 5&nbsp;mm; only the number of them changes. Pick whichever paper is actually in the printer, because printing an A4 file onto Letter may scale or crop the sheet depending on the print settings.</p>
       </details>
     </div>
   </section>

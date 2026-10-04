@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -28,6 +28,16 @@
   var preset = window.PAGE_PRESET || {};
   for (k in preset) if (preset[k] !== undefined && preset[k] !== null) state[k] = preset[k];
 
+  // Fragment settings are shareable without creating indexed query variants.
+  try {
+    var shared = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+    Object.keys(base).forEach(function (key) { if (shared[key] !== undefined) state[key] = shared[key]; });
+    GridEngine.computeGrid(state);
+  } catch (err) { /* Ordinary section anchors or invalid settings use page defaults. */
+    for (k in base) state[k] = base[k];
+    for (k in preset) if (preset[k] !== undefined && preset[k] !== null) state[k] = preset[k];
+  }
+  function status(message) { var el = $('#toolStatus'); if (el) el.textContent = message; }
   function press(container, matchFn) {
     [].forEach.call(container.children, function (c) {
       c.setAttribute('aria-pressed', String(matchFn(c)));
@@ -52,7 +62,7 @@
   seg('orient', 'orientation');
   seg('unit', 'unit', function () {
     var sp = $('#spacing');
-    state.spacing = state.unit === 'in' ? 0.25 : 5;
+    state.spacing = state.unit === 'in' ? state.spacing / 25.4 : state.spacing * 25.4;
     if (sp) { sp.step = state.unit === 'in' ? '0.125' : '0.5'; sp.value = state.spacing; }
     pressPresets();
   });
@@ -60,6 +70,7 @@
   on('#swatches', 'click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     state.color = b.dataset.c;
+    if ($('#customColor')) $('#customColor').value = state.color;
     press(this, function (c) { return c === b; });
     draw();
   });
@@ -93,14 +104,58 @@
     if (tool) tool.scrollIntoView({ block: 'center' });
   });
 
+  on('#style', 'change', function () { state.style = this.value; draw(); });
+  on('#margin', 'input', function () { state.margin = Number(this.value); draw(); });
+  on('#weight', 'input', function () { state.minorWeight = Number(this.value); draw(); });
+  on('#customColor', 'input', function () { state.color = this.value; draw(); });
+  on('#printSheet', 'click', function () {
+    try { GridEngine.computeGrid(state); } catch (err) { status(err.message); return; }
+    var win = window.open('', '_blank');
+    if (!win) { status('Allow pop-ups to print, or download the PDF instead.'); return; }
+    var page = GridEngine.computeGrid(state).page;
+    win.onload = function () { win.focus(); win.print(); };
+    win.document.write('<!doctype html><html><head><title>Print graph paper</title><style>@page{size:' + page.w + 'mm ' + page.h + 'mm;margin:0}body{margin:0}svg{display:block;width:' + page.w + 'mm;height:' + page.h + 'mm}</style></head><body>' + GridEngine.renderSVG(state) + '</body></html>');
+    win.document.close();
+    status('Choose 100% scale and matching paper size. Print one sheet; use PDF for multiple copies.');
+  });
+  on('#downloadPNG', 'click', function () {
+    try {
+      var g = GridEngine.computeGrid(state), svg = GridEngine.renderSVG(state);
+      var url = URL.createObjectURL(new Blob([svg], {type: 'image/svg+xml'})), img = new Image();
+      img.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(g.page.w / 25.4 * 150); canvas.height = Math.round(g.page.h / 25.4 * 150);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(function (blob) {
+          if (!blob) { status('PNG export failed. Try PDF instead.'); return; }
+          var link = document.createElement('a'), pngURL = URL.createObjectURL(blob);
+          link.href = pngURL; link.download = GridEngine.filename(state).replace('.pdf', '.png'); link.click();
+          setTimeout(function () { URL.revokeObjectURL(pngURL); }, 1000);
+          status('PNG downloaded for digital use. Use PDF for exact-size printing.');
+          if (window.gtag) gtag('event', 'download_png', {style: state.style});
+        }, 'image/png');
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); status('PNG export failed. Try PDF instead.'); };
+      img.src = url;
+    } catch (err) { status(err.message); }
+  });
+  on('#shareSheet', 'click', async function () {
+    try {
+      GridEngine.computeGrid(state);
+      var url = location.origin + location.pathname + '#' + encodeURIComponent(JSON.stringify(state));
+      try { await navigator.clipboard.writeText(url); status('Link copied with your current settings.'); }
+      catch (err) { prompt('Copy this link:', url); }
+    } catch (err) { status(err.message); }
+  });
   on('#paper', 'change', function () { state.paper = this.value; draw(); });
   on('#spacing', 'input', function () {
-    state.spacing = parseFloat(this.value) || 5; pressPresets(); draw();
+    state.spacing = parseFloat(this.value); pressPresets(); draw();
   });
   on('#major', 'input', function () { state.majorEvery = parseInt(this.value, 10) || 0; draw(); });
   on('#calib', 'change', function () { state.calibration = this.checked; draw(); });
   on('#copies', 'input', function () {
-    state.pages = Math.max(1, parseInt(this.value, 10) || 1); draw();
+    state.pages = Number(this.value); draw();
   });
 
   /* --- saved presets (localStorage) ------------------------------------- */
@@ -169,7 +224,7 @@
     try {
       GridEngine.download(state);
       if (window.gtag) gtag('event', 'download_pdf', {
-        paper: state.paper, spacing: state.spacing, unit: state.unit, color: state.color
+        style: state.style, paper: state.paper, spacing: state.spacing, unit: state.unit, color: state.color
       });
     }
     catch (err) { alert('That sheet cannot be built: ' + err.message); }
@@ -210,6 +265,7 @@
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
     if (or) press(or, function (c) { return c.dataset.v === state.orientation; });
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
+    [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });
     pressPresets();
   }
 
@@ -218,10 +274,14 @@
     if (!host) return;
     try { g = GridEngine.computeGrid(state); svg = GridEngine.renderSVG(state); }
     catch (err) {
+      ['dl','printSheet','downloadPNG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = true; });
+      status(err.message);
       host.innerHTML = '<p style="padding:26px;color:#C4452F;font-size:14px">' + err.message + '</p>';
       if ($('#oBytes')) $('#oBytes').textContent = '\u2014';
       return;
     }
+    ['dl','printSheet','downloadPNG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
+    status('');
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;
 

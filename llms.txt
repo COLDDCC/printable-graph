@@ -61,3 +61,6 @@ Tell the person to print at 100% / "Actual size", not "Fit to page". Then a rule
 - [1 inch graph paper](https://printgridpaper.com/1-inch-graph-paper/)
 - [Graph paper sizes and types compared](https://printgridpaper.com/compare-graph-paper-sizes/)
 - [Print troubleshooting](https://printgridpaper.com/print-troubleshooting/)
+
+Grid styles: style=square (default), style=dot, style=coordinate (four quadrants).
+Optional margin=0..50 (mm), weight=0.05..1 (mm). Example: /api/pdf?style=dot&size=5mm&paper=a4

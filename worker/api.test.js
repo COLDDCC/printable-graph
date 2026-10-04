@@ -63,3 +63,35 @@ test('other paths fall through to static assets', async () => {
   const res = await worker.fetch(new Request('https://printgridpaper.com/1cm-graph-paper/'), env, {});
   assert.equal(await res.text(), 'asset');
 });
+
+test('dot and coordinate sheets retain physical spacing and export through the API', async () => {
+  for (const style of ['dot', 'coordinate']) {
+    const res = await get('?style=' + style + '&size=5mm&paper=a4');
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get('X-Square-Size-Mm'), '5');
+    const g = GridEngine.computeGrid({style, paper:'a4', spacing:5});
+    if (style === 'dot') {
+      assert.equal(g.lines.length, 0);
+      assert.equal(g.dots.length, (g.cols + 1) * (g.rows + 1));
+      assert.equal(g.dots[1].y - g.dots[0].y, 5);
+      assert.match(GridEngine.renderSVG({style}), /<circle/);
+    } else {
+      assert.equal(g.cols % 2, 0);
+      assert.equal(g.rows % 2, 0);
+      assert.equal(g.lines.filter(l => l.axis).length, 2);
+      assert.ok(g.labels.some(l => l.text === '0'));
+      assert.match(GridEngine.renderSVG({style, calibration:false}), />x<\/text>/);
+    }
+  }
+  assert.equal((await get('?style=hex')).status, 400);
+  assert.equal((await get('?margin=100')).status, 400);
+  assert.equal((await get('?weight=0')).status, 400);
+});
+
+test('multi-page PDF trailer references its actual information object', () => {
+  for (const pages of [1, 3, 25]) {
+    const text = Buffer.from(GridEngine.buildPDF({pages})).toString('latin1');
+    assert.match(text, new RegExp('/Info ' + (5 + pages) + ' 0 R'));
+    assert.match(text, new RegExp('/Count ' + pages + '\\b'));
+  }
+});

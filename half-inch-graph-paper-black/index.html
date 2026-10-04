@@ -85,6 +85,7 @@
       </div>
 
       <div class="ctrls">
+        <div class="f"><span>Paper type</span><select id="style" aria-label="Paper type"><option value="square">Square grid</option><option value="dot">Dot grid</option><option value="coordinate">Coordinate grid (four quadrants)</option></select></div>
         <div class="f">
           <span>Square size</span>
           <div class="presets" id="presets">
@@ -127,6 +128,7 @@
           </div>
         </div>
 
+<details class="advanced"><summary>Advanced settings</summary>
         <div class="row">
           <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="2" aria-label="Heavy line every N squares"></div>
           <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
@@ -147,9 +149,15 @@
           <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
         </div>
 
+        <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
+        <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>
         <label class="check"><input type="checkbox" id="calib" checked>
           <span>Include the measuring bars (turn off for a clean sheet)</span></label>
+        </details>
         <button class="dl" id="dl" type="button">Download PDF</button>
+        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="shareSheet">Share settings</button></div>
+        <p id="toolStatus" role="status" aria-live="polite"></p>
+        <p class="print-hint">For accurate measurements, print the PDF at 100% / Actual Size.</p>
       </div>
     </div>
   </div>

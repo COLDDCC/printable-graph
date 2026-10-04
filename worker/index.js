@@ -82,6 +82,9 @@ export function parseOptions(q) {
     throw new BadRequest('unit only applies together with spacing');
   }
 
+  if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate'], 'style');
+  if (q.has('margin')) o.margin = num(q.get('margin'), 'margin', 0, 50);
+  if (q.has('weight')) o.minorWeight = num(q.get('weight'), 'weight', 0.05, 1);
   if (q.has('paper')) o.paper = pick(q.get('paper'), Object.keys(GridEngine.PAPER), 'paper');
   if (q.has('orientation')) o.orientation = pick(q.get('orientation'), ['portrait', 'landscape'], 'orientation');
   if (q.has('major')) o.majorEvery = Math.round(num(q.get('major'), 'major', 0, 20));

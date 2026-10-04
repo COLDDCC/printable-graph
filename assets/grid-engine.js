@@ -30,6 +30,7 @@
   };
 
   var DEFAULTS = {
+    style: 'square',
     paper: 'letter',
     orientation: 'portrait',
     spacing: 5,             // in `unit`
@@ -79,8 +80,13 @@
     o = opts(o);
     var page = paperSize(o);
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
-    if (!(step > 0.2)) throw new Error('Spacing too small to print: ' + step + 'mm');
+    if (!isFinite(step) || step < 1) throw new Error('Spacing too small to print: ' + step + 'mm');
 
+    if (['square', 'dot', 'coordinate'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
+    if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
+    if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
+    if (!/^#[0-9a-f]{6}$/i.test(o.color)) throw new Error('Invalid line colour');
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     var availW = page.w - 2 * o.margin;
     var availH = page.h - 2 * o.margin - reserve;
@@ -88,6 +94,8 @@
 
     var cols = Math.floor((availW + 1e-9) / step);
     var rows = Math.floor((availH + 1e-9) / step);
+    if (o.style === 'coordinate') { cols -= cols % 2; rows -= rows % 2; }
+    if (cols < 2 || rows < 2) throw new Error('Choose a smaller spacing or margin');
     var gridW = cols * step;
     var gridH = rows * step;
     var x0 = o.margin + (availW - gridW) / 2;
@@ -105,7 +113,28 @@
                    w: major ? o.majorWeight : o.minorWeight, major: major });
     }
 
+    var dots = [], labels = [];
+    if (o.style === 'dot') {
+      if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');
+      lines = [];
+      for (var dx = 0; dx <= cols; dx++) for (var dy = 0; dy <= rows; dy++)
+        dots.push({x: x0 + dx * step, y: y0 + dy * step, r: Math.max(0.18, o.minorWeight)});
+    }
+    if (o.style === 'coordinate') {
+      var cx = x0 + gridW / 2, cy = y0 + gridH / 2;
+      lines.push({x1: cx, y1: y0, x2: cx, y2: y0 + gridH, w: 0.5, major: true, axis: true});
+      lines.push({x1: x0, y1: cy, x2: x0 + gridW, y2: cy, w: 0.5, major: true, axis: true});
+      var interval = Math.max(1, Math.ceil(8 / step));
+      for (var t = Math.ceil((-cols / 2 + 1) / interval) * interval; t < cols / 2; t += interval)
+        if (t !== 0) labels.push({x: cx + t * step - 1, y: cy + 3, size: 2.5, text: String(t)});
+      for (var t = Math.ceil((-rows / 2 + 1) / interval) * interval; t < rows / 2; t += interval)
+        if (t !== 0) labels.push({x: cx + 1, y: cy - t * step + 1, size: 2.5, text: String(t)});
+      labels.push({x: cx + 1, y: cy + 3, size: 2.5, text: '0'});
+      labels.push({x: x0 + gridW - 3, y: cy - 2, size: 3, text: 'x'});
+      labels.push({x: cx + 2, y: y0 + 3, size: 3, text: 'y'});
+    }
     return {
+      dots: dots, labels: labels,
       opts: o, page: page, step: step, cols: cols, rows: rows,
       x0: x0, y0: y0, gridW: gridW, gridH: gridH, lines: lines,
       calibrationY: page.h - o.margin - 12,      // metric bar baseline
@@ -165,10 +194,14 @@
       L = g.lines[i];
       s.push('<line x1="' + L.x1.toFixed(3) + '" y1="' + L.y1.toFixed(3) +
              '" x2="' + L.x2.toFixed(3) + '" y2="' + L.y2.toFixed(3) +
-             '" stroke-width="' + L.w + '"/>');
+             '" stroke="' + (L.axis ? g.opts.calibInk : g.opts.color) + '" stroke-width="' + L.w + '"/>');
     }
     s.push('</g>');
-    if (c.ticks.length) {
+    g.dots.forEach(function (d) {
+      s.push('<circle cx="' + d.x + '" cy="' + d.y + '" r="' + d.r + '" fill="' + g.opts.color + '"/>');
+    });
+    c.labels = g.labels.concat(c.labels);
+    if (c.ticks.length || c.labels.length) {
       s.push('<g stroke="' + g.opts.calibInk + '" stroke-linecap="butt">');
       for (i = 0; i < c.ticks.length; i++) {
         L = c.ticks[i];
@@ -225,12 +258,24 @@
     var ordered = g.lines.slice().sort(function (a, b) { return (a.major ? 1 : 0) - (b.major ? 1 : 0); });
     for (i = 0; i < ordered.length; i++) {
       L = ordered[i];
+      var ink = L.axis ? hex2rgb(g.opts.calibInk) : rgb;
+      out.push(n(ink[0]) + ' ' + n(ink[1]) + ' ' + n(ink[2]) + ' RG');
       if (L.w !== lastW) { out.push(n(mm2pt(L.w)) + ' w'); lastW = L.w; }
       out.push(n(mm2pt(L.x1)) + ' ' + n(flip(L.y1)) + ' m ' +
                n(mm2pt(L.x2)) + ' ' + n(flip(L.y2)) + ' l S');
     }
 
-    if (c.ticks.length) {
+    out.push(n(rgb[0]) + ' ' + n(rgb[1]) + ' ' + n(rgb[2]) + ' rg');
+    g.dots.forEach(function (d) {
+      var x = mm2pt(d.x), y = flip(d.y), radius = mm2pt(d.r), k = radius * 0.55228475;
+      out.push(n(x + radius) + ' ' + n(y) + ' m ' +
+        n(x + radius) + ' ' + n(y + k) + ' ' + n(x + k) + ' ' + n(y + radius) + ' ' + n(x) + ' ' + n(y + radius) + ' c ' +
+        n(x - k) + ' ' + n(y + radius) + ' ' + n(x - radius) + ' ' + n(y + k) + ' ' + n(x - radius) + ' ' + n(y) + ' c ' +
+        n(x - radius) + ' ' + n(y - k) + ' ' + n(x - k) + ' ' + n(y - radius) + ' ' + n(x) + ' ' + n(y - radius) + ' c ' +
+        n(x + k) + ' ' + n(y - radius) + ' ' + n(x + radius) + ' ' + n(y - k) + ' ' + n(x + radius) + ' ' + n(y) + ' c f');
+    });
+    c.labels = g.labels.concat(c.labels);
+    if (c.ticks.length || c.labels.length) {
       var ckrgb = hex2rgb(g.opts.calibInk);
       out.push(n(ckrgb[0]) + ' ' + n(ckrgb[1]) + ' ' + n(ckrgb[2]) + ' RG');
       lastW = null;
@@ -299,7 +344,7 @@
       xref += ('0000000000' + offsets[i]).slice(-10) + ' 00000 n \n';
     }
     var trailer = 'trailer\n<< /Size ' + (objs.length + 1) +
-                  ' /Root 1 0 R /Info 6 0 R >>\nstartxref\n' + pos + '\n%%EOF\n';
+                  ' /Root 1 0 R /Info ' + (5 + pages) + ' 0 R >>\nstartxref\n' + pos + '\n%%EOF\n';
 
     var pdf = head + body + xref + trailer;
     var bytes = new Uint8Array(pdf.length);
@@ -310,7 +355,7 @@
   function filename(o) {
     o = opts(o);
     var p = typeof o.paper === 'string' ? o.paper : 'custom';
-    var f = ['grid', o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
+    var f = [o.style, 'grid', o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
     if (Math.max(1, Math.floor(o.pages) || 1) > 1) {
       f = f.replace(/\.pdf$/, '-x' + (Math.floor(o.pages) || 1) + '.pdf');
     }

@@ -236,3 +236,13 @@ main:has(.hero.compact) .crumb{margin:0;padding-top:14px}
 .intro{margin-top:26px}
 .intro .lede{margin:0}
 main > .hero.compact:first-child{padding-top:22px}
+
+/* Keep advanced controls out of the main download flow. */
+.advanced{margin:10px 0}.advanced summary{cursor:pointer;font-size:13px;padding:8px 0}.advanced .row{margin-top:12px}
+.export-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.export-actions button{padding:8px 12px;background:white;border:1px solid #c3cdd2;border-radius:5px;cursor:pointer;font:inherit;font-size:12px}
+.print-hint,#toolStatus{font-size:12px;line-height:1.5;color:#53616b;margin:8px 0}button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:880px){
+  .tool.compact>.block{grid-row:1}
+  .tool.compact>.sheet-frame{grid-row:2}
+  .tool.compact .sheet{width:auto;height:340px;max-width:100%;margin:auto}
+}

@@ -30,6 +30,7 @@
   };
 
   var DEFAULTS = {
+    mode: 'spacing', columns: 20, rows: 30,
     style: 'square',
     paper: 'letter',
     orientation: 'portrait',
@@ -80,7 +81,7 @@
     o = opts(o);
     var page = paperSize(o);
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
-    if (!isFinite(step) || step < 1) throw new Error('Spacing too small to print: ' + step + 'mm');
+    if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
     if (['square', 'dot', 'coordinate'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
@@ -90,10 +91,16 @@
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     var availW = page.w - 2 * o.margin;
     var availH = page.h - 2 * o.margin - reserve;
+    if (o.mode === 'count') {
+      if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
+      if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
+      step = Math.min(availW / o.columns, availH / o.rows);
+      if (step < 1) throw new Error('Too many squares for this paper: reduce the counts or margins');
+    } else if (o.mode !== 'spacing') throw new Error('Unknown sizing mode');
     if (availW <= step || availH <= step) throw new Error('Margin leaves no room for a grid');
 
-    var cols = Math.floor((availW + 1e-9) / step);
-    var rows = Math.floor((availH + 1e-9) / step);
+    var cols = o.mode === 'count' ? o.columns : Math.floor((availW + 1e-9) / step);
+    var rows = o.mode === 'count' ? o.rows : Math.floor((availH + 1e-9) / step);
     if (o.style === 'coordinate') { cols -= cols % 2; rows -= rows % 2; }
     if (cols < 2 || rows < 2) throw new Error('Choose a smaller spacing or margin');
     var gridW = cols * step;
@@ -307,7 +314,7 @@
     var stream = contentStream(g);
     var W = n(mm2pt(g.page.w)), H = n(mm2pt(g.page.h));
     var title = 'Printable grid — ' + g.page.label + ' ' + o.orientation +
-                ' — ' + o.spacing + o.unit;
+                ' — ' + (o.mode === 'count' ? o.columns + 'x' + o.rows + ' squares' : o.spacing + o.unit);
     var pages = Math.max(1, Math.floor(o.pages) || 1), i;
 
     // Every page is identical, so they all share one content stream and one
@@ -355,7 +362,7 @@
   function filename(o) {
     o = opts(o);
     var p = typeof o.paper === 'string' ? o.paper : 'custom';
-    var f = [o.style, 'grid', o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
+    var f = [o.style, 'grid', o.mode === 'count' ? o.columns + 'x' + o.rows : o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
     if (Math.max(1, Math.floor(o.pages) || 1) > 1) {
       f = f.replace(/\.pdf$/, '-x' + (Math.floor(o.pages) || 1) + '.pdf');
     }

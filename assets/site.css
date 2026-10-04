@@ -253,3 +253,5 @@ main > .hero.compact:first-child{padding-top:22px}
 @media(max-width:1000px){.mast{gap:12px}.mast nav{gap:12px}.mast-tagline{max-width:300px}}
 @media(max-width:880px){.tool.compact .sheet{width:100%;height:auto}.mast nav{display:none}}
 @media(max-width:600px){.mast{height:auto;min-height:56px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:8px 12px}.mast-tagline{font-size:13px;max-width:none}.block-hd{gap:8px}.block-hd .paper-types{gap:4px}.block-hd .paper-types button{padding:7px 8px}}
+
+#countFields[hidden],#countHelp[hidden]{display:none}#countHelp{font-size:13px;line-height:1.5;margin:8px 0;color:var(--ink-2)}

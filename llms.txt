@@ -64,3 +64,5 @@ Tell the person to print at 100% / "Actual size", not "Fit to page". Then a rule
 
 Grid styles: style=square (default), style=dot, style=coordinate (four quadrants).
 Optional margin=0..50 (mm), weight=0.05..1 (mm). Example: /api/pdf?style=dot&size=5mm&paper=a4
+
+Exact-count mode: mode=count&columns=20&rows=30. Counts must be integers from 2 to 200; coordinate grids require even counts. Square spacing is calculated to fit the printable area and must be at least 1 mm.

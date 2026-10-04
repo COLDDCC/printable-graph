@@ -178,6 +178,37 @@
               "minimum": 0.05,
               "maximum": 1
             }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "spacing",
+                "count"
+              ]
+            }
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 200
+            },
+            "description": "Required with rows when mode=count"
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 200
+            },
+            "description": "Required with columns when mode=count"
           }
         ],
         "responses": {

@@ -130,6 +130,10 @@
         </div>
 
 <details class="advanced"><summary>Advanced settings</summary>
+
+          <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
+          <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
+          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge.</p>
           <button type="button" id="resetSheet">Reset settings</button>
         <div class="row">
           <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>

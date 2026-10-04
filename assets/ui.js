@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -83,6 +83,7 @@
   }
 
   function applyPitch(d) {
+    state.mode = 'spacing'; syncSizing();
     state.spacing = parseFloat(d.s);
     state.unit = d.u;
     state.majorEvery = parseInt(d.m, 10);
@@ -114,6 +115,17 @@
   function syncPaperTypes() {
     var host = $('#paperTypes');
     if (host) press(host, function (button) { return button.dataset.style === state.style; });
+  }
+  on('#sizingMode', 'change', function () { state.mode = this.value; syncSizing(); draw(); });
+  on('#columns', 'input', function () { state.columns = Number(this.value); draw(); });
+  on('#rows', 'input', function () { state.rows = Number(this.value); draw(); });
+  function syncSizing() {
+    if ($('#sizingMode')) $('#sizingMode').value = state.mode;
+    if ($('#columns')) $('#columns').value = state.columns;
+    if ($('#rows')) $('#rows').value = state.rows;
+    if ($('#countFields')) $('#countFields').hidden = state.mode !== 'count';
+    if ($('#countHelp')) $('#countHelp').hidden = state.mode !== 'count';
+    if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
   on('#margin', 'input', function () { state.margin = Number(this.value); draw(); });
   on('#weight', 'input', function () { state.minorWeight = Number(this.value); draw(); });
@@ -254,7 +266,7 @@
     try {
       GridEngine.download(state);
       if (window.gtag) gtag('event', 'download_pdf', {
-        style: state.style, paper: state.paper, spacing: state.spacing, unit: state.unit, color: state.color
+        mode: state.mode, columns: state.columns, rows: state.rows, style: state.style, paper: state.paper, spacing: state.spacing, unit: state.unit, color: state.color
       });
     }
     catch (err) { alert('That sheet cannot be built: ' + err.message); }
@@ -297,6 +309,7 @@
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
     [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });
     syncPaperTypes();
+    syncSizing();
     pressPresets();
   }
 
@@ -316,10 +329,10 @@
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;
 
-    if ($('#oPitch')) $('#oPitch').textContent = state.spacing + ' ' + state.unit;
+    if ($('#oPitch')) $('#oPitch').textContent = state.mode === 'count' ? g.step.toFixed(3) + ' mm' : state.spacing + ' ' + state.unit;
     if ($('#oSheet')) $('#oSheet').textContent =
       g.page.label + (state.orientation === 'landscape' ? ' \u2014 landscape' : '');
-    if ($('#metaGrid')) $('#metaGrid').textContent = g.cols + ' \u00D7 ' + g.rows + ' squares';
+    if ($('#metaGrid')) $('#metaGrid').textContent = (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
     if ($('#metaSize')) $('#metaSize').textContent =
       g.page.w.toFixed(1) + ' \u00D7 ' + g.page.h.toFixed(1) + ' mm';
     if ($('#oBytes')) {

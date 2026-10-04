@@ -95,3 +95,19 @@ test('multi-page PDF trailer references its actual information object', () => {
     assert.match(text, new RegExp('/Count ' + pages + '\\b'));
   }
 });
+
+test('exact counts keep square cells and fit within the printable area', async () => {
+  for (const style of ['square','dot','coordinate']) {
+    const o = {mode:'count',columns:20,rows:30,paper:'a4',style};
+    const g = GridEngine.computeGrid(o);
+    assert.equal(g.cols,20); assert.equal(g.rows,30);
+    assert.ok(g.gridW <= 190); assert.ok(g.gridH <= 259);
+    assert.equal(g.gridW / 20,g.gridH / 30);
+    const response = await get('?mode=count&columns=20&rows=30&style='+style);
+    assert.equal(response.status,200);
+    assert.equal(response.headers.get('X-Grid-Columns'),'20');
+    assert.equal(response.headers.get('X-Grid-Rows'),'30');
+  }
+  for (const query of ['?mode=count','?columns=20&rows=30','?mode=count&columns=2.5&rows=30','?mode=count&columns=21&rows=30&style=coordinate','?mode=count&columns=200&rows=200&paper=a5'])
+    assert.equal((await get(query)).status,400,query);
+});

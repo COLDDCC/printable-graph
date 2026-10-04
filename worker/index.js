@@ -82,6 +82,12 @@ export function parseOptions(q) {
     throw new BadRequest('unit only applies together with spacing');
   }
 
+  if (q.has('mode')) o.mode = pick(q.get('mode'), ['spacing','count'], 'mode');
+  if (q.has('columns') || q.has('rows')) {
+    if (o.mode !== 'count' || !q.has('columns') || !q.has('rows')) throw new BadRequest('Exact counts require mode=count, columns and rows');
+    o.columns = num(q.get('columns'), 'columns', 2, 200);
+    o.rows = num(q.get('rows'), 'rows', 2, 200);
+  } else if (o.mode === 'count') throw new BadRequest('Provide columns and rows');
   if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate'], 'style');
   if (q.has('margin')) o.margin = num(q.get('margin'), 'margin', 0, 50);
   if (q.has('weight')) o.minorWeight = num(q.get('weight'), 'weight', 0.05, 1);

@@ -109,6 +109,8 @@
     var button = e.target.closest('button[data-style]');
     if (!button) return;
     state.style = button.dataset.style;
+    if (state.style === 'isometric') state.mode = 'spacing';
+    syncSizing();
     syncPaperTypes();
     draw();
   });
@@ -120,7 +122,7 @@
   on('#columns', 'input', function () { state.columns = Number(this.value); draw(); });
   on('#rows', 'input', function () { state.rows = Number(this.value); draw(); });
   function syncSizing() {
-    if ($('#sizingMode')) $('#sizingMode').value = state.mode;
+    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'isometric'; }
     if ($('#columns')) $('#columns').value = state.columns;
     if ($('#rows')) $('#rows').value = state.rows;
     if ($('#countFields')) $('#countFields').hidden = state.mode !== 'count';
@@ -325,14 +327,14 @@
       return;
     }
     ['dl','printSheet','downloadPNG','downloadSVG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
-    status('');
+    status(state.style === 'isometric' ? 'Isometric: spacing is the triangle edge length. Heavy-line settings do not apply.' : '');
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;
 
     if ($('#oPitch')) $('#oPitch').textContent = state.mode === 'count' ? g.step.toFixed(3) + ' mm' : state.spacing + ' ' + state.unit;
     if ($('#oSheet')) $('#oSheet').textContent =
       g.page.label + (state.orientation === 'landscape' ? ' \u2014 landscape' : '');
-    if ($('#metaGrid')) $('#metaGrid').textContent = (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
+    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
     if ($('#metaSize')) $('#metaSize').textContent =
       g.page.w.toFixed(1) + ' \u00D7 ' + g.page.h.toFixed(1) + ' mm';
     if ($('#oBytes')) {

@@ -78,7 +78,7 @@
     </div>
 
     <div class="block">
-      <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button></div><span id="oBytes">&mdash;</span></div>
+      <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button><button type="button" data-style="isometric" aria-pressed="false">Isometric</button></div><span id="oBytes">&mdash;</span></div>
       <div class="preset-chips" id="presetChips" hidden></div>
       <div class="cells">
         <div class="cell"><label>Square</label><output id="oPitch">1/8 inch</output></div>
@@ -157,7 +157,7 @@
 
           <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
           <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
-          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge.</p>
+          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge. Isometric paper uses spacing mode.</p>
           <button type="button" id="resetSheet">Reset settings</button>
 
           <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>

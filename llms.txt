@@ -66,3 +66,5 @@ Grid styles: style=square (default), style=dot, style=coordinate (four quadrants
 Optional margin=0..50 (mm), weight=0.05..1 (mm). Example: /api/pdf?style=dot&size=5mm&paper=a4
 
 Exact-count mode: mode=count&columns=20&rows=30. Counts must be integers from 2 to 200; coordinate grids require even counts. Square spacing is calculated to fit the printable area and must be at least 1 mm.
+
+Isometric paper: style=isometric, spacing mode only. Spacing is the equilateral triangle edge length. Three line families run vertically and at +/-30 degrees; heavy-line intervals do not apply.

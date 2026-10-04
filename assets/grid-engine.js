@@ -83,7 +83,7 @@
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
-    if (['square', 'dot', 'coordinate'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (['square', 'dot', 'coordinate', 'isometric'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
@@ -91,6 +91,7 @@
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     var availW = page.w - 2 * o.margin;
     var availH = page.h - 2 * o.margin - reserve;
+    if (o.style === 'isometric' && o.mode === 'count') throw new Error('Isometric paper uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
       if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
@@ -103,7 +104,8 @@
     var rows = o.mode === 'count' ? o.rows : Math.floor((availH + 1e-9) / step);
     if (o.style === 'coordinate') { cols -= cols % 2; rows -= rows % 2; }
     if (cols < 2 || rows < 2) throw new Error('Choose a smaller spacing or margin');
-    var gridW = cols * step;
+    if (o.style === 'isometric') cols = Math.floor((availW + 1e-9) / (step * Math.sqrt(3) / 2));
+    var gridW = cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
     var gridH = rows * step;
     var x0 = o.margin + (availW - gridW) / 2;
     var y0 = o.margin + (availH - gridH) / 2;
@@ -120,6 +122,22 @@
                    w: major ? o.majorWeight : o.minorWeight, major: major });
     }
 
+    if (o.style === 'isometric') {
+      lines = [];
+      function isoLine(a, b, c, d) { lines.push({x1:x0+a,y1:y0+b,x2:x0+c,y2:y0+d,w:o.minorWeight,major:false}); }
+      var dx = step * Math.sqrt(3) / 2;
+      for (i = 0; i <= cols; i++) isoLine(i * dx, 0, i * dx, gridH);
+      // Two families at +/-30 degrees; clipped to the rectangular grid area.
+      [-1 / Math.sqrt(3), 1 / Math.sqrt(3)].forEach(function (slope) {
+        var low = Math.min(0, -slope * gridW), high = Math.max(gridH, gridH - slope * gridW);
+        for (var j = Math.ceil(low / step); j <= Math.floor(high / step); j++) {
+          var intercept = j * step;
+          var left = Math.max(0, Math.min(-intercept / slope, (gridH - intercept) / slope));
+          var right = Math.min(gridW, Math.max(-intercept / slope, (gridH - intercept) / slope));
+          if (right - left > 0.00001) isoLine(left, slope * left + intercept, right, slope * right + intercept);
+        }
+      });
+    }
     var dots = [], labels = [];
     if (o.style === 'dot') {
       if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');

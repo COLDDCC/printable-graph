@@ -156,7 +156,8 @@
               "enum": [
                 "square",
                 "dot",
-                "coordinate"
+                "coordinate",
+                "isometric"
               ],
               "default": "square"
             }

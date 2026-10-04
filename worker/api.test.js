@@ -111,3 +111,19 @@ test('exact counts keep square cells and fit within the printable area', async (
   for (const query of ['?mode=count','?columns=20&rows=30','?mode=count&columns=2.5&rows=30','?mode=count&columns=21&rows=30&style=coordinate','?mode=count&columns=200&rows=200&paper=a5'])
     assert.equal((await get(query)).status,400,query);
 });
+
+test('isometric grid has vertical and true 30-degree lines inside its bounds', async () => {
+  const g = GridEngine.computeGrid({style:'isometric',paper:'a4',spacing:5});
+  const vertical = g.lines.filter(l=>Math.abs(l.x2-l.x1)<1e-8);
+  assert.ok(vertical.length>0);
+  assert.ok(Math.abs(vertical[1].x1-vertical[0].x1-5*Math.sqrt(3)/2)<1e-8);
+  const slants = g.lines.filter(l=>Math.abs(l.x2-l.x1)>1e-8);
+  assert.ok(slants.some(l=>l.y2>l.y1)); assert.ok(slants.some(l=>l.y2<l.y1));
+  for (const l of slants) assert.ok(Math.abs(Math.abs((l.y2-l.y1)/(l.x2-l.x1))-1/Math.sqrt(3))<1e-8);
+  for (const l of g.lines) for (const [x,y] of [[l.x1,l.y1],[l.x2,l.y2]]) {
+    assert.ok(x>=g.x0-1e-8 && x<=g.x0+g.gridW+1e-8);
+    assert.ok(y>=g.y0-1e-8 && y<=g.y0+g.gridH+1e-8);
+  }
+  assert.equal((await get('?style=isometric&size=5mm')).status,200);
+  assert.equal((await get('?style=isometric&mode=count&columns=20&rows=30')).status,400);
+});

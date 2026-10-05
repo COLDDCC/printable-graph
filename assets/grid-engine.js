@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, numberOrder: 'rows', radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -236,6 +236,7 @@
       if (!Number.isInteger(o.numberStart) || !Number.isInteger(o.numberEnd) || o.numberStart < 1 || o.numberEnd > 9999 || o.numberEnd < o.numberStart) throw new Error('Number range must be whole numbers from 1 to 9999, with end at least start');
       if (!Number.isFinite(o.numberSize) || o.numberSize < 2 || o.numberSize > 8) throw new Error('Number size must be between 2 and 8 mm');
       if (['rows','columns','snake'].indexOf(o.numberOrder) < 0) throw new Error('Unknown number order');
+      if (['center','top-left','top-right'].indexOf(o.numberPosition) < 0) throw new Error('Unknown number position');
       var numberedCells = hexCells.slice();
       if (o.style === 'hexagonal' && o.numberOrder === 'columns') numberedCells.sort(function(a,b) { return Math.abs(a.x-b.x)<1e-8 ? a.y-b.y : a.x-b.x; });
       if (o.style === 'hexagonal' && o.numberOrder === 'snake') {
@@ -253,7 +254,15 @@
         var cellRow = o.numberOrder === 'columns' ? cell%rows : Math.floor(cell/cols);
         if (o.numberOrder === 'snake' && cellRow%2) cellCol=cols-1-cellCol;
         var center = o.style === 'hexagonal' ? numberedCells[cell] : {x:x0+(cellCol+0.5)*step,y:y0+(cellRow+0.5)*step};
-        labels.push({x:center.x-cellText.length*textSize*0.278,y:center.y+textSize*0.35,size:textSize,text:cellText});
+        var labelX=center.x-cellText.length*textSize*0.278, labelY=center.y+textSize*0.35;
+        if (o.numberPosition !== 'center') {
+          // Keep corner labels inside the central rectangle of both cell shapes.
+          textSize=Math.min(textSize,step*0.2);
+          var inset=step*0.4, textWidth=cellText.length*textSize*0.556;
+          labelX=o.numberPosition === 'top-left' ? center.x-inset : center.x+inset-textWidth;
+          labelY=center.y-step*0.35+textSize*0.8;
+        }
+        labels.push({x:labelX,y:labelY,size:textSize,text:cellText});
       }
     }
     if (o.style === 'dot') {

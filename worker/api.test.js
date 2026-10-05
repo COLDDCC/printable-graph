@@ -360,3 +360,27 @@ test('number order traverses square and hexagonal cells without duplicates', asy
   }
   assert.equal((await get('?numberOrder=bad')).status,400);
 });
+
+test('corner numbers leave writing space and stay inside both cell shapes', async () => {
+  for (const style of ['square','hexagonal']) {
+    const o={style,spacing:10,cellNumbers:true,numberSize:8,numberStart:9999,numberEnd:9999};
+    const middle=GridEngine.computeGrid(o).labels[0];
+    const left=GridEngine.computeGrid({...o,numberPosition:'top-left'}).labels[0];
+    const right=GridEngine.computeGrid({...o,numberPosition:'top-right'}).labels[0];
+    const cx=middle.x+middle.text.length*middle.size*.278,cy=middle.y-middle.size*.35;
+    for(const l of [left,right]) {
+      assert.ok(l.y<cy);assert.ok(l.size<=2);
+      assert.ok(l.x>=cx-4-1e-8);assert.ok(l.x+l.text.length*l.size*.556<=cx+4+1e-8);
+      assert.ok(l.y-l.size*.8>=cy-3.5-1e-8);
+    }
+    assert.ok(left.x<right.x);
+    for(const numberOrder of ['rows','columns','snake']) {
+      const g=GridEngine.computeGrid({...o,numberStart:1,numberEnd:31,numberOrder,numberPosition:'top-right'});
+      assert.equal(g.labels[0].text,'1');assert.equal(g.labels.at(-1).text,'31');
+      assert.ok(GridEngine.buildPDF(g.opts).length>1000);
+    }
+    assert.throws(()=>GridEngine.computeGrid({...o,numberPosition:'bad'}),/number position/);
+    assert.equal((await get('?style='+style+'&spacing=10&cellNumbers=true&numberPosition=top-left')).status,200);
+  }
+  assert.equal((await get('?numberPosition=bad')).status,400);
+});

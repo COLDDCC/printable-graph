@@ -406,6 +406,20 @@
               ],
               "default": "rows"
             }
+          },
+          {
+            "name": "numberPosition",
+            "in": "query",
+            "description": "Cell number placement. Corner labels shrink to leave writing space.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "center",
+                "top-left",
+                "top-right"
+              ],
+              "default": "center"
+            }
           }
         ],
         "responses": {

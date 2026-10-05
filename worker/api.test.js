@@ -189,3 +189,12 @@ test('binding margin reserves left space for every grid style and headings', asy
   assert.equal(res.status,200);
   assert.equal((await get('?bindingMargin=31')).status,400);
 });
+
+test('PNG pixel dimensions match selected resolution and page orientation', () => {
+  assert.deepEqual(GridEngine.pngSize({paper:'a4'},150), {width:1240,height:1754,dpi:150});
+  assert.deepEqual(GridEngine.pngSize({paper:'a4'},300), {width:2480,height:3508,dpi:300});
+  assert.deepEqual(GridEngine.pngSize({paper:'letter',orientation:'landscape'},300), {width:3300,height:2550,dpi:300});
+  assert.deepEqual(GridEngine.pngSize({paper:'a3'},300), {width:3508,height:4961,dpi:300});
+  assert.throws(() => GridEngine.pngSize({},600), /PNG resolution/);
+  assert.throws(() => GridEngine.pngSize({},NaN), /PNG resolution/);
+});

@@ -250,6 +250,13 @@
   /* --- SVG preview ---------------------------------------------------------
      Same line list, so what is previewed is what is printed.
      ------------------------------------------------------------------------ */
+  function pngSize(o, dpi) {
+    dpi = Number(dpi);
+    if (dpi !== 150 && dpi !== 300) throw new Error('PNG resolution must be 150 or 300 DPI');
+    var g = computeGrid(o);
+    return {width:Math.round(g.page.w / MM_PER_IN * dpi),height:Math.round(g.page.h / MM_PER_IN * dpi),dpi:dpi};
+  }
+
   function renderSVG(o) {
     var g = computeGrid(o), c = calibrationMarks(g), s = [], i, L;
     s.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' +
@@ -441,7 +448,7 @@
   return {
     PAPER: PAPER, DEFAULTS: DEFAULTS, MM_PER_IN: MM_PER_IN,
     computeGrid: computeGrid, calibrationMarks: calibrationMarks,
-    renderSVG: renderSVG, buildPDF: buildPDF, filename: filename, download: download,
+    pngSize: pngSize, renderSVG: renderSVG, buildPDF: buildPDF, filename: filename, download: download,
     mm2pt: mm2pt
   };
 });

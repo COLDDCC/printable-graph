@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { pngDpi: 150, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -129,6 +129,7 @@
     if ($('#countHelp')) $('#countHelp').hidden = state.mode !== 'count';
     if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
+  on('#pngDpi', 'change', function () { state.pngDpi = Number(this.value); });
   on('#bindingMargin', 'input', function () { state.bindingMargin = Number(this.value); draw(); });
   on('#sheetTitle', 'input', function () { state.title = this.value; draw(); });
   on('#worksheetHeader', 'change', function () { state.worksheetHeader = this.checked; draw(); });
@@ -147,20 +148,20 @@
   });
   on('#downloadPNG', 'click', function () {
     try {
-      var g = GridEngine.computeGrid(state), svg = GridEngine.renderSVG(state);
+      var exportState = Object.assign({}, state), dimensions = GridEngine.pngSize(exportState, exportState.pngDpi), svg = GridEngine.renderSVG(exportState);
       var url = URL.createObjectURL(new Blob([svg], {type: 'image/svg+xml'})), img = new Image();
       img.onload = function () {
         var canvas = document.createElement('canvas');
-        canvas.width = Math.round(g.page.w / 25.4 * 150); canvas.height = Math.round(g.page.h / 25.4 * 150);
+        canvas.width = dimensions.width; canvas.height = dimensions.height;
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
         URL.revokeObjectURL(url);
         canvas.toBlob(function (blob) {
           if (!blob) { status('PNG export failed. Try PDF instead.'); return; }
           var link = document.createElement('a'), pngURL = URL.createObjectURL(blob);
-          link.href = pngURL; link.download = GridEngine.filename(state).replace('.pdf', '.png'); link.click();
+          link.href = pngURL; link.download = GridEngine.filename(exportState).replace('.pdf', '-' + dimensions.dpi + 'dpi.png'); link.click();
           setTimeout(function () { URL.revokeObjectURL(pngURL); }, 1000);
-          status('PNG downloaded for digital use. Use PDF for exact-size printing.');
-          if (window.gtag) gtag('event', 'download_png', {style: state.style});
+          status('PNG downloaded: ' + dimensions.width + ' × ' + dimensions.height + ' px (' + dimensions.dpi + ' DPI pixel resolution). Use PDF for exact-size printing.');
+          if (window.gtag) gtag('event', 'download_png', {style: exportState.style, dpi: dimensions.dpi});
         }, 'image/png');
       };
       img.onerror = function () { URL.revokeObjectURL(url); status('PNG export failed. Try PDF instead.'); };
@@ -312,6 +313,7 @@
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
     if (or) press(or, function (c) { return c.dataset.v === state.orientation; });
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
+    if ($('#pngDpi')) $('#pngDpi').value = state.pngDpi === 300 ? '300' : '150';
     if ($('#bindingMargin')) $('#bindingMargin').value = state.bindingMargin;
     if ($('#sheetTitle')) $('#sheetTitle').value = state.title;
     if ($('#worksheetHeader')) $('#worksheetHeader').checked = state.worksheetHeader;

@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -227,6 +227,17 @@
       var fieldSize = Math.min(3.5, availW / 42);
       labels.push({x:leftMargin,y:margins.top+15,size:fieldSize,text:'Name: ____________________'});
       labels.push({x:leftMargin+availW*0.6,y:margins.top+15,size:fieldSize,text:'Date: ____________'});
+    }
+    if (o.cellNumbers) {
+      if (o.style !== 'square') throw new Error('Cell numbering is available for square paper');
+      if (!Number.isInteger(o.numberStart) || !Number.isInteger(o.numberEnd) || o.numberStart < 1 || o.numberEnd > 9999 || o.numberEnd < o.numberStart) throw new Error('Number range must be whole numbers from 1 to 9999, with end at least start');
+      var numberedCount = Math.min(cols * rows, o.numberEnd - o.numberStart + 1);
+      if (numberedCount > 1000) throw new Error('Limit numbered cells to 1000');
+      if (step < 8) throw new Error('Numbered cells need at least 8 mm spacing; choose larger squares or fewer rows and columns');
+      for (var cell = 0; cell < numberedCount; cell++) {
+        var cellText = String(o.numberStart + cell), textSize = Math.min(3.5,step / (cellText.length * 0.75 + 1));
+        labels.push({x:x0+(cell%cols+0.5)*step-cellText.length*textSize*0.278,y:y0+(Math.floor(cell/cols)+0.5)*step+textSize*0.35,size:textSize,text:cellText});
+      }
     }
     if (o.style === 'dot') {
       if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');

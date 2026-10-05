@@ -352,6 +352,35 @@
               "minimum": 100,
               "maximum": 420
             }
+          },
+          {
+            "name": "cellNumbers",
+            "in": "query",
+            "description": "Square cells numbered row by row. Needs spacing at least 8 mm; limit 1000 numbered cells. Stops at sheet capacity.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "numberStart",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999,
+              "default": 1
+            }
+          },
+          {
+            "name": "numberEnd",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9999,
+              "default": 31
+            }
           }
         ],
         "responses": {

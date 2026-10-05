@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { cellNumbers: false, numberStart: 1, numberEnd: 31, pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -109,6 +109,8 @@
     var button = e.target.closest('button[data-style]');
     if (!button) return;
     state.style = button.dataset.style;
+    if (state.style !== 'square') state.cellNumbers = false;
+    syncNumbers();
     if ((state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
     syncSizing();
     syncPaperTypes();
@@ -134,6 +136,20 @@
     if ($('#countHelp')) $('#countHelp').hidden = state.mode !== 'count';
     if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
+  function syncNumbers() {
+    if ($('#cellNumbers')) { $('#cellNumbers').checked = state.cellNumbers; $('#cellNumbers').disabled = state.style !== 'square'; }
+    if ($('#numberFields')) $('#numberFields').hidden = !state.cellNumbers;
+    if ($('#numberStart')) $('#numberStart').value = state.numberStart;
+    if ($('#numberEnd')) $('#numberEnd').value = state.numberEnd;
+  }
+  on('#cellNumbers', 'change', function () {
+    if (this.checked) {
+      try { if (GridEngine.computeGrid(state).step < 8) { state.mode='spacing'; state.unit='mm'; state.spacing=10; } } catch (err) { /* draw reports invalid settings */ }
+    }
+    state.cellNumbers=this.checked; syncControls(); draw();
+  });
+  on('#numberStart', 'input', function () { state.numberStart=Number(this.value); draw(); });
+  on('#numberEnd', 'input', function () { state.numberEnd=Number(this.value); draw(); });
   on('#logAxes', 'change', function () { state.logAxes = this.value; draw(); });
   on('#decades', 'change', function () { state.decades = Number(this.value); draw(); });
   on('#radials', 'change', function () { state.radials = Number(this.value); draw(); });
@@ -345,6 +361,7 @@
     syncSizing();
     syncMargins();
     syncCustomPaper();
+    syncNumbers();
     pressPresets();
   }
 
@@ -360,7 +377,7 @@
       return;
     }
     ['dl','printSheet','downloadPNG','downloadSVG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
-    status(state.style === 'logarithmic' ? 'Base-10 log paper: each decade runs from 1 to 10 times the previous value. Spacing and heavy-line controls apply to linear axes; decade boundaries are heavy.' : state.style === 'polar' ? 'Polar: spacing is the distance between rings; radial lines divide a full circle evenly.' : state.style === 'hexagonal' ? 'Hexagonal: spacing is each hexagon edge length. Heavy-line settings do not apply.' : state.style === 'isometric' ? 'Isometric: spacing is the triangle edge length. Heavy-line settings do not apply.' : '');
+    status(state.cellNumbers ? 'Cells are numbered left to right, then top to bottom. Numbered cells need at least 8 mm spacing; smaller grids switch to 10 mm when enabled.' : state.style === 'logarithmic' ? 'Base-10 log paper: each decade runs from 1 to 10 times the previous value. Spacing and heavy-line controls apply to linear axes; decade boundaries are heavy.' : state.style === 'polar' ? 'Polar: spacing is the distance between rings; radial lines divide a full circle evenly.' : state.style === 'hexagonal' ? 'Hexagonal: spacing is each hexagon edge length. Heavy-line settings do not apply.' : state.style === 'isometric' ? 'Isometric: spacing is the triangle edge length. Heavy-line settings do not apply.' : '');
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;
 

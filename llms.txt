@@ -82,3 +82,5 @@ Logarithmic paper: style=logarithmic, logAxes=x|y|both (default y), decades=1..4
 Independent margins: marginTop, marginBottom, marginLeft, marginRight accept 0..50 mm. Any side enables separate margins unless separateMargins=false is explicit; unspecified sides use margin (default 10 mm). Extra bindingMargin is added to the left side. Header and calibration bars respect top/bottom margins.
 
 Custom paper: paper=custom requires paperWidth and paperHeight in mm (100..420 per side). Landscape swaps dimensions. Shared settings and saved presets keep dimensions; PDF, SVG, PNG and printing use the same custom page size.
+
+Square cell numbers: cellNumbers=true with numberStart (default 1) and numberEnd (default 31), whole numbers 1..9999. Left-to-right then top-to-bottom, stops at available cells. Requires at least 8 mm spacing, with at most 1000 numbered cells. Browser enabling switches smaller grids to 10 mm; API callers must specify adequate spacing themselves.

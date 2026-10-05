@@ -285,3 +285,22 @@ test('custom paper dimensions persist across geometry, orientation and exports',
   assert.equal((await get('?paper=custom&paperWidth=200')).status,400);
   assert.equal((await get('?paperWidth=200&paperHeight=300')).status,400);
 });
+
+test('square cell numbers follow rows, fit cells and stop at sheet capacity', async () => {
+  const o={cellNumbers:true,spacing:10,numberStart:10,numberEnd:40};
+  const g=GridEngine.computeGrid(o);
+  assert.equal(g.labels.length,31);
+  assert.equal(g.labels[0].text,'10');assert.equal(g.labels.at(-1).text,'40');
+  assert.ok(g.labels[g.cols].y>g.labels[0].y);
+  g.labels.forEach((l,i)=>{const x=g.x0+(i%g.cols)*g.step,y=g.y0+Math.floor(i/g.cols)*g.step;assert.ok(l.x>x && l.x<x+g.step);assert.ok(l.y>y && l.y<y+g.step);});
+  const small=GridEngine.computeGrid({...o,paper:'custom',paperWidth:100,paperHeight:100,numberStart:1,numberEnd:100});
+  assert.equal(small.labels.length,small.cols*small.rows);
+  assert.ok(GridEngine.renderSVG(o).includes('>40</text>'));
+  assert.ok(GridEngine.buildPDF(o).length>1000);
+  assert.throws(()=>GridEngine.computeGrid({...o,spacing:5}),/at least 8 mm/);
+  assert.throws(()=>GridEngine.computeGrid({...o,style:'dot'}),/square paper/);
+  assert.throws(()=>GridEngine.computeGrid({...o,numberEnd:9}),/Number range/);
+  assert.throws(()=>GridEngine.computeGrid({...o,numberStart:1.5}),/Number range/);
+  assert.equal((await get('?spacing=10&cellNumbers=true&numberStart=1&numberEnd=31')).status,200);
+  assert.equal((await get('?cellNumbers=true')).status,400);
+});

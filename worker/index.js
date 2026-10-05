@@ -91,6 +91,7 @@ export function parseOptions(q) {
   if (q.has('bindingMargin')) o.bindingMargin = num(q.get('bindingMargin'), 'bindingMargin', 0, 30);
   if (q.has('cellNumbers')) o.cellNumbers = bool(q.get('cellNumbers'), 'cellNumbers');
   if (q.has('numberStart')) o.numberStart = num(q.get('numberStart'), 'numberStart', 1, 9999);
+  if (q.has('numberOrder')) o.numberOrder = pick(q.get('numberOrder'), ['rows','columns','snake'], 'numberOrder');
   if (q.has('numberSize')) o.numberSize = num(q.get('numberSize'), 'numberSize', 2, 8);
   if (q.has('numberEnd')) o.numberEnd = num(q.get('numberEnd'), 'numberEnd', 1, 9999);
   if (q.has('logAxes')) o.logAxes = pick(q.get('logAxes'), ['x','y','both'], 'logAxes');

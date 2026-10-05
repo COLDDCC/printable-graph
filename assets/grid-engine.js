@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, numberOrder: 'rows', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -235,12 +235,24 @@
       if (o.style !== 'square' && o.style !== 'hexagonal') throw new Error('Cell numbering is available for square paper and hexagonal paper');
       if (!Number.isInteger(o.numberStart) || !Number.isInteger(o.numberEnd) || o.numberStart < 1 || o.numberEnd > 9999 || o.numberEnd < o.numberStart) throw new Error('Number range must be whole numbers from 1 to 9999, with end at least start');
       if (!Number.isFinite(o.numberSize) || o.numberSize < 2 || o.numberSize > 8) throw new Error('Number size must be between 2 and 8 mm');
+      if (['rows','columns','snake'].indexOf(o.numberOrder) < 0) throw new Error('Unknown number order');
+      var numberedCells = hexCells.slice();
+      if (o.style === 'hexagonal' && o.numberOrder === 'columns') numberedCells.sort(function(a,b) { return Math.abs(a.x-b.x)<1e-8 ? a.y-b.y : a.x-b.x; });
+      if (o.style === 'hexagonal' && o.numberOrder === 'snake') {
+        var bands = [];
+        numberedCells.forEach(function(c) { var band=bands[bands.length-1]; if (!band || Math.abs(band[0].y-c.y)>1e-8) { band=[]; bands.push(band); } band.push(c); });
+        numberedCells = [];
+        bands.forEach(function(band,i) { numberedCells = numberedCells.concat(i%2 ? band.reverse() : band); });
+      }
       var numberedCount = Math.min(o.style === 'hexagonal' ? hexCells.length : cols * rows, o.numberEnd - o.numberStart + 1);
       if (numberedCount > 1000) throw new Error('Limit numbered cells to 1000');
       if (step < 8) throw new Error('Numbered cells need at least 8 mm spacing; choose larger cells or fewer rows and columns');
       for (var cell = 0; cell < numberedCount; cell++) {
         var cellText = String(o.numberStart + cell), textSize = Math.min(o.numberSize,step / (cellText.length * 0.75 + 1));
-        var center = o.style === 'hexagonal' ? hexCells[cell] : {x:x0+(cell%cols+0.5)*step,y:y0+(Math.floor(cell/cols)+0.5)*step};
+        var cellCol = o.numberOrder === 'columns' ? Math.floor(cell/rows) : cell%cols;
+        var cellRow = o.numberOrder === 'columns' ? cell%rows : Math.floor(cell/cols);
+        if (o.numberOrder === 'snake' && cellRow%2) cellCol=cols-1-cellCol;
+        var center = o.style === 'hexagonal' ? numberedCells[cell] : {x:x0+(cellCol+0.5)*step,y:y0+(cellRow+0.5)*step};
         labels.push({x:center.x-cellText.length*textSize*0.278,y:center.y+textSize*0.35,size:textSize,text:cellText});
       }
     }

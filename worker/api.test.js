@@ -341,3 +341,22 @@ test('number size enlarges text, fits long labels and rejects invalid sizes', as
   assert.equal((await get('?spacing=20&cellNumbers=true&numberSize=7')).status,200);
   assert.equal((await get('?spacing=20&cellNumbers=true&numberSize=9')).status,400);
 });
+
+test('number order traverses square and hexagonal cells without duplicates', async () => {
+  for (const style of ['square','hexagonal']) {
+    const o={style,spacing:20,cellNumbers:true,numberEnd:999};
+    const rows=GridEngine.computeGrid(o),columns=GridEngine.computeGrid({...o,numberOrder:'columns'}),snake=GridEngine.computeGrid({...o,numberOrder:'snake'});
+    const centres=g=>g.labels.map(l=>({x:l.x+l.text.length*l.size*.278,y:l.y-l.size*.35}));
+    const a=centres(rows),b=centres(columns),c=centres(snake);
+    const keys=xs=>xs.map(p=>p.x.toFixed(6)+','+p.y.toFixed(6)).sort();
+    assert.deepEqual(keys(a),keys(b));assert.deepEqual(keys(a),keys(c));
+    assert.equal(new Set(keys(c)).size,c.length);
+    assert.ok(b[1].y>b[0].y);assert.ok(Math.abs(b[1].x-b[0].x)<1e-8);
+    const secondRow=c.findIndex(p=>p.y>c[0].y+1e-8);
+    assert.ok(c[secondRow].x>c[secondRow+1].x);
+    assert.equal(GridEngine.computeGrid({...o,numberOrder:'snake',numberEnd:5}).labels.length,5);
+    assert.throws(()=>GridEngine.computeGrid({...o,numberOrder:'bad'}),/number order/);
+    assert.equal((await get('?style='+style+'&spacing=20&cellNumbers=true&numberOrder=snake')).status,200);
+  }
+  assert.equal((await get('?numberOrder=bad')).status,400);
+});

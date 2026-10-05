@@ -356,7 +356,7 @@
           {
             "name": "cellNumbers",
             "in": "query",
-            "description": "Square or complete hexagonal cells numbered row by row. Needs spacing at least 8 mm; limit 1000 numbered cells. Stops at sheet capacity.",
+            "description": "Square or complete hexagonal cells numbered in the selected order. Needs spacing at least 8 mm; limit 1000 numbered cells. Stops at sheet capacity.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -391,6 +391,20 @@
               "minimum": 2,
               "maximum": 8,
               "default": 3.5
+            }
+          },
+          {
+            "name": "numberOrder",
+            "in": "query",
+            "description": "Cell numbering traversal: rows, columns or alternating rows.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "rows",
+                "columns",
+                "snake"
+              ],
+              "default": "rows"
             }
           }
         ],

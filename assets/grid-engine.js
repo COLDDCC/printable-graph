@@ -32,6 +32,7 @@
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
     style: 'square',
+    title: '', worksheetHeader: false,
     paper: 'letter',
     orientation: 'portrait',
     spacing: 5,             // in `unit`
@@ -88,9 +89,11 @@
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
     if (!/^#[0-9a-f]{6}$/i.test(o.color)) throw new Error('Invalid line colour');
+    if (typeof o.title !== 'string' || o.title.length > 60 || /[^\x20-\x7e]/.test(o.title)) throw new Error('Title must be up to 60 English letters, numbers or punctuation');
+    var headerHeight = o.title.trim() || o.worksheetHeader ? 22 : 0;
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     var availW = page.w - 2 * o.margin;
-    var availH = page.h - 2 * o.margin - reserve;
+    var availH = page.h - 2 * o.margin - reserve - headerHeight;
     if ((o.style === 'isometric' || o.style === 'hexagonal') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
@@ -108,7 +111,7 @@
     var gridW = cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
     var gridH = rows * step;
     var x0 = o.margin + (availW - gridW) / 2;
-    var y0 = o.margin + (availH - gridH) / 2;
+    var y0 = o.margin + headerHeight + (availH - gridH) / 2;
 
     var lines = [], i, major;
     for (i = 0; i <= cols; i++) {
@@ -170,6 +173,12 @@
       }
     }
     var dots = [], labels = [];
+    if (o.title.trim()) labels.push({x:o.margin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
+    if (o.worksheetHeader) {
+      var fieldSize = Math.min(3.5, availW / 42);
+      labels.push({x:o.margin,y:o.margin+15,size:fieldSize,text:'Name: ____________________'});
+      labels.push({x:o.margin+availW*0.6,y:o.margin+15,size:fieldSize,text:'Date: ____________'});
+    }
     if (o.style === 'dot') {
       if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');
       lines = [];
@@ -270,7 +279,7 @@
         L = c.labels[i];
         s.push('<text x="' + L.x.toFixed(3) + '" y="' + L.y.toFixed(3) +
                '" font-size="' + L.size + '" font-family="Helvetica, sans-serif" fill="' + g.opts.calibInk + '">' +
-               L.text + '</text>');
+               String(L.text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</text>');
       }
     }
     s.push('</svg>');

@@ -70,3 +70,5 @@ Exact-count mode: mode=count&columns=20&rows=30. Counts must be integers from 2 
 Isometric paper: style=isometric, spacing mode only. Spacing is the equilateral triangle edge length. Three line families run vertically and at +/-30 degrees; heavy-line intervals do not apply.
 
 Hexagonal paper: style=hexagonal, spacing mode only. Spacing is the regular hexagon edge length. Flat-top hexagons share single edges; heavy-line intervals do not apply.
+
+Optional worksheet headings: title (up to 60 printable ASCII characters) and worksheetHeader=true add a title and blank Name/Date fields. The heading reserves 22 mm above the grid without changing physical spacing.

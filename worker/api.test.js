@@ -147,3 +147,24 @@ test('hexagonal paper has regular hexagon edges, bounded segments and no duplica
   assert.equal((await get('?style=hexagonal&size=5mm')).status,200);
   assert.equal((await get('?style=hexagonal&mode=count&columns=20&rows=30')).status,400);
 });
+
+test('worksheet headings reserve space without changing cell size and escape SVG text', async () => {
+  for (const style of ['square','dot','coordinate','isometric','hexagonal']) {
+    const plain = GridEngine.computeGrid({style});
+    const options = {style,title:'Maths <practice> & notes',worksheetHeader:true,calibration:false};
+    const g = GridEngine.computeGrid(options);
+    assert.equal(g.step, plain.step);
+    assert.ok(g.y0 >= g.opts.margin + 22);
+    assert.equal(g.labels[0].text, options.title);
+    assert.ok(g.labels.some(l => l.text.startsWith('Name:')));
+    const svg = GridEngine.renderSVG(options);
+    assert.ok(svg.includes('Maths &lt;practice&gt; &amp; notes'));
+    assert.ok(svg.includes('Date:'));
+    assert.ok(GridEngine.buildPDF(options).length > 1000);
+  }
+  const long = GridEngine.computeGrid({title:'W'.repeat(60),paper:'a5',orientation:'landscape',margin:30});
+  assert.ok(long.labels[0].size < 5);
+  assert.throws(() => GridEngine.computeGrid({title:'X'.repeat(61)}), /Title/);
+  assert.equal((await get('?title=Practice&worksheetHeader=true')).status,200);
+  assert.equal((await get('?title='+encodeURIComponent('中文'))).status,400);
+});

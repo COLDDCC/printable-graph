@@ -147,6 +147,8 @@
           <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
           <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
           <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge. Isometric and hexagonal paper use edge-spacing mode.</p>
+          <div class="f"><span>Sheet title (optional)</span><input id="sheetTitle" type="text" maxlength="60" placeholder="e.g. Maths practice" aria-label="Sheet title"><small>Up to 60 English letters, numbers or punctuation.</small></div>
+          <label class="check"><input id="worksheetHeader" type="checkbox"><span>Add name and date fields</span></label>
           <button type="button" id="resetSheet">Reset settings</button>
 
           <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>

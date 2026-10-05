@@ -211,6 +211,25 @@
               "maximum": 200
             },
             "description": "Required with columns when mode=count"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Optional sheet heading; up to 60 printable ASCII characters. Reserves space above the grid.",
+            "schema": {
+              "type": "string",
+              "maxLength": 60,
+              "pattern": "^[ -~]*$"
+            }
+          },
+          {
+            "name": "worksheetHeader",
+            "in": "query",
+            "description": "Add blank Name and Date fields above the grid.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {

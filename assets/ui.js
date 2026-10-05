@@ -404,6 +404,16 @@
     }
   }
 
+  // Keep optional print preferences below the primary download actions.
+  var advanced = $('.tool.compact .extra-tools');
+  if (advanced) {
+    var optional = [$('#major'), $('#presetSave'), $('#calib')];
+    optional.forEach(function (control, index) {
+      if (!control) return;
+      var group = control.closest(index === 0 ? '.row' : index === 1 ? '.f' : '.check');
+      if (group && !advanced.contains(group)) advanced.appendChild(group);
+    });
+  }
   syncControls();
   draw();
   renderChips();

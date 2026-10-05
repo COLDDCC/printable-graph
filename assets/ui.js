@@ -53,6 +53,7 @@
   function seg(id, key, after) {
     on('#' + id, 'click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
+      if (state[key] === b.dataset.v) return;
       state[key] = b.dataset.v;
       press(this, function (c) { return c === b; });
       if (after) after();

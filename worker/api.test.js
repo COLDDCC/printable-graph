@@ -1,8 +1,28 @@
 /* Tests for GET /api/pdf. Run with: npm test */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import GridEngine from '../assets/grid-engine.js';
 import worker, { SIZES, parseOptions } from './index.js';
+
+test('repeated unit clicks preserve physical spacing', () => {
+  const handlers = {};
+  const spacing = { value: 5, addEventListener() {} };
+  const buttons = ['mm', 'in'].map(v => ({ dataset: { v }, setAttribute() {} }));
+  const unit = { children: buttons, addEventListener(type, fn) { handlers[type] = fn; } };
+  runInNewContext(readFileSync(new URL('../assets/ui.js', import.meta.url), 'utf8'), {
+    document: { querySelectorAll() { return []; }, querySelector(s) { return s === '#unit' ? unit : s === '#spacing' ? spacing : null; } },
+    window: {}, location: { hash: '' }, GridEngine,
+    localStorage: { getItem() { return null; } }
+  });
+  const click = i => handlers.click.call(unit, { target: { closest() { return buttons[i]; } } });
+  click(0); assert.equal(spacing.value, 5);
+  click(1); assert.equal(spacing.value, 5 / 25.4);
+  click(1); assert.equal(spacing.value, 5 / 25.4);
+  click(0); assert.equal(spacing.value, 5);
+  click(0); assert.equal(spacing.value, 5);
+});
 
 const env = { ASSETS: { fetch: () => new Response('asset') } };
 const get = (qs, method = 'GET') =>

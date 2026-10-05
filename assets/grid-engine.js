@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -234,6 +234,7 @@
     if (o.cellNumbers) {
       if (o.style !== 'square' && o.style !== 'hexagonal') throw new Error('Cell numbering is available for square paper and hexagonal paper');
       if (!Number.isInteger(o.numberStart) || !Number.isInteger(o.numberEnd) || o.numberStart < 1 || o.numberEnd > 9999 || o.numberEnd < o.numberStart) throw new Error('Number range must be whole numbers from 1 to 9999, with end at least start');
+      if (!Number.isInteger(o.numberStep) || o.numberStep < 1 || o.numberStep > 100) throw new Error('Number step must be a whole number from 1 to 100');
       if (!Number.isFinite(o.numberSize) || o.numberSize < 2 || o.numberSize > 8) throw new Error('Number size must be between 2 and 8 mm');
       if (['rows','columns','snake'].indexOf(o.numberOrder) < 0) throw new Error('Unknown number order');
       if (['center','top-left','top-right'].indexOf(o.numberPosition) < 0) throw new Error('Unknown number position');
@@ -245,11 +246,11 @@
         numberedCells = [];
         bands.forEach(function(band,i) { numberedCells = numberedCells.concat(i%2 ? band.reverse() : band); });
       }
-      var numberedCount = Math.min(o.style === 'hexagonal' ? hexCells.length : cols * rows, o.numberEnd - o.numberStart + 1);
+      var numberedCount = Math.min(o.style === 'hexagonal' ? hexCells.length : cols * rows, Math.floor((o.numberEnd - o.numberStart) / o.numberStep) + 1);
       if (numberedCount > 1000) throw new Error('Limit numbered cells to 1000');
       if (step < 8) throw new Error('Numbered cells need at least 8 mm spacing; choose larger cells or fewer rows and columns');
       for (var cell = 0; cell < numberedCount; cell++) {
-        var cellText = String(o.numberStart + cell), textSize = Math.min(o.numberSize,step / (cellText.length * 0.75 + 1));
+        var cellText = String(o.numberStart + cell * o.numberStep), textSize = Math.min(o.numberSize,step / (cellText.length * 0.75 + 1));
         var cellCol = o.numberOrder === 'columns' ? Math.floor(cell/rows) : cell%cols;
         var cellRow = o.numberOrder === 'columns' ? cell%rows : Math.floor(cell/cols);
         if (o.numberOrder === 'snake' && cellRow%2) cellCol=cols-1-cellCol;

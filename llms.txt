@@ -92,3 +92,5 @@ Cell number size: numberSize=2..8 mm (default 3.5). Applies to square and hexago
 Cell number order: numberOrder=rows (default), columns, or snake (alternating left-to-right and right-to-left rows). Supported on square and hexagonal paper; complete hexagons only.
 
 Cell number position: numberPosition=center (default), top-left, or top-right. Corner labels are limited to 20% of cell spacing to leave writing room and stay inside square or hexagonal cells.
+
+Cell number step: numberStep=1..100, whole numbers (default 1). Example numberStart=2, numberEnd=10, numberStep=2 generates 2,4,6,8,10. Stops at sheet capacity or before exceeding numberEnd. Supported with every number order and position.

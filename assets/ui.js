@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { cellNumbers: false, numberStart: 1, numberEnd: 31, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -143,6 +143,7 @@
     if ($('#numberFields')) $('#numberFields').hidden = !state.cellNumbers;
     if ($('#numberStart')) $('#numberStart').value = state.numberStart;
     if ($('#numberEnd')) $('#numberEnd').value = state.numberEnd;
+    if ($('#numberStep')) $('#numberStep').value = state.numberStep;
     if ($('#numberSize')) $('#numberSize').value = state.numberSize;
     if ($('#numberOrder')) $('#numberOrder').value = state.numberOrder;
     if ($('#numberPosition')) $('#numberPosition').value = state.numberPosition;
@@ -154,6 +155,7 @@
     state.cellNumbers=this.checked; syncControls(); draw();
   });
   on('#numberStart', 'input', function () { state.numberStart=Number(this.value); draw(); });
+  on('#numberStep', 'input', function () { state.numberStep=Number(this.value); draw(); });
   on('#numberEnd', 'input', function () { state.numberEnd=Number(this.value); draw(); });
   on('#numberPosition', 'change', function () { state.numberPosition=this.value; draw(); });
   on('#numberOrder', 'change', function () { state.numberOrder=this.value; draw(); });

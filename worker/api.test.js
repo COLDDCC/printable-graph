@@ -384,3 +384,20 @@ test('corner numbers leave writing space and stay inside both cell shapes', asyn
   }
   assert.equal((await get('?numberPosition=bad')).status,400);
 });
+
+test('number steps skip correctly, respect upper bounds and preserve placement options', async () => {
+  for(const style of ['square','hexagonal']) for(const numberOrder of ['rows','columns','snake']) {
+    const o={style,spacing:10,cellNumbers:true,numberStart:2,numberEnd:11,numberStep:2,numberOrder,numberPosition:'top-left'};
+    const g=GridEngine.computeGrid(o);
+    assert.deepEqual(g.labels.map(l=>l.text),['2','4','6','8','10']);
+    assert.deepEqual(GridEngine.computeGrid({...o,numberStart:9998,numberEnd:9999,numberStep:100}).labels.map(l=>l.text),['9998']);
+    assert.ok(GridEngine.renderSVG(o).includes('>10</text>'));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+    for(const numberStep of [0,101,1.5,NaN]) assert.throws(()=>GridEngine.computeGrid({...o,numberStep}),/Number step/);
+  }
+  const o={paper:'custom',paperWidth:100,paperHeight:100,spacing:10,cellNumbers:true,numberStart:1,numberEnd:9999,numberStep:100};
+  const g=GridEngine.computeGrid(o);assert.equal(g.labels.length,g.cols*g.rows);
+  assert.equal((await get('?spacing=10&cellNumbers=true&numberStart=2&numberEnd=11&numberStep=2')).status,200);
+  assert.equal((await get('?spacing=10&cellNumbers=true&numberStep=1.5')).status,400);
+  assert.equal((await get('?numberStep=0')).status,400);
+});

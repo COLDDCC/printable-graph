@@ -420,6 +420,17 @@
               ],
               "default": "center"
             }
+          },
+          {
+            "name": "numberStep",
+            "in": "query",
+            "description": "Increment between cell numbers. The final value never exceeds numberEnd.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
           }
         ],
         "responses": {

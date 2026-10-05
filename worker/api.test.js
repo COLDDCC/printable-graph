@@ -443,3 +443,21 @@ test('paper/style/orientation/export combinations contain finite geometry', () =
     }
   }
 });
+
+test('PDF API rejects fractional copy counts and heavy line intervals', async () => {
+  for (const qs of ['?pages=1.5','?major=2.5']) {
+    const res=await get(qs);
+    assert.equal(res.status,400);
+    assert.match((await res.json()).error,/whole number/);
+  }
+});
+
+test('corrupt saved preset entries do not break the controller', () => {
+  const host={hidden:false,innerHTML:'',appendChild(){throw new Error('Corrupt entries must not render');}};
+  assert.doesNotThrow(() => runInNewContext(readFileSync(new URL('../assets/ui.js',import.meta.url),'utf8'),{
+    document:{querySelectorAll(){return [];},querySelector(s){return s==='#presetChips'?host:null;}},
+    window:{},location:{hash:''},GridEngine,
+    localStorage:{getItem(){return JSON.stringify([null,42,{}, {name:'Broken',cfg:null},{name:'Array',cfg:[]}]);}}
+  }));
+  assert.equal(host.hidden,true);
+});

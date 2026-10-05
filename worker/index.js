@@ -116,8 +116,14 @@ export function parseOptions(q) {
     o.paperHeight = num(q.get('paperHeight'), 'paperHeight', 100, 420);
   } else if (q.has('paperWidth') || q.has('paperHeight')) throw new BadRequest('Custom dimensions require paper=custom');
   if (q.has('orientation')) o.orientation = pick(q.get('orientation'), ['portrait', 'landscape'], 'orientation');
-  if (q.has('major')) o.majorEvery = Math.round(num(q.get('major'), 'major', 0, 20));
-  if (q.has('pages')) o.pages = Math.round(num(q.get('pages'), 'pages', 1, MAX_PAGES));
+  if (q.has('major')) {
+    o.majorEvery = num(q.get('major'), 'major', 0, 20);
+    if (!Number.isInteger(o.majorEvery)) throw new BadRequest('major must be a whole number');
+  }
+  if (q.has('pages')) {
+    o.pages = num(q.get('pages'), 'pages', 1, MAX_PAGES);
+    if (!Number.isInteger(o.pages)) throw new BadRequest('pages must be a whole number');
+  }
   if (q.has('calibration')) o.calibration = bool(q.get('calibration'), 'calibration');
 
   const bg = BACKGROUNDS[q.has('background') ? pick(q.get('background'), Object.keys(BACKGROUNDS), 'background') : 'white'];

@@ -259,7 +259,9 @@
   /* --- saved presets (localStorage) ------------------------------------- */
   var PRESETS_KEY = 'graphpaper_presets';
   function loadPresets() {
-    try { var l = JSON.parse(localStorage.getItem(PRESETS_KEY)); return Array.isArray(l) ? l : []; }
+    try { var l = JSON.parse(localStorage.getItem(PRESETS_KEY)); return Array.isArray(l) ? l.filter(function (p) {
+      return p && typeof p.name === 'string' && p.cfg && typeof p.cfg === 'object' && !Array.isArray(p.cfg);
+    }) : []; }
     catch (e) { return []; }
   }
   function persistPresets(list) {
@@ -307,6 +309,7 @@
   }
 
   on('#presetSave', 'click', function () {
+    try { GridEngine.computeGrid(state); } catch (err) { status('Cannot save these settings: ' + err.message); return; }
     var name = prompt('Name this preset (e.g. "My sketch paper"):');
     if (!name) return;
     var cfg = {};

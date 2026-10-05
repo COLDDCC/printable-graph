@@ -421,3 +421,25 @@ test('number steps skip correctly, respect upper bounds and preserve placement o
   assert.equal((await get('?spacing=10&cellNumbers=true&numberStep=1.5')).status,400);
   assert.equal((await get('?numberStep=0')).status,400);
 });
+
+test('invalid shared/export options are rejected consistently', () => {
+  for (const options of [{pages:1.5},{majorEvery:-1},{majorEvery:2.5},{majorEvery:NaN},{unit:'cm'},{orientation:'sideways'},{majorWeight:NaN},{bg:'#badbadbad'},{calibInk:'red'},{paper:{w:NaN,h:297}}]) {
+    for (const build of [GridEngine.computeGrid,GridEngine.renderSVG,GridEngine.buildPDF]) assert.throws(() => build(options), JSON.stringify(options));
+  }
+});
+
+test('paper/style/orientation/export combinations contain finite geometry', () => {
+  for (const style of ['square','dot','coordinate','isometric','hexagonal','polar','logarithmic']) {
+    for (const paper of Object.keys(GridEngine.PAPER)) {
+      for (const orientation of ['portrait','landscape']) {
+        const options={style,paper,orientation,spacing:10,title:'QA worksheet',worksheetHeader:true,separateMargins:true,marginTop:5,marginBottom:15,marginLeft:12,marginRight:8,bindingMargin:10,pages:2};
+        const svg=GridEngine.renderSVG(options),pdf=Buffer.from(GridEngine.buildPDF(options)).toString('latin1');
+        assert.doesNotMatch(svg+pdf,/NaN|Infinity/);
+        assert.match(svg,/QA worksheet/);
+        assert.match(pdf,/\/Count 2\b/);
+        const g=GridEngine.computeGrid(options);
+        assert.ok(g.page.w>0 && g.page.h>0);
+      }
+    }
+  }
+});

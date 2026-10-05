@@ -86,13 +86,20 @@
   function computeGrid(o) {
     o = opts(o);
     var page = paperSize(o);
+    if (!isFinite(page.w) || !isFinite(page.h) || page.w <= 0 || page.h <= 0) throw new Error('Invalid paper dimensions');
+    if (o.unit !== 'mm' && o.unit !== 'in') throw new Error('Unit must be mm or in');
+    if (o.orientation !== 'portrait' && o.orientation !== 'landscape') throw new Error('Unknown paper orientation');
+    if (!Number.isInteger(o.majorEvery) || o.majorEvery < 0 || o.majorEvery > 20) throw new Error('Heavy line interval must be a whole number from 0 to 20');
+    if (!isFinite(o.majorWeight) || o.majorWeight < 0.05 || o.majorWeight > 1) throw new Error('Heavy line width must be 0.05 to 1 mm');
+    if (o.bg !== null && !/^#[0-9a-f]{6}$/i.test(o.bg)) throw new Error('Invalid background colour');
+    if (!/^#[0-9a-f]{6}$/i.test(o.calibInk)) throw new Error('Invalid measuring bar colour');
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
     if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
-    if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
+    if (!Number.isInteger(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be a whole number from 1 to 25');
     if (!/^#[0-9a-f]{6}$/i.test(o.color)) throw new Error('Invalid line colour');
     if (typeof o.title !== 'string' || o.title.length > 60 || /[^\x20-\x7e]/.test(o.title)) throw new Error('Title must be up to 60 English letters, numbers or punctuation');
     var headerHeight = o.title.trim() || o.worksheetHeader ? 22 : 0;

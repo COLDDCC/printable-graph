@@ -250,7 +250,7 @@
   on('#spacing', 'input', function () {
     state.spacing = parseFloat(this.value); pressPresets(); draw();
   });
-  on('#major', 'input', function () { state.majorEvery = parseInt(this.value, 10) || 0; draw(); });
+  on('#major', 'input', function () { state.majorEvery = this.value === '' ? NaN : Number(this.value); draw(); });
   on('#calib', 'change', function () { state.calibration = this.checked; draw(); });
   on('#copies', 'input', function () {
     state.pages = Number(this.value); draw();

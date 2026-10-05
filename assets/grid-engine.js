@@ -83,7 +83,7 @@
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
-    if (['square', 'dot', 'coordinate', 'isometric'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
@@ -91,7 +91,7 @@
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     var availW = page.w - 2 * o.margin;
     var availH = page.h - 2 * o.margin - reserve;
-    if (o.style === 'isometric' && o.mode === 'count') throw new Error('Isometric paper uses edge spacing; choose spacing mode');
+    if ((o.style === 'isometric' || o.style === 'hexagonal') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
       if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
@@ -137,6 +137,37 @@
           if (right - left > 0.00001) isoLine(left, slope * left + intercept, right, slope * right + intercept);
         }
       });
+    }
+    if (o.style === 'hexagonal') {
+      lines = [];
+      var seen = Object.create(null), height = Math.sqrt(3) * step;
+      // Flat-top regular hexagons. Clip edge segments at the page's grid bounds
+      // and emit each shared edge once so it does not print darker.
+      function edge(ax, ay, bx, by) {
+        var vx = bx - ax, vy = by - ay, lo = 0, hi = 1;
+        var pp = [-vx, vx, -vy, vy], qq = [ax, gridW - ax, ay, gridH - ay];
+        for (var z = 0; z < 4; z++) {
+          if (Math.abs(pp[z]) < 1e-10) { if (qq[z] < -1e-8) return; }
+          else { var ratio = qq[z] / pp[z]; if (pp[z] < 0) lo = Math.max(lo, ratio); else hi = Math.min(hi, ratio); }
+        }
+        if (hi - lo <= 1e-8) return;
+        var x1 = ax + lo * vx, y1 = ay + lo * vy, x2 = ax + hi * vx, y2 = ay + hi * vy;
+        var a = x1.toFixed(6) + ',' + y1.toFixed(6), b = x2.toFixed(6) + ',' + y2.toFixed(6);
+        var key = a < b ? a + ':' + b : b + ':' + a;
+        if (seen[key]) return; seen[key] = true;
+        lines.push({x1:x0+x1,y1:y0+y1,x2:x0+x2,y2:y0+y2,w:o.minorWeight,major:false});
+      }
+      if ((gridW / step + 3) * (gridH / height + 3) * 4 > 40000) throw new Error('Choose larger hexagon edges for this paper size');
+      for (var col = -1; col <= Math.ceil(gridW / (1.5 * step)) + 1; col++) {
+        var offset = Math.abs(col % 2) * height / 2;
+        for (var row = -1; row <= Math.ceil(gridH / height) + 1; row++) {
+          var cx = col * 1.5 * step, cy = row * height + offset;
+          for (var corner = 0; corner < 6; corner++) {
+            var angle = corner * Math.PI / 3, next = (corner + 1) * Math.PI / 3;
+            edge(cx + step * Math.cos(angle), cy + step * Math.sin(angle), cx + step * Math.cos(next), cy + step * Math.sin(next));
+          }
+        }
+      }
     }
     var dots = [], labels = [];
     if (o.style === 'dot') {

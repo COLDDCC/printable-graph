@@ -88,7 +88,7 @@ export function parseOptions(q) {
     o.columns = num(q.get('columns'), 'columns', 2, 200);
     o.rows = num(q.get('rows'), 'rows', 2, 200);
   } else if (o.mode === 'count') throw new BadRequest('Provide columns and rows');
-  if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate', 'isometric'], 'style');
+  if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate', 'isometric', 'hexagonal'], 'style');
   if (q.has('margin')) o.margin = num(q.get('margin'), 'margin', 0, 50);
   if (q.has('weight')) o.minorWeight = num(q.get('weight'), 'weight', 0.05, 1);
   if (q.has('paper')) o.paper = pick(q.get('paper'), Object.keys(GridEngine.PAPER), 'paper');

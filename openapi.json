@@ -157,7 +157,8 @@
                 "square",
                 "dot",
                 "coordinate",
-                "isometric"
+                "isometric",
+                "hexagonal"
               ],
               "default": "square"
             }

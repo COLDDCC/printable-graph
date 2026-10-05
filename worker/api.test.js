@@ -127,3 +127,23 @@ test('isometric grid has vertical and true 30-degree lines inside its bounds', a
   assert.equal((await get('?style=isometric&size=5mm')).status,200);
   assert.equal((await get('?style=isometric&mode=count&columns=20&rows=30')).status,400);
 });
+
+test('hexagonal paper has regular hexagon edges, bounded segments and no duplicates', async () => {
+  const g = GridEngine.computeGrid({style:'hexagonal',spacing:5,paper:'a4'});
+  assert.ok(g.lines.length>100);
+  const seen = new Set(); let full = 0;
+  for (const l of g.lines) {
+    const length = Math.hypot(l.x2-l.x1,l.y2-l.y1);
+    assert.ok(length<=5+1e-8);
+    if (Math.abs(length-5)<1e-8) full++;
+    for (const [x,y] of [[l.x1,l.y1],[l.x2,l.y2]]) {
+      assert.ok(x>=g.x0-1e-8 && x<=g.x0+g.gridW+1e-8);
+      assert.ok(y>=g.y0-1e-8 && y<=g.y0+g.gridH+1e-8);
+    }
+    const ends = [[l.x1,l.y1],[l.x2,l.y2]].map(e=>e.map(v=>v.toFixed(5)).join(',')).sort().join(':');
+    assert.ok(!seen.has(ends)); seen.add(ends);
+  }
+  assert.ok(full>100);
+  assert.equal((await get('?style=hexagonal&size=5mm')).status,200);
+  assert.equal((await get('?style=hexagonal&mode=count&columns=20&rows=30')).status,400);
+});

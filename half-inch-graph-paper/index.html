@@ -78,7 +78,7 @@
     </div>
 
     <div class="block">
-      <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button><button type="button" data-style="isometric" aria-pressed="false">Isometric</button><button type="button" data-style="hexagonal" aria-pressed="false">Hexagonal</button></div><span id="oBytes">&mdash;</span></div>
+      <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button><button type="button" data-style="isometric" aria-pressed="false">Isometric</button><button type="button" data-style="hexagonal" aria-pressed="false">Hexagonal</button><button type="button" data-style="polar" aria-pressed="false">Polar</button></div><span id="oBytes">&mdash;</span></div>
       <div class="preset-chips" id="presetChips" hidden></div>
       <div class="cells">
         <div class="cell"><label>Square</label><output id="oPitch">0.5 in</output></div>
@@ -156,7 +156,8 @@
 
           <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
           <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
-          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge. Isometric and hexagonal paper use edge-spacing mode.</p>
+          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge. Isometric and hexagonal paper use edge-spacing mode. Polar paper uses ring spacing.</p>
+          <div class="f" id="polarFields" hidden><span>Polar radial lines</span><select id="radials" aria-label="Polar radial lines"><option value="12">12 lines — 30 degrees</option><option value="24" selected>24 lines — 15 degrees</option><option value="36">36 lines — 10 degrees</option><option value="72">72 lines — 5 degrees</option></select></div>
           <div class="f"><span>PNG resolution</span><select id="pngDpi" aria-label="PNG resolution"><option value="150">150 DPI — smaller file</option><option value="300">300 DPI — high resolution</option></select><small>Sets pixel dimensions. Use PDF to print at actual size.</small></div>
           <div class="f"><span>Extra left binding margin (mm)</span><input id="bindingMargin" type="number" min="0" max="30" step="1" value="0" aria-label="Extra left binding margin in millimetres"><small>Adds blank space for hole punching. 0 turns it off.</small></div>
           <div class="f"><span>Sheet title (optional)</span><input id="sheetTitle" type="text" maxlength="60" placeholder="e.g. Maths practice" aria-label="Sheet title"><small>Up to 60 English letters, numbers or punctuation.</small></div>

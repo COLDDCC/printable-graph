@@ -158,7 +158,8 @@
                 "dot",
                 "coordinate",
                 "isometric",
-                "hexagonal"
+                "hexagonal",
+                "polar"
               ],
               "default": "square"
             }
@@ -240,6 +241,21 @@
               "minimum": 0,
               "maximum": 30,
               "default": 0
+            }
+          },
+          {
+            "name": "radials",
+            "in": "query",
+            "description": "Polar radial lines; ring separation uses spacing. Polar requires spacing mode.",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                12,
+                24,
+                36,
+                72
+              ],
+              "default": 24
             }
           }
         ],

@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square',
+    style: 'square', radials: 24,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter',
     orientation: 'portrait',
@@ -84,7 +84,7 @@
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
-    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
@@ -96,7 +96,7 @@
     var leftMargin = o.margin + Number(o.bindingMargin);
     var availW = page.w - leftMargin - o.margin;
     var availH = page.h - 2 * o.margin - reserve - headerHeight;
-    if ((o.style === 'isometric' || o.style === 'hexagonal') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
+    if ((o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
       if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
@@ -174,7 +174,22 @@
         }
       }
     }
-    var dots = [], labels = [];
+    var dots = [], labels = [], circles = [], ringCount = 0;
+    if (o.style === 'polar') {
+      if ([12,24,36,72].indexOf(Number(o.radials)) < 0) throw new Error('Polar radial count must be 12, 24, 36 or 72');
+      lines = [];
+      ringCount = Math.floor((Math.min(gridW,gridH) / 2 + 1e-9) / step);
+      if (ringCount < 1) throw new Error('Choose smaller ring spacing');
+      var polarX = x0 + gridW / 2, polarY = y0 + gridH / 2, polarRadius = ringCount * step;
+      for (var ring = 1; ring <= ringCount; ring++) {
+        var heavy = o.majorEvery > 0 && ring % o.majorEvery === 0;
+        circles.push({x:polarX,y:polarY,r:ring*step,w:heavy ? o.majorWeight : o.minorWeight});
+      }
+      for (var ray = 0; ray < Number(o.radials); ray++) {
+        var theta = ray * 2 * Math.PI / Number(o.radials);
+        lines.push({x1:polarX,y1:polarY,x2:polarX+polarRadius*Math.cos(theta),y2:polarY-polarRadius*Math.sin(theta),w:o.minorWeight,major:false});
+      }
+    }
     if (o.title.trim()) labels.push({x:leftMargin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
     if (o.worksheetHeader) {
       var fieldSize = Math.min(3.5, availW / 42);
@@ -201,7 +216,7 @@
       labels.push({x: cx + 2, y: y0 + 3, size: 3, text: 'y'});
     }
     return {
-      dots: dots, labels: labels,
+      dots: dots, labels: labels, circles: circles, rings: ringCount,
       opts: o, page: page, step: step, cols: cols, rows: rows,
       x0: x0, y0: y0, gridW: gridW, gridH: gridH, lines: lines,
       calibrationY: page.h - o.margin - 12,      // metric bar baseline
@@ -271,6 +286,9 @@
              '" stroke="' + (L.axis ? g.opts.calibInk : g.opts.color) + '" stroke-width="' + L.w + '"/>');
     }
     s.push('</g>');
+    g.circles.forEach(function (d) {
+      s.push('<circle cx="' + d.x + '" cy="' + d.y + '" r="' + d.r + '" fill="none" stroke="' + g.opts.color + '" stroke-width="' + d.w + '"/>');
+    });
     g.dots.forEach(function (d) {
       s.push('<circle cx="' + d.x + '" cy="' + d.y + '" r="' + d.r + '" fill="' + g.opts.color + '"/>');
     });
@@ -340,13 +358,14 @@
     }
 
     out.push(n(rgb[0]) + ' ' + n(rgb[1]) + ' ' + n(rgb[2]) + ' rg');
-    g.dots.forEach(function (d) {
+    g.dots.concat(g.circles).forEach(function (d) {
+      if (d.w) out.push(n(mm2pt(d.w)) + ' w');
       var x = mm2pt(d.x), y = flip(d.y), radius = mm2pt(d.r), k = radius * 0.55228475;
       out.push(n(x + radius) + ' ' + n(y) + ' m ' +
         n(x + radius) + ' ' + n(y + k) + ' ' + n(x + k) + ' ' + n(y + radius) + ' ' + n(x) + ' ' + n(y + radius) + ' c ' +
         n(x - k) + ' ' + n(y + radius) + ' ' + n(x - radius) + ' ' + n(y + k) + ' ' + n(x - radius) + ' ' + n(y) + ' c ' +
         n(x - radius) + ' ' + n(y - k) + ' ' + n(x - k) + ' ' + n(y - radius) + ' ' + n(x) + ' ' + n(y - radius) + ' c ' +
-        n(x + k) + ' ' + n(y - radius) + ' ' + n(x + radius) + ' ' + n(y - k) + ' ' + n(x + radius) + ' ' + n(y) + ' c f');
+        n(x + k) + ' ' + n(y - radius) + ' ' + n(x + radius) + ' ' + n(y - k) + ' ' + n(x + radius) + ' ' + n(y) + (d.w ? ' c S' : ' c f'));
     });
     c.labels = g.labels.concat(c.labels);
     if (c.ticks.length || c.labels.length) {

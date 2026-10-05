@@ -74,3 +74,5 @@ Hexagonal paper: style=hexagonal, spacing mode only. Spacing is the regular hexa
 Optional worksheet headings: title (up to 60 printable ASCII characters) and worksheetHeader=true add a title and blank Name/Date fields. The heading reserves 22 mm above the grid without changing physical spacing.
 
 Optional bindingMargin=0..30 adds extra blank space on the left in millimetres for hole punching. Grid, heading and measuring strips shift together; spacing mode retains physical cell sizes, while count mode recalculates spacing to fit.
+
+Polar paper: style=polar with spacing controlling ring separation, and radials=12|24|36|72 (default 24). Rings form a circle centred in the available grid area. Exact-count mode is unavailable. PDF, SVG, PNG and print exports share the same geometry.

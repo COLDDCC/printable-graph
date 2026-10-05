@@ -198,3 +198,23 @@ test('PNG pixel dimensions match selected resolution and page orientation', () =
   assert.throws(() => GridEngine.pngSize({},600), /PNG resolution/);
   assert.throws(() => GridEngine.pngSize({},NaN), /PNG resolution/);
 });
+
+test('polar rings and rays share a centre, physical spacing, bounds and exports', async () => {
+  for (const radials of [12,24,36,72]) {
+    const o={style:'polar',radials,spacing:5,bindingMargin:20,title:'Polar practice',worksheetHeader:true};
+    const g=GridEngine.computeGrid(o);
+    assert.equal(g.lines.length,radials);
+    assert.equal(g.circles.length,g.rings);
+    const c=g.circles[0],radius=g.circles.at(-1).r;
+    g.circles.forEach((ring,i)=>{assert.equal(ring.r,(i+1)*5);assert.equal(ring.x,c.x);assert.equal(ring.y,c.y);});
+    assert.ok(c.x-radius>=g.x0-1e-8 && c.x+radius<=g.x0+g.gridW+1e-8);
+    assert.ok(c.y-radius>=g.y0-1e-8 && c.y+radius<=g.y0+g.gridH+1e-8);
+    g.lines.forEach(ray=>{assert.equal(ray.x1,c.x);assert.equal(ray.y1,c.y);assert.ok(Math.abs(Math.hypot(ray.x2-c.x,ray.y2-c.y)-radius)<1e-8);});
+    assert.ok(GridEngine.renderSVG(o).includes('fill="none"'));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+  }
+  assert.throws(()=>GridEngine.computeGrid({style:'polar',mode:'count'}),/spacing mode/);
+  assert.throws(()=>GridEngine.computeGrid({style:'polar',radials:13}),/radial count/);
+  assert.equal((await get('?style=polar&radials=36')).status,200);
+  assert.equal((await get('?style=polar&radials=13')).status,400);
+});

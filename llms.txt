@@ -83,6 +83,6 @@ Independent margins: marginTop, marginBottom, marginLeft, marginRight accept 0..
 
 Custom paper: paper=custom requires paperWidth and paperHeight in mm (100..420 per side). Landscape swaps dimensions. Shared settings and saved presets keep dimensions; PDF, SVG, PNG and printing use the same custom page size.
 
-Square cell numbers: cellNumbers=true with numberStart (default 1) and numberEnd (default 31), whole numbers 1..9999. Left-to-right then top-to-bottom, stops at available cells. Requires at least 8 mm spacing, with at most 1000 numbered cells. Browser enabling switches smaller grids to 10 mm; API callers must specify adequate spacing themselves.
+Square or hexagonal cell numbers: cellNumbers=true with numberStart (default 1) and numberEnd (default 31), whole numbers 1..9999. Left-to-right then top-to-bottom, stops at available cells. Hexagonal numbering excludes partial boundary cells. Requires at least 8 mm spacing, with at most 1000 numbered cells. Browser enabling switches smaller grids to 10 mm; API callers must specify adequate spacing themselves.
 
 Dedicated style generators: /isometric-graph-paper/, /hexagonal-graph-paper/, /polar-graph-paper/, /logarithmic-graph-paper/. Each opens with its matching style and includes spacing instructions.

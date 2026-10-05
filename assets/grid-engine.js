@@ -154,6 +154,7 @@
         }
       });
     }
+    var hexCells = [];
     if (o.style === 'hexagonal') {
       lines = [];
       var seen = Object.create(null), height = Math.sqrt(3) * step;
@@ -178,6 +179,7 @@
         var offset = Math.abs(col % 2) * height / 2;
         for (var row = -1; row <= Math.ceil(gridH / height) + 1; row++) {
           var cx = col * 1.5 * step, cy = row * height + offset;
+          if (cx - step >= -1e-8 && cx + step <= gridW + 1e-8 && cy - height / 2 >= -1e-8 && cy + height / 2 <= gridH + 1e-8) hexCells.push({x:x0+cx,y:y0+cy});
           for (var corner = 0; corner < 6; corner++) {
             var angle = corner * Math.PI / 3, next = (corner + 1) * Math.PI / 3;
             edge(cx + step * Math.cos(angle), cy + step * Math.sin(angle), cx + step * Math.cos(next), cy + step * Math.sin(next));
@@ -185,6 +187,7 @@
         }
       }
     }
+    hexCells.sort(function (a,b) { return Math.abs(a.y-b.y) < 1e-8 ? a.x-b.x : a.y-b.y; });
     var dots = [], labels = [], circles = [], ringCount = 0;
     if (o.style === 'polar') {
       if ([12,24,36,72].indexOf(Number(o.radials)) < 0) throw new Error('Polar radial count must be 12, 24, 36 or 72');
@@ -229,14 +232,15 @@
       labels.push({x:leftMargin+availW*0.6,y:margins.top+15,size:fieldSize,text:'Date: ____________'});
     }
     if (o.cellNumbers) {
-      if (o.style !== 'square') throw new Error('Cell numbering is available for square paper');
+      if (o.style !== 'square' && o.style !== 'hexagonal') throw new Error('Cell numbering is available for square paper and hexagonal paper');
       if (!Number.isInteger(o.numberStart) || !Number.isInteger(o.numberEnd) || o.numberStart < 1 || o.numberEnd > 9999 || o.numberEnd < o.numberStart) throw new Error('Number range must be whole numbers from 1 to 9999, with end at least start');
-      var numberedCount = Math.min(cols * rows, o.numberEnd - o.numberStart + 1);
+      var numberedCount = Math.min(o.style === 'hexagonal' ? hexCells.length : cols * rows, o.numberEnd - o.numberStart + 1);
       if (numberedCount > 1000) throw new Error('Limit numbered cells to 1000');
-      if (step < 8) throw new Error('Numbered cells need at least 8 mm spacing; choose larger squares or fewer rows and columns');
+      if (step < 8) throw new Error('Numbered cells need at least 8 mm spacing; choose larger cells or fewer rows and columns');
       for (var cell = 0; cell < numberedCount; cell++) {
         var cellText = String(o.numberStart + cell), textSize = Math.min(3.5,step / (cellText.length * 0.75 + 1));
-        labels.push({x:x0+(cell%cols+0.5)*step-cellText.length*textSize*0.278,y:y0+(Math.floor(cell/cols)+0.5)*step+textSize*0.35,size:textSize,text:cellText});
+        var center = o.style === 'hexagonal' ? hexCells[cell] : {x:x0+(cell%cols+0.5)*step,y:y0+(Math.floor(cell/cols)+0.5)*step};
+        labels.push({x:center.x-cellText.length*textSize*0.278,y:center.y+textSize*0.35,size:textSize,text:cellText});
       }
     }
     if (o.style === 'dot') {
@@ -259,7 +263,7 @@
       labels.push({x: cx + 2, y: y0 + 3, size: 3, text: 'y'});
     }
     return {
-      dots: dots, labels: labels, circles: circles, rings: ringCount,
+      cells: hexCells, dots: dots, labels: labels, circles: circles, rings: ringCount,
       opts: o, margins: margins, page: page, step: step, cols: cols, rows: rows,
       x0: x0, y0: y0, gridW: gridW, gridH: gridH, lines: lines,
       calibrationY: page.h - margins.bottom - 12,      // metric bar baseline

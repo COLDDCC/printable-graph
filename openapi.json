@@ -356,7 +356,7 @@
           {
             "name": "cellNumbers",
             "in": "query",
-            "description": "Square cells numbered row by row. Needs spacing at least 8 mm; limit 1000 numbered cells. Stops at sheet capacity.",
+            "description": "Square or complete hexagonal cells numbered row by row. Needs spacing at least 8 mm; limit 1000 numbered cells. Stops at sheet capacity.",
             "schema": {
               "type": "boolean",
               "default": false

@@ -304,3 +304,24 @@ test('square cell numbers follow rows, fit cells and stop at sheet capacity', as
   assert.equal((await get('?spacing=10&cellNumbers=true&numberStart=1&numberEnd=31')).status,200);
   assert.equal((await get('?cellNumbers=true')).status,400);
 });
+
+test('hexagonal numbers use complete cell centres in row order and stop at capacity', async () => {
+  const o={style:'hexagonal',spacing:10,cellNumbers:true,numberStart:100,numberEnd:999};
+  const g=GridEngine.computeGrid(o);
+  assert.ok(g.cells.length>0);
+  assert.equal(g.labels.length,g.cells.length);
+  g.cells.forEach((c,i)=>{
+    assert.ok(c.x-g.step>=g.x0-1e-8 && c.x+g.step<=g.x0+g.gridW+1e-8);
+    assert.ok(c.y-Math.sqrt(3)*g.step/2>=g.y0-1e-8 && c.y+Math.sqrt(3)*g.step/2<=g.y0+g.gridH+1e-8);
+    if(i) assert.ok(c.y>g.cells[i-1].y || Math.abs(c.y-g.cells[i-1].y)<1e-8 && c.x>g.cells[i-1].x);
+    const label=g.labels[i];
+    assert.equal(label.text,String(100+i));
+    assert.ok(Math.abs(label.x+label.text.length*label.size*.278-c.x)<1e-8);
+    assert.ok(Math.abs(label.y-label.size*.35-c.y)<1e-8);
+  });
+  assert.equal(GridEngine.computeGrid({...o,numberEnd:105}).labels.length,6);
+  assert.ok(GridEngine.renderSVG(o).includes('>100</text>'));
+  assert.ok(GridEngine.buildPDF(o).length>1000);
+  assert.equal((await get('?style=hexagonal&spacing=10&cellNumbers=true')).status,200);
+  assert.equal((await get('?style=hexagonal&cellNumbers=true')).status,400);
+});

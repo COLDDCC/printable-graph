@@ -109,11 +109,13 @@
     var button = e.target.closest('button[data-style]');
     if (!button) return;
     state.style = button.dataset.style;
-    if (state.style !== 'square') state.cellNumbers = false;
+    if (state.style !== 'square' && state.style !== 'hexagonal') state.cellNumbers = false;
     syncNumbers();
     if ((state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
-    syncSizing();
-    syncPaperTypes();
+    if (state.cellNumbers) {
+      try { if (GridEngine.computeGrid(Object.assign({},state,{cellNumbers:false})).step < 8) { state.mode='spacing'; state.unit='mm'; state.spacing=10; } } catch (_) {}
+    }
+    syncControls();
     draw();
   });
   function syncPaperTypes() {
@@ -137,7 +139,7 @@
     if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
   function syncNumbers() {
-    if ($('#cellNumbers')) { $('#cellNumbers').checked = state.cellNumbers; $('#cellNumbers').disabled = state.style !== 'square'; }
+    if ($('#cellNumbers')) { $('#cellNumbers').checked = state.cellNumbers; $('#cellNumbers').disabled = state.style !== 'square' && state.style !== 'hexagonal'; }
     if ($('#numberFields')) $('#numberFields').hidden = !state.cellNumbers;
     if ($('#numberStart')) $('#numberStart').value = state.numberStart;
     if ($('#numberEnd')) $('#numberEnd').value = state.numberEnd;

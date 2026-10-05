@@ -168,3 +168,24 @@ test('worksheet headings reserve space without changing cell size and escape SVG
   assert.equal((await get('?title=Practice&worksheetHeader=true')).status,200);
   assert.equal((await get('?title='+encodeURIComponent('中文'))).status,400);
 });
+
+test('binding margin reserves left space for every grid style and headings', async () => {
+  for (const style of ['square','dot','coordinate','isometric','hexagonal']) {
+    const plain = GridEngine.computeGrid({style});
+    const g = GridEngine.computeGrid({style,bindingMargin:20,title:'Practice',worksheetHeader:true});
+    assert.equal(g.step, plain.step);
+    assert.ok(g.x0 >= g.opts.margin + 20);
+    assert.ok(g.x0 + g.gridW <= g.page.w - g.opts.margin + 1e-8);
+    assert.ok(g.labels.every(l => l.x >= g.opts.margin + 20));
+    assert.ok(g.lines.every(l => l.x1 >= g.x0 - 1e-8 && l.x2 >= g.x0 - 1e-8));
+  }
+  const g = GridEngine.computeGrid({bindingMargin:30,mode:'count',columns:20,rows:30});
+  assert.equal(g.cols,20);
+  assert.equal(g.rows,30);
+  assert.ok(g.x0 >= g.opts.margin + 30);
+  assert.throws(() => GridEngine.computeGrid({bindingMargin:-1}), /binding margin/);
+  assert.throws(() => GridEngine.computeGrid({bindingMargin:31}), /binding margin/);
+  const res = await get('?bindingMargin=20&title=Practice');
+  assert.equal(res.status,200);
+  assert.equal((await get('?bindingMargin=31')).status,400);
+});

@@ -230,6 +230,17 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "name": "bindingMargin",
+            "in": "query",
+            "description": "Extra blank space on the left, in mm, in addition to the normal margin. Headings and grid both respect this space.",
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 30,
+              "default": 0
+            }
           }
         ],
         "responses": {

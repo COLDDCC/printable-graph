@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -129,6 +129,7 @@
     if ($('#countHelp')) $('#countHelp').hidden = state.mode !== 'count';
     if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
+  on('#bindingMargin', 'input', function () { state.bindingMargin = Number(this.value); draw(); });
   on('#sheetTitle', 'input', function () { state.title = this.value; draw(); });
   on('#worksheetHeader', 'change', function () { state.worksheetHeader = this.checked; draw(); });
   on('#margin', 'input', function () { state.margin = Number(this.value); draw(); });
@@ -311,6 +312,7 @@
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
     if (or) press(or, function (c) { return c.dataset.v === state.orientation; });
     if (sw) press(sw, function (c) { return c.dataset.c === state.color; });
+    if ($('#bindingMargin')) $('#bindingMargin').value = state.bindingMargin;
     if ($('#sheetTitle')) $('#sheetTitle').value = state.title;
     if ($('#worksheetHeader')) $('#worksheetHeader').checked = state.worksheetHeader;
     [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });

@@ -32,7 +32,7 @@
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
     style: 'square',
-    title: '', worksheetHeader: false,
+    title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter',
     orientation: 'portrait',
     spacing: 5,             // in `unit`
@@ -92,7 +92,9 @@
     if (typeof o.title !== 'string' || o.title.length > 60 || /[^\x20-\x7e]/.test(o.title)) throw new Error('Title must be up to 60 English letters, numbers or punctuation');
     var headerHeight = o.title.trim() || o.worksheetHeader ? 22 : 0;
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
-    var availW = page.w - 2 * o.margin;
+    if (!isFinite(o.bindingMargin) || o.bindingMargin < 0 || o.bindingMargin > 30) throw new Error('Extra binding margin must be 0 to 30 mm');
+    var leftMargin = o.margin + Number(o.bindingMargin);
+    var availW = page.w - leftMargin - o.margin;
     var availH = page.h - 2 * o.margin - reserve - headerHeight;
     if ((o.style === 'isometric' || o.style === 'hexagonal') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
@@ -110,7 +112,7 @@
     if (o.style === 'isometric') cols = Math.floor((availW + 1e-9) / (step * Math.sqrt(3) / 2));
     var gridW = cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
     var gridH = rows * step;
-    var x0 = o.margin + (availW - gridW) / 2;
+    var x0 = leftMargin + (availW - gridW) / 2;
     var y0 = o.margin + headerHeight + (availH - gridH) / 2;
 
     var lines = [], i, major;
@@ -173,11 +175,11 @@
       }
     }
     var dots = [], labels = [];
-    if (o.title.trim()) labels.push({x:o.margin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
+    if (o.title.trim()) labels.push({x:leftMargin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
     if (o.worksheetHeader) {
       var fieldSize = Math.min(3.5, availW / 42);
-      labels.push({x:o.margin,y:o.margin+15,size:fieldSize,text:'Name: ____________________'});
-      labels.push({x:o.margin+availW*0.6,y:o.margin+15,size:fieldSize,text:'Date: ____________'});
+      labels.push({x:leftMargin,y:o.margin+15,size:fieldSize,text:'Name: ____________________'});
+      labels.push({x:leftMargin+availW*0.6,y:o.margin+15,size:fieldSize,text:'Date: ____________'});
     }
     if (o.style === 'dot') {
       if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');

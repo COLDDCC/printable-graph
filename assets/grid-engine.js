@@ -33,7 +33,7 @@
     mode: 'spacing', columns: 20, rows: 30,
     style: 'square', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
-    paper: 'letter',
+    paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
     spacing: 5,             // in `unit`
     unit: 'mm',             // 'mm' | 'in'
@@ -58,6 +58,10 @@
 
   function paperSize(o) {
     var p = typeof o.paper === 'string' ? PAPER[o.paper] : o.paper;
+    if (o.paper === 'custom') {
+      if (!isFinite(o.paperWidth) || !isFinite(o.paperHeight) || o.paperWidth < 100 || o.paperWidth > 420 || o.paperHeight < 100 || o.paperHeight > 420) throw new Error('Custom paper width and height must be 100 to 420 mm');
+      p = {w:Number(o.paperWidth),h:Number(o.paperHeight),label:'Custom'};
+    }
     if (!p) throw new Error('Unknown paper size: ' + o.paper);
     return o.orientation === 'landscape'
       ? { w: p.h, h: p.w, label: (p.label || '') }
@@ -475,7 +479,7 @@
 
   function filename(o) {
     o = opts(o);
-    var p = typeof o.paper === 'string' ? o.paper : 'custom';
+    var p = o.paper === 'custom' ? 'custom-' + o.paperWidth + 'x' + o.paperHeight + 'mm' : typeof o.paper === 'string' ? o.paper : 'custom';
     var f = [o.style, 'grid', o.mode === 'count' ? o.columns + 'x' + o.rows : o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
     if (Math.max(1, Math.floor(o.pages) || 1) > 1) {
       f = f.replace(/\.pdf$/, '-x' + (Math.floor(o.pages) || 1) + '.pdf');

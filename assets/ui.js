@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -212,7 +212,14 @@
       catch (err) { prompt('Copy this link:', url); }
     } catch (err) { status(err.message); }
   });
-  on('#paper', 'change', function () { state.paper = this.value; draw(); });
+  function syncCustomPaper() {
+    if ($('#customPaperFields')) $('#customPaperFields').hidden = state.paper !== 'custom';
+    if ($('#paperWidth')) $('#paperWidth').value = state.paperWidth;
+    if ($('#paperHeight')) $('#paperHeight').value = state.paperHeight;
+  }
+  on('#paperWidth', 'input', function () { state.paperWidth = Number(this.value); draw(); });
+  on('#paperHeight', 'input', function () { state.paperHeight = Number(this.value); draw(); });
+  on('#paper', 'change', function () { state.paper = this.value; syncCustomPaper(); if (state.paper === 'custom' && $('.extra-tools')) $('.extra-tools').open = true; draw(); });
   on('#spacing', 'input', function () {
     state.spacing = parseFloat(this.value); pressPresets(); draw();
   });
@@ -337,6 +344,7 @@
     syncPaperTypes();
     syncSizing();
     syncMargins();
+    syncCustomPaper();
     pressPresets();
   }
 

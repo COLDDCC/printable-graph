@@ -72,7 +72,8 @@
                 "a5",
                 "a3",
                 "legal",
-                "tabloid"
+                "tabloid",
+                "custom"
               ]
             }
           },
@@ -330,6 +331,26 @@
               "type": "number",
               "minimum": 0,
               "maximum": 50
+            }
+          },
+          {
+            "name": "paperWidth",
+            "in": "query",
+            "description": "Custom paper width in mm. Both dimensions required with paper=custom; landscape swaps them.",
+            "schema": {
+              "type": "number",
+              "minimum": 100,
+              "maximum": 420
+            }
+          },
+          {
+            "name": "paperHeight",
+            "in": "query",
+            "description": "Custom paper height in mm. Both dimensions required with paper=custom; landscape swaps them.",
+            "schema": {
+              "type": "number",
+              "minimum": 100,
+              "maximum": 420
             }
           }
         ],

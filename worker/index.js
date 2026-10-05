@@ -102,7 +102,12 @@ export function parseOptions(q) {
   }
   if (q.has('margin')) o.margin = num(q.get('margin'), 'margin', 0, 50);
   if (q.has('weight')) o.minorWeight = num(q.get('weight'), 'weight', 0.05, 1);
-  if (q.has('paper')) o.paper = pick(q.get('paper'), Object.keys(GridEngine.PAPER), 'paper');
+  if (q.has('paper')) o.paper = pick(q.get('paper'), Object.keys(GridEngine.PAPER).concat('custom'), 'paper');
+  if (o.paper === 'custom') {
+    if (!q.has('paperWidth') || !q.has('paperHeight')) throw new BadRequest('Custom paper requires paperWidth and paperHeight in mm');
+    o.paperWidth = num(q.get('paperWidth'), 'paperWidth', 100, 420);
+    o.paperHeight = num(q.get('paperHeight'), 'paperHeight', 100, 420);
+  } else if (q.has('paperWidth') || q.has('paperHeight')) throw new BadRequest('Custom dimensions require paper=custom');
   if (q.has('orientation')) o.orientation = pick(q.get('orientation'), ['portrait', 'landscape'], 'orientation');
   if (q.has('major')) o.majorEvery = Math.round(num(q.get('major'), 'major', 0, 20));
   if (q.has('pages')) o.pages = Math.round(num(q.get('pages'), 'pages', 1, MAX_PAGES));

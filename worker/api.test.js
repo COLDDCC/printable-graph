@@ -265,3 +265,23 @@ test('independent margins constrain every paper style, headers and calibration',
   assert.equal((await get('?marginLeft=30&marginBottom=20')).status,200);
   assert.equal((await get('?marginLeft=-1')).status,400);
 });
+
+test('custom paper dimensions persist across geometry, orientation and exports', async () => {
+  for (const style of ['square','dot','coordinate','isometric','hexagonal','polar','logarithmic']) {
+    const o={style,paper:'custom',paperWidth:200,paperHeight:300,title:'Custom practice',worksheetHeader:true,separateMargins:true,marginLeft:20,marginRight:15};
+    const g=GridEngine.computeGrid(o);
+    assert.equal(g.page.w,200);assert.equal(g.page.h,300);
+    assert.ok(g.x0>=20 && g.x0+g.gridW<=185+1e-8);
+    assert.ok(GridEngine.renderSVG(o).includes('viewBox="0 0 200.000 300.000"'));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+    const landscape=GridEngine.computeGrid({...o,orientation:'landscape'});
+    assert.equal(landscape.page.w,300);assert.equal(landscape.page.h,200);
+    assert.ok(GridEngine.filename(o).includes('custom-200x300mm'));
+  }
+  assert.deepEqual(GridEngine.pngSize({paper:'custom',paperWidth:254,paperHeight:254},300),{width:3000,height:3000,dpi:300});
+  assert.throws(()=>GridEngine.computeGrid({paper:'custom',paperWidth:99}),/Custom paper/);
+  assert.throws(()=>GridEngine.computeGrid({paper:'custom',paperHeight:421}),/Custom paper/);
+  assert.equal((await get('?paper=custom&paperWidth=200&paperHeight=300')).status,200);
+  assert.equal((await get('?paper=custom&paperWidth=200')).status,400);
+  assert.equal((await get('?paperWidth=200&paperHeight=300')).status,400);
+});

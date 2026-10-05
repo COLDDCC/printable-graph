@@ -266,4 +266,8 @@
     <priority>0.8</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/tabloid-graph-paper.png</image:loc></image:image>
   </url>
+  <url><loc>https://printgridpaper.com/isometric-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://printgridpaper.com/hexagonal-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://printgridpaper.com/polar-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://printgridpaper.com/logarithmic-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Free Printable Logarithmic Graph Paper | PrintGridPaper</title>
+<meta name="description" content="Print base-10 semi-log or log-log graph paper. Choose logarithmic axes and one to four decades, with labelled decade boundaries and vector PDF export.">
+<link rel="canonical" href="https://printgridpaper.com/logarithmic-graph-paper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Logarithmic Graph Paper Generator">
+<meta property="og:description" content="Print base-10 semi-log or log-log graph paper. Choose logarithmic axes and one to four decades, with labelled decade boundaries and vector PDF export.">
+<meta property="og:url" content="https://printgridpaper.com/logarithmic-graph-paper/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/assets/site.css">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WFH3F9TQCN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WFH3F9TQCN');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap mast">
+    <a class="brand" href="/">
+      <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#C3CDD2"/><g stroke="#4A7FB5" stroke-width="1"><path d="M4.5 0v16M8.5 0v16M12.5 0v16M0 4.5h16M0 8.5h16M0 12.5h16"/></g></svg>
+      Graph Paper
+    </a>
+    <span class="mast-tagline">Free &middot; no signup &middot; no watermark &middot; true to size</span>
+    <nav>
+      <a href="#setup">Print settings</a>
+      <a href="#sizes">Square sizes</a>
+      <a href="/how-to-print-graph-paper/">How to print</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero size compact">
+    <div>
+      <h1>Free Printable Logarithmic Graph Paper</h1>
+      <p class="sub">Print base-10 semi-log or log-log graph paper. Choose logarithmic axes and one to four decades, with labelled decade boundaries and vector PDF export.</p>
+    </div>
+    <div class="quick-dl">
+      <a class="cta" href="/api/pdf?style=logarithmic&amp;size=5mm&amp;paper=a4" data-paper="a4">Download semi-log PDF &middot; A4</a>
+      <a class="quick-alt" href="/api/pdf?style=logarithmic&amp;size=5mm&amp;paper=letter" data-paper="letter">US Letter</a>
+    </div>
+  </div>
+
+  <div class="tool compact">
+    <div class="sheet-frame">
+      <div id="sheet" class="sheet"></div>
+      <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
+    </div>
+
+    <div class="block">
+      <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="false">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button><button type="button" data-style="isometric" aria-pressed="false">Isometric</button><button type="button" data-style="hexagonal" aria-pressed="false">Hexagonal</button><button type="button" data-style="polar" aria-pressed="false">Polar</button><button type="button" data-style="logarithmic" aria-pressed="true">Logarithmic</button></div><span id="oBytes">&mdash;</span></div>
+      <div class="preset-chips" id="presetChips" hidden></div>
+      <div class="cells">
+        <div class="cell"><label>Square</label><output id="oPitch">5 mm</output></div>
+        <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
+      </div>
+
+      <div class="ctrls">
+
+
+        <div class="f">
+          <span>Grid spacing</span>
+          <div class="presets" id="presets">
+            <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
+            <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
+            <button type="button" data-s="0.25" data-u="in" data-m="4">1/4 in</button>
+            <button type="button" data-s="0.5" data-u="in" data-m="2">1/2 in</button>
+            <button type="button" data-s="1" data-u="in" data-m="0">1 in</button>
+            <button type="button" data-s="0.1" data-u="in" data-m="10">10 per in</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+                <div class="row">
+          <div class="f">
+          <span>Paper</span>
+          <select id="paper" aria-label="Paper size">
+            <option value="a4">A4 &mdash; 210 &times; 297 mm</option>
+            <option value="letter">Letter &mdash; 8.5 &times; 11 in</option>
+            <option value="a5">A5 &mdash; 148 &times; 210 mm</option>
+            <option value="a3">A3 &mdash; 297 &times; 420 mm</option>
+            <option value="legal">Legal &mdash; 8.5 &times; 14 in</option>
+            <option value="tabloid">Tabloid &mdash; 11 &times; 17 in</option>
+          <option value="custom">Custom size</option>
+          </select>
+        </div>
+          <div class="f"><span>Orientation</span>
+            <div class="seg" id="orient">
+              <button type="button" data-v="portrait" aria-pressed="true">Portrait</button>
+              <button type="button" data-v="landscape" aria-pressed="false">Landscape</button>
+            </div>
+          </div>
+        </div>
+
+<details class="advanced"><summary>Advanced settings</summary>
+
+          <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
+          <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
+          <p id="countHelp" hidden>Square size is calculated to fit your exact counts. Coordinate grids require even counts; dot grids have one more dot than squares along each edge. Isometric and hexagonal paper use edge-spacing mode. Polar paper uses ring spacing. Logarithmic paper uses spacing mode.</p>
+          <label class="check"><input id="cellNumbers" type="checkbox"><span>Number square cells</span></label>
+          <div id="numberFields" hidden><div class="row"><div class="f"><span>First number</span><input id="numberStart" type="number" min="1" max="9999" step="1" value="1" aria-label="First cell number"></div><div class="f"><span>Last number</span><input id="numberEnd" type="number" min="1" max="9999" step="1" value="31" aria-label="Last cell number"></div></div><small>Square paper only. Left to right, top to bottom; stops when the sheet is full. Minimum 8 mm cells. Smaller grids switch to 10 mm when enabled.</small></div>
+          <div id="customPaperFields" hidden><div class="row"><div class="f"><span>Paper width (mm)</span><input id="paperWidth" type="number" min="100" max="420" step="0.1" value="210" aria-label="Custom paper width in millimetres"></div><div class="f"><span>Paper height (mm)</span><input id="paperHeight" type="number" min="100" max="420" step="0.1" value="297" aria-label="Custom paper height in millimetres"></div></div><small>100–420 mm per side. Landscape swaps width and height. Match your printer's paper size.</small></div>
+          <div id="logFields" hidden><div class="f"><span>Logarithmic axes</span><select id="logAxes" aria-label="Logarithmic axes"><option value="y">Y axis — semi-log</option><option value="x">X axis — semi-log</option><option value="both">Both axes — log-log</option></select></div><div class="f"><span>Decades per log axis</span><select id="decades" aria-label="Decades per log axis"><option value="1">1 — 1 to 10</option><option value="2" selected>2 — 1 to 100</option><option value="3">3 — 1 to 1000</option><option value="4">4 — 1 to 10000</option></select></div></div>
+          <div class="f" id="polarFields" hidden><span>Polar radial lines</span><select id="radials" aria-label="Polar radial lines"><option value="12">12 lines — 30 degrees</option><option value="24" selected>24 lines — 15 degrees</option><option value="36">36 lines — 10 degrees</option><option value="72">72 lines — 5 degrees</option></select></div>
+          <div class="f"><span>PNG resolution</span><select id="pngDpi" aria-label="PNG resolution"><option value="150">150 DPI — smaller file</option><option value="300">300 DPI — high resolution</option></select><small>Sets pixel dimensions. Use PDF to print at actual size.</small></div>
+          <label class="check"><input id="separateMargins" type="checkbox"><span>Set each margin separately</span></label>
+          <div id="marginFields" hidden><div class="row"><div class="f"><span>Top margin (mm)</span><input id="marginTop" type="number" min="0" max="50" step="1" value="10" aria-label="Top margin in millimetres"></div><div class="f"><span>Bottom margin (mm)</span><input id="marginBottom" type="number" min="0" max="50" step="1" value="10" aria-label="Bottom margin in millimetres"></div></div><div class="row"><div class="f"><span>Left margin (mm)</span><input id="marginLeft" type="number" min="0" max="50" step="1" value="10" aria-label="Left margin in millimetres"></div><div class="f"><span>Right margin (mm)</span><input id="marginRight" type="number" min="0" max="50" step="1" value="10" aria-label="Right margin in millimetres"></div></div></div>
+          <div class="f"><span>Extra left binding margin (mm)</span><input id="bindingMargin" type="number" min="0" max="30" step="1" value="0" aria-label="Extra left binding margin in millimetres"><small>Adds blank space for hole punching. 0 turns it off.</small></div>
+          <div class="f"><span>Sheet title (optional)</span><input id="sheetTitle" type="text" maxlength="60" placeholder="e.g. Maths practice" aria-label="Sheet title"><small>Up to 60 English letters, numbers or punctuation.</small></div>
+          <label class="check"><input id="worksheetHeader" type="checkbox"><span>Add name and date fields</span></label>
+          <button type="button" id="resetSheet">Reset settings</button>
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
+
+        <div class="row">
+          <div class="f">
+          <span>Line colour</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-c="#4A7FB5" style="background:#4A7FB5" aria-pressed="true" aria-label="Blue"></button>
+            <button type="button" data-c="#5F8A6E" style="background:#5F8A6E" aria-pressed="false" aria-label="Green"></button>
+            <button type="button" data-c="#9AA6AD" style="background:#9AA6AD" aria-pressed="false" aria-label="Grey"></button>
+            <button type="button" data-c="#12171B" style="background:#12171B" aria-pressed="false" aria-label="Black"></button>
+            <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
+          </div>
+        </div>
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+        </div>
+
+        <div class="row"><div class="f"><span>Margin (mm)</span><input id="margin" type="number" min="0" max="50" step="1" value="10" aria-label="Margin in millimetres"></div><div class="f"><span>Line / dot size (mm)</span><input id="weight" type="number" min="0.05" max="1" step="0.05" value="0.12" aria-label="Line or dot size in millimetres"></div></div>
+        <div class="f"><span>Custom line colour</span><input id="customColor" type="color" value="#4a7fb5" aria-label="Custom line colour"></div>
+        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
+        </details>
+        <button class="dl" id="dl" type="button">Download PDF</button>
+        <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="downloadSVG">Download SVG</button><button type="button" id="shareSheet">Share settings</button></div>
+        <p id="toolStatus" role="status" aria-live="polite"></p>
+        <p class="print-hint">For accurate measurements, print the PDF at 100% / Actual Size.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?style=logarithmic&amp;size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?style=logarithmic&amp;size=5mm&amp;paper=a4</a></p>
+
+  <div class="print-banner" id="printBanner" role="note">
+    <div class="pb-copy">
+      <strong>First time here? Verify your printer in 3 steps</strong>
+      <span class="pb-steps">1&nbsp;&#8680;&nbsp;Download the PDF &nbsp;&middot;&nbsp; 2&nbsp;&#8680;&nbsp;Print one sheet &nbsp;&middot;&nbsp; 3&nbsp;&#8680;&nbsp;Lay a ruler on the two bars at the bottom</span>
+      <span class="pb-note">The upper bar must read <b>100&nbsp;mm</b>, the lower one <b>4&nbsp;in</b>. If both come up short by the same amount, your print dialog is scaling the page &mdash; set it to 100% / Actual Size and print again. <a href="#setup">Full guide &rarr;</a></span>
+    </div>
+    <button type="button" class="pb-done" id="pbDone">I&rsquo;ve verified it</button>
+  </div>
+
+  <section><h2>How logarithmic paper works</h2><p>A logarithmic axis gives equal physical length to each factor-of-ten range. Within each decade, the lines follow base-10 logarithms rather than equal numeric intervals.</p><h3>Choose settings for your task</h3><p>Choose Y axis for a semi-log plot of exponential change, X axis when the horizontal values span several orders of magnitude, or Both axes for log-log work. The default covers 1 to 100 on the Y axis.</p><p>PDF is the best option for actual-size printing. PNG offers 150 or 300 DPI pixel resolution; SVG keeps physical page dimensions. Match your printer paper and use 100% scale.</p><p><a href="/isometric-graph-paper/">Isometric</a> · <a href="/hexagonal-graph-paper/">Hexagonal</a> · <a href="/polar-graph-paper/">Polar</a> · <a href="/logarithmic-graph-paper/">Logarithmic</a></p></section>
+  <section id="setup">
+    <div class="sec-hd">
+      <h2>Your printer is probably shrinking the page</h2>
+      <p class="sec-lede">Print dialogs may use Fit to page, which changes the size of the grid. The amount depends on your paper and printer settings. On a 5&nbsp;mm grid that turns every square into 4.7&nbsp;mm.
+        It is small enough to go unnoticed and large enough to ruin a scale drawing, a knitting chart, or a floor plan.
+        Change this one setting before you print.</p>
+    </div>
+
+    <div class="setup">
+      <div><h3>Chrome / Edge</h3><p>Open <code>More settings</code>, find <code>Scale</code>, switch it from Default to <code>Custom</code> and type <code>100</code>.</p></div>
+      <div><h3>Adobe Acrobat</h3><p>Under <code>Page Sizing &amp; Handling</code> choose <code>Actual size</code>. Do not leave it on Fit or Shrink oversized pages.</p></div>
+      <div><h3>Safari / macOS Preview</h3><p>Expand the dialog, set <code>Scale</code> to <code>100%</code>, and make sure <code>Scale to Fit</code> is unchecked.</p></div>
+      <div><h3>Firefox</h3><p>Open <code>More settings</code> and set <code>Scale</code> to <code>100</code> instead of Fit to page width.</p></div>
+      <div><h3>Paper must match</h3><p>Printing a Letter PDF onto A4 may scale or crop the page, depending on your settings. Pick the paper you actually have loaded.</p></div>
+      <div><h3>Phone printing</h3><p>Mobile print flows usually scale without asking and give you no control. For anything you intend to measure, print from a computer.</p></div>
+    </div>
+
+    <p class="flag"><b>How to check it worked:</b> lay a ruler on the two bars at the bottom of the sheet.
+      The upper one must read 100&nbsp;mm and the lower one 4&nbsp;inches. If both are short by the same
+      proportion, the page was scaled &mdash; fix the setting and print again. The bars help you verify the physical size before using a sheet for measured work.</p>
+  </section>
+
+  <section id="sizes">
+    <div class="sec-hd">
+      <h2>Choose a spacing or another paper style</h2>
+      <p class="sec-lede">Each size has its own page, with the exact measurements, how many squares
+        fit on each sheet, what it is normally used for and which sizes it gets mistaken for. Or type any
+        value into the custom field above &mdash; metric or imperial, no size is off limits.</p>
+    </div>
+    <div class="related">
+      <a href="/2mm-graph-paper/"><strong>2 mm</strong><span>Dense plotting and fine detail work</span></a>
+      <a href="/5mm-graph-paper/"><strong>5 mm</strong><span>The metric school and notebook grid</span></a>
+      <a href="/eighth-inch-graph-paper/"><strong>1/8 inch</strong><span>Cross stitch, pixel art and bead patterns</span></a>
+      <a href="/1cm-graph-paper/"><strong>1 cm</strong><span>Coordinate geometry and large clear plotting</span></a>
+      <a href="/quarter-inch-graph-paper/"><strong>1/4 inch</strong><span>Quad paper, the US classroom default</span></a>
+      <a href="/10-squares-per-inch-graph-paper/"><strong>10 per inch</strong><span>Engineering computation work</span></a>
+      <a href="/half-inch-graph-paper/"><strong>1/2 inch</strong><span>Younger students and rough sketching</span></a>
+      <a href="/1-inch-graph-paper/"><strong>1 inch</strong><span>Floor plans and room layouts at scale</span></a>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="sec-hd">
+      <h2>Questions</h2>
+    </div>
+    <div class="faq"><details open><summary>What is a decade, and can I plot zero?</summary><p>A decade is a factor-of-ten range: 1 to 10 is one decade, and 1 to 100 is two. Zero and negative values have no position on this base-10 logarithmic scale. Advanced settings offers one to four decades.</p></details>
+      <details open>
+        <summary>Why doesn't my printed graph paper measure correctly?</summary>
+        <p>Check print scaling first. Fit to page may shrink the grid, depending on your printer, paper and settings.</p>
+        <p>The measuring bars on every sheet here exist to catch exactly this. If the metric bar reads 96&nbsp;mm instead
+          of 100, your page was scaled to 96 percent and every square is 4 percent small.</p>
+      </details>
+      <details><summary>Can I use exact square counts or cell numbering?</summary><p>This paper uses spacing mode. Exact square counts and square cell numbering are available with the square grid instead. You can still change paper size, margins, colour and line width.</p></details>
+      <details>
+        <summary>Should I choose A4 or Letter?</summary>
+        <p>Choose whichever is loaded in your printer. A4 is standard in Europe, Asia, Australia and most of the world;
+          Letter is standard in the US and Canada. Printing on a different paper size may scale or crop the sheet, depending on the settings.</p>
+      </details>
+      <details>
+        <summary>Is it free, and can I use it for work?</summary>
+        <p>Yes to both. There is no signup, no watermark and no limit on how many sheets you generate. The PDFs are plain
+          vector line work and you are free to use them for schoolwork, client work or anything else.</p>
+      </details>
+      <details>
+        <summary>Why is the file so small?</summary>
+        <p>The PDF is drawn as vector lines rather than an image, so a full sheet is only a few kilobytes. It also means
+          the grid stays perfectly sharp at any zoom level and prints at your printer's full resolution instead of
+          whatever a picture happened to be saved at.</p>
+      </details>
+      <details>
+        <summary>Can I get a size that isn't listed?</summary>
+        <p>Yes. Type any number into the custom size field and switch the unit between millimetres and inches. The sheet
+          is rebuilt as you type, and the preview always shows exactly what the PDF will contain.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <span>Graph paper, generated in your browser. Nothing is uploaded.</span>
+    <span>&copy; 2026</span>
+    <span><a href="mailto:hello@printgridpaper.com">Something wrong with a sheet? Tell me.</a>
+      &nbsp;&middot;&nbsp; <a href="#" id="fbLink">Found a bug? Report it</a></span>
+    <span class="foot-links">
+      <a href="/how-to-print-graph-paper/">How to print graph paper</a>
+      &nbsp;&middot;&nbsp; <a href="/graph-paper-templates/">All templates</a>
+      &nbsp;&middot;&nbsp; <a href="/graph-paper-for-teachers/">For teachers</a>
+      &nbsp;&middot;&nbsp; <a href="/compare-graph-paper-sizes/">Compare sizes</a>
+      &nbsp;&middot;&nbsp; <a href="/print-troubleshooting/">Print help</a>
+    </span>
+  </footer>
+</main>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Logarithmic Graph Paper Generator", "url": "https://printgridpaper.com/logarithmic-graph-paper/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+
+<script src="/assets/grid-engine.js"></script>
+<script>window.PAGE_PRESET = {style:'logarithmic',paper:'a4',spacing:5,unit:'mm',majorEvery:5,logAxes:'y',decades:2};</script>
+<script src="/assets/ui.js"></script>
+<script>
+(function () {
+  try {
+    var b = document.getElementById('printBanner');
+    if (b && localStorage.getItem('graphpaper_verified') === '1') b.remove();
+    var d = document.getElementById('pbDone');
+    if (d) d.addEventListener('click', function () {
+      try { localStorage.setItem('graphpaper_verified', '1'); } catch (e) {}
+      b.remove();
+    });
+  } catch (e) {}
+  var fb = document.getElementById('fbLink');
+  if (fb) fb.addEventListener('click', function (e) {
+    e.preventDefault();
+    var msg = prompt('What went wrong? Tell us in one or two lines so we can fix it:');
+    if (msg) location.href = 'mailto:hello@printgridpaper.com?subject=Feedback%20from%20printgridpaper.com&body=' + encodeURIComponent(msg);
+  });
+})();
+</script>
+</body>
+</html>

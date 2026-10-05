@@ -325,3 +325,19 @@ test('hexagonal numbers use complete cell centres in row order and stop at capac
   assert.equal((await get('?style=hexagonal&spacing=10&cellNumbers=true')).status,200);
   assert.equal((await get('?style=hexagonal&cellNumbers=true')).status,400);
 });
+
+test('number size enlarges text, fits long labels and rejects invalid sizes', async () => {
+  for (const style of ['square','hexagonal']) {
+    const o={style,spacing:20,cellNumbers:true,numberSize:7,numberStart:1,numberEnd:31};
+    const g=GridEngine.computeGrid(o);
+    assert.equal(g.labels[0].size,7);
+    assert.ok(g.labels[0].size>GridEngine.computeGrid({...o,numberSize:3.5}).labels[0].size);
+    const tight=GridEngine.computeGrid({...o,spacing:8,numberStart:9999,numberEnd:9999});
+    assert.equal(tight.labels[0].size,2);
+    assert.ok(GridEngine.renderSVG(o).includes('font-size="7"'));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+    for(const numberSize of [1,9,NaN]) assert.throws(()=>GridEngine.computeGrid({...o,numberSize}),/Number size/);
+  }
+  assert.equal((await get('?spacing=20&cellNumbers=true&numberSize=7')).status,200);
+  assert.equal((await get('?spacing=20&cellNumbers=true&numberSize=9')).status,400);
+});

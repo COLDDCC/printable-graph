@@ -381,6 +381,17 @@
               "maximum": 9999,
               "default": 31
             }
+          },
+          {
+            "name": "numberSize",
+            "in": "query",
+            "description": "Requested cell number font size in mm. Automatically reduced to fit each cell.",
+            "schema": {
+              "type": "number",
+              "minimum": 2,
+              "maximum": 8,
+              "default": 3.5
+            }
           }
         ],
         "responses": {

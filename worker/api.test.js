@@ -218,3 +218,30 @@ test('polar rings and rays share a centre, physical spacing, bounds and exports'
   assert.equal((await get('?style=polar&radials=36')).status,200);
   assert.equal((await get('?style=polar&radials=13')).status,400);
 });
+
+test('log paper uses base-10 positions on selected axes and validates cycles', async () => {
+  for (const logAxes of ['x','y','both']) for (const decades of [1,2,3,4]) {
+    const o={style:'logarithmic',logAxes,decades,bindingMargin:15,title:'Log practice',worksheetHeader:true};
+    const g=GridEngine.computeGrid(o);
+    const vertical=g.lines.filter(l=>l.x1===l.x2), horizontal=g.lines.filter(l=>l.y1===l.y2);
+    if(logAxes!=='y') {
+      assert.equal(vertical.length,decades*9+1);
+      assert.ok(Math.abs((vertical[1].x1-g.x0)/g.gridW-Math.log10(2)/decades)<1e-10);
+      assert.equal(vertical.filter(l=>l.major).length,decades+1);
+    }
+    if(logAxes!=='x') {
+      assert.equal(horizontal.length,decades*9+1);
+      assert.ok(Math.abs((g.y0+g.gridH-horizontal[1].y1)/g.gridH-Math.log10(2)/decades)<1e-10);
+      assert.equal(horizontal.filter(l=>l.major).length,decades+1);
+    }
+    assert.ok(g.labels.some(l=>l.text===String(10**decades)));
+    assert.ok(g.lines.every(l=>l.x1>=g.x0-1e-8 && l.x2<=g.x0+g.gridW+1e-8 && l.y1>=g.y0-1e-8 && l.y2<=g.y0+g.gridH+1e-8));
+    assert.ok(GridEngine.renderSVG(o).includes('>10</text>'));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+  }
+  assert.throws(()=>GridEngine.computeGrid({style:'logarithmic',decades:1.5}),/decades/);
+  assert.throws(()=>GridEngine.computeGrid({style:'logarithmic',logAxes:'z'}),/Log axes/);
+  assert.throws(()=>GridEngine.computeGrid({style:'logarithmic',mode:'count'}),/spacing mode/);
+  assert.equal((await get('?style=logarithmic&logAxes=both&decades=3')).status,200);
+  assert.equal((await get('?style=logarithmic&decades=1.5')).status,400);
+});

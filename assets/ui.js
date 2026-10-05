@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { pngDpi: 150, radials: 24, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -109,7 +109,7 @@
     var button = e.target.closest('button[data-style]');
     if (!button) return;
     state.style = button.dataset.style;
-    if ((state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar')) state.mode = 'spacing';
+    if ((state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
     syncSizing();
     syncPaperTypes();
     draw();
@@ -122,15 +122,20 @@
   on('#columns', 'input', function () { state.columns = Number(this.value); draw(); });
   on('#rows', 'input', function () { state.rows = Number(this.value); draw(); });
   function syncSizing() {
-    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar'; }
+    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic'; }
     if ($('#columns')) $('#columns').value = state.columns;
     if ($('#rows')) $('#rows').value = state.rows;
+    if ($('#logFields')) $('#logFields').hidden = state.style !== 'logarithmic';
+    if ($('#logAxes')) $('#logAxes').value = state.logAxes;
+    if ($('#decades')) $('#decades').value = state.decades;
     if ($('#polarFields')) $('#polarFields').hidden = state.style !== 'polar';
     if ($('#radials')) $('#radials').value = state.radials;
     if ($('#countFields')) $('#countFields').hidden = state.mode !== 'count';
     if ($('#countHelp')) $('#countHelp').hidden = state.mode !== 'count';
     if ($('#spacing')) $('#spacing').disabled = state.mode === 'count';
   }
+  on('#logAxes', 'change', function () { state.logAxes = this.value; draw(); });
+  on('#decades', 'change', function () { state.decades = Number(this.value); draw(); });
   on('#radials', 'change', function () { state.radials = Number(this.value); draw(); });
   on('#pngDpi', 'change', function () { state.pngDpi = Number(this.value); });
   on('#bindingMargin', 'input', function () { state.bindingMargin = Number(this.value); draw(); });
@@ -338,14 +343,14 @@
       return;
     }
     ['dl','printSheet','downloadPNG','downloadSVG','shareSheet'].forEach(function (id) { if ($('#' + id)) $('#' + id).disabled = false; });
-    status(state.style === 'polar' ? 'Polar: spacing is the distance between rings; radial lines divide a full circle evenly.' : state.style === 'hexagonal' ? 'Hexagonal: spacing is each hexagon edge length. Heavy-line settings do not apply.' : state.style === 'isometric' ? 'Isometric: spacing is the triangle edge length. Heavy-line settings do not apply.' : '');
+    status(state.style === 'logarithmic' ? 'Base-10 log paper: each decade runs from 1 to 10 times the previous value. Spacing and heavy-line controls apply to linear axes; decade boundaries are heavy.' : state.style === 'polar' ? 'Polar: spacing is the distance between rings; radial lines divide a full circle evenly.' : state.style === 'hexagonal' ? 'Hexagonal: spacing is each hexagon edge length. Heavy-line settings do not apply.' : state.style === 'isometric' ? 'Isometric: spacing is the triangle edge length. Heavy-line settings do not apply.' : '');
     host.style.aspectRatio = g.page.w + ' / ' + g.page.h;
     host.innerHTML = svg;
 
     if ($('#oPitch')) $('#oPitch').textContent = state.mode === 'count' ? g.step.toFixed(3) + ' mm' : state.spacing + ' ' + state.unit;
     if ($('#oSheet')) $('#oSheet').textContent =
       g.page.label + (state.orientation === 'landscape' ? ' \u2014 landscape' : '');
-    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
+    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'logarithmic' ? state.decades + ' decades · log ' + (state.logAxes === 'both' ? 'X and Y' : state.logAxes.toUpperCase()) : state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
     if ($('#metaSize')) $('#metaSize').textContent =
       g.page.w.toFixed(1) + ' \u00D7 ' + g.page.h.toFixed(1) + ' mm';
     if ($('#oBytes')) {

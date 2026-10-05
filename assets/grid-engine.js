@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', radials: 24,
+    style: 'square', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter',
     orientation: 'portrait',
@@ -84,7 +84,7 @@
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
-    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!isFinite(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be 1 to 25');
@@ -96,7 +96,7 @@
     var leftMargin = o.margin + Number(o.bindingMargin);
     var availW = page.w - leftMargin - o.margin;
     var availH = page.h - 2 * o.margin - reserve - headerHeight;
-    if ((o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
+    if ((o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar' || o.style === 'logarithmic') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
       if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
@@ -189,6 +189,27 @@
         var theta = ray * 2 * Math.PI / Number(o.radials);
         lines.push({x1:polarX,y1:polarY,x2:polarX+polarRadius*Math.cos(theta),y2:polarY-polarRadius*Math.sin(theta),w:o.minorWeight,major:false});
       }
+    }
+    if (o.style === 'logarithmic') {
+      if (['x','y','both'].indexOf(o.logAxes) < 0) throw new Error('Log axes must be x, y or both');
+      if (!Number.isInteger(o.decades) || o.decades < 1 || o.decades > 4) throw new Error('Log decades must be a whole number from 1 to 4');
+      var logX = o.logAxes === 'x' || o.logAxes === 'both';
+      var logY = o.logAxes === 'y' || o.logAxes === 'both';
+      lines = lines.filter(function (line) { return line.x1 === line.x2 ? !logX : !logY; });
+      function logarithmicAxis(horizontal) {
+        var span = horizontal ? gridW : gridH;
+        function mark(fraction, isMajor, value) {
+          var position = horizontal ? x0 + fraction * span : y0 + gridH - fraction * span;
+          lines.push(horizontal ? {x1:position,y1:y0,x2:position,y2:y0+gridH,w:isMajor?o.majorWeight:o.minorWeight,major:isMajor} : {x1:x0,y1:position,x2:x0+gridW,y2:position,w:isMajor?o.majorWeight:o.minorWeight,major:isMajor});
+          if (isMajor && !(!horizontal && logX && fraction === 0)) labels.push(horizontal ? {x:Math.min(position+1,x0+gridW-10),y:y0+gridH-2,size:2.5,text:String(value)} : {x:x0+1,y:Math.max(position-1,y0+3),size:2.5,text:String(value)});
+        }
+        for (var cycle=0; cycle<o.decades; cycle++) {
+          for (var digit=1; digit<=9; digit++) mark((cycle+Math.log10(digit))/o.decades,digit===1,Math.pow(10,cycle));
+        }
+        mark(1,true,Math.pow(10,o.decades));
+      }
+      if (logX) logarithmicAxis(true);
+      if (logY) logarithmicAxis(false);
     }
     if (o.title.trim()) labels.push({x:leftMargin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
     if (o.worksheetHeader) {

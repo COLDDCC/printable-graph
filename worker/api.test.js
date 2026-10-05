@@ -245,3 +245,23 @@ test('log paper uses base-10 positions on selected axes and validates cycles', a
   assert.equal((await get('?style=logarithmic&logAxes=both&decades=3')).status,200);
   assert.equal((await get('?style=logarithmic&decades=1.5')).status,400);
 });
+
+test('independent margins constrain every paper style, headers and calibration', async () => {
+  for (const style of ['square','dot','coordinate','isometric','hexagonal','polar','logarithmic']) {
+    const o={style,separateMargins:true,marginTop:20,marginBottom:25,marginLeft:15,marginRight:30,bindingMargin:10,title:'Margins practice',worksheetHeader:true};
+    const g=GridEngine.computeGrid(o);
+    assert.deepEqual(g.margins,{top:20,bottom:25,left:15,right:30});
+    assert.ok(g.x0>=25 && g.x0+g.gridW<=g.page.w-30+1e-8);
+    assert.ok(g.y0>=42 && g.y0+g.gridH<=g.page.h-25-18+1e-8);
+    assert.equal(g.calibrationY,g.page.h-25-12);
+    assert.ok(g.labels.some(l=>l.text==='Margins practice' && l.x===25 && l.y===26));
+    assert.ok(GridEngine.buildPDF(o).length>1000);
+  }
+  const g=GridEngine.computeGrid({mode:'count',columns:20,rows:30,separateMargins:true,marginLeft:40,marginRight:30});
+  assert.equal(g.cols,20);assert.equal(g.rows,30);assert.ok(g.x0>=40);
+  assert.equal(GridEngine.computeGrid({separateMargins:false,marginLeft:40}).margins.left,10);
+  assert.throws(()=>GridEngine.computeGrid({separateMargins:true,marginTop:51}),/Top margin/);
+  assert.deepEqual(parseOptions(new URLSearchParams('margin=12&marginLeft=30')), {...parseOptions(new URLSearchParams('margin=12')),separateMargins:true,marginLeft:30});
+  assert.equal((await get('?marginLeft=30&marginBottom=20')).status,200);
+  assert.equal((await get('?marginLeft=-1')).status,400);
+});

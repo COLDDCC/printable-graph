@@ -39,6 +39,7 @@
     unit: 'mm',             // 'mm' | 'in'
     majorEvery: 5,          // heavy line every N squares; 0 disables
     margin: 10,             // mm
+    separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null,
     minorWeight: 0.12,      // mm
     majorWeight: 0.30,      // mm
     color: '#4A7FB5',
@@ -93,9 +94,15 @@
     var headerHeight = o.title.trim() || o.worksheetHeader ? 22 : 0;
     var reserve = o.calibration ? 18 : 0;         // bottom strip for the ruler
     if (!isFinite(o.bindingMargin) || o.bindingMargin < 0 || o.bindingMargin > 30) throw new Error('Extra binding margin must be 0 to 30 mm');
-    var leftMargin = o.margin + Number(o.bindingMargin);
-    var availW = page.w - leftMargin - o.margin;
-    var availH = page.h - 2 * o.margin - reserve - headerHeight;
+    var margins = {};
+    ['Top','Bottom','Left','Right'].forEach(function (side) {
+      var value = o.separateMargins && o['margin'+side] !== null ? o['margin'+side] : o.margin;
+      if (!isFinite(value) || value < 0 || value > 50) throw new Error(side + ' margin must be 0 to 50 mm');
+      margins[side.toLowerCase()] = Number(value);
+    });
+    var leftMargin = margins.left + Number(o.bindingMargin);
+    var availW = page.w - leftMargin - margins.right;
+    var availH = page.h - margins.top - margins.bottom - reserve - headerHeight;
     if ((o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar' || o.style === 'logarithmic') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
@@ -113,7 +120,7 @@
     var gridW = cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
     var gridH = rows * step;
     var x0 = leftMargin + (availW - gridW) / 2;
-    var y0 = o.margin + headerHeight + (availH - gridH) / 2;
+    var y0 = margins.top + headerHeight + (availH - gridH) / 2;
 
     var lines = [], i, major;
     for (i = 0; i <= cols; i++) {
@@ -211,11 +218,11 @@
       if (logX) logarithmicAxis(true);
       if (logY) logarithmicAxis(false);
     }
-    if (o.title.trim()) labels.push({x:leftMargin,y:o.margin+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
+    if (o.title.trim()) labels.push({x:leftMargin,y:margins.top+6,size:Math.min(5,availW/(o.title.trim().length*0.65)),text:o.title.trim()});
     if (o.worksheetHeader) {
       var fieldSize = Math.min(3.5, availW / 42);
-      labels.push({x:leftMargin,y:o.margin+15,size:fieldSize,text:'Name: ____________________'});
-      labels.push({x:leftMargin+availW*0.6,y:o.margin+15,size:fieldSize,text:'Date: ____________'});
+      labels.push({x:leftMargin,y:margins.top+15,size:fieldSize,text:'Name: ____________________'});
+      labels.push({x:leftMargin+availW*0.6,y:margins.top+15,size:fieldSize,text:'Date: ____________'});
     }
     if (o.style === 'dot') {
       if ((cols + 1) * (rows + 1) > 20000) throw new Error('Choose wider dot spacing for this paper size');
@@ -238,10 +245,10 @@
     }
     return {
       dots: dots, labels: labels, circles: circles, rings: ringCount,
-      opts: o, page: page, step: step, cols: cols, rows: rows,
+      opts: o, margins: margins, page: page, step: step, cols: cols, rows: rows,
       x0: x0, y0: y0, gridW: gridW, gridH: gridH, lines: lines,
-      calibrationY: page.h - o.margin - 12,      // metric bar baseline
-      calibrationY2: page.h - o.margin - 4.5     // imperial bar baseline
+      calibrationY: page.h - margins.bottom - 12,      // metric bar baseline
+      calibrationY2: page.h - margins.bottom - 4.5     // imperial bar baseline
     };
   }
 

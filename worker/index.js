@@ -95,6 +95,11 @@ export function parseOptions(q) {
   if (q.has('title')) o.title = q.get('title');
   if (q.has('worksheetHeader')) o.worksheetHeader = bool(q.get('worksheetHeader'), 'worksheetHeader');
   if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic'], 'style');
+  if (q.has('separateMargins')) o.separateMargins = bool(q.get('separateMargins'), 'separateMargins');
+  for (const side of ['Top','Bottom','Left','Right']) {
+    const key = 'margin'+side;
+    if (q.has(key)) { o[key] = num(q.get(key), key, 0, 50); if (!q.has('separateMargins')) o.separateMargins = true; }
+  }
   if (q.has('margin')) o.margin = num(q.get('margin'), 'margin', 0, 50);
   if (q.has('weight')) o.minorWeight = num(q.get('weight'), 'weight', 0.05, 1);
   if (q.has('paper')) o.paper = pick(q.get('paper'), Object.keys(GridEngine.PAPER), 'paper');

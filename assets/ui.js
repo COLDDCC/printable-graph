@@ -20,7 +20,7 @@
   var $ = function (s) { return document.querySelector(s); };
 
   var base = { pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', orientation: 'portrait', spacing: 5, unit: 'mm',
-               margin: 10, majorEvery: 5, calibration: true, color: '#4A7FB5',
+               margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
   var state = {}, k;
@@ -141,7 +141,15 @@
   on('#bindingMargin', 'input', function () { state.bindingMargin = Number(this.value); draw(); });
   on('#sheetTitle', 'input', function () { state.title = this.value; draw(); });
   on('#worksheetHeader', 'change', function () { state.worksheetHeader = this.checked; draw(); });
-  on('#margin', 'input', function () { state.margin = Number(this.value); draw(); });
+  function syncMargins() {
+    if ($('#separateMargins')) $('#separateMargins').checked = state.separateMargins;
+    if ($('#marginFields')) $('#marginFields').hidden = !state.separateMargins;
+    if ($('#margin')) $('#margin').disabled = state.separateMargins;
+    ['Top','Bottom','Left','Right'].forEach(function (side) { var el=$('#margin'+side); if (el) el.value=state['margin'+side] === null ? state.margin : state['margin'+side]; });
+  }
+  on('#separateMargins', 'change', function () { state.separateMargins=this.checked; syncMargins(); draw(); });
+  ['Top','Bottom','Left','Right'].forEach(function (side) { on('#margin'+side, 'input', function () { state['margin'+side]=Number(this.value); draw(); }); });
+  on('#margin', 'input', function () { state.margin = Number(this.value); syncMargins(); draw(); });
   on('#weight', 'input', function () { state.minorWeight = Number(this.value); draw(); });
   on('#customColor', 'input', function () { state.color = this.value; draw(); });
   on('#printSheet', 'click', function () {
@@ -328,6 +336,7 @@
     [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });
     syncPaperTypes();
     syncSizing();
+    syncMargins();
     pressPresets();
   }
 

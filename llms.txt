@@ -78,3 +78,5 @@ Optional bindingMargin=0..30 adds extra blank space on the left in millimetres f
 Polar paper: style=polar with spacing controlling ring separation, and radials=12|24|36|72 (default 24). Rings form a circle centred in the available grid area. Exact-count mode is unavailable. PDF, SVG, PNG and print exports share the same geometry.
 
 Logarithmic paper: style=logarithmic, logAxes=x|y|both (default y), decades=1..4 (default 2). Log positions follow log10 and major boundaries are labelled 1,10,100,etc. Spacing controls linear axes only. Requires spacing mode. All exports share the same geometry.
+
+Independent margins: marginTop, marginBottom, marginLeft, marginRight accept 0..50 mm. Any side enables separate margins unless separateMargins=false is explicit; unspecified sides use margin (default 10 mm). Extra bindingMargin is added to the left side. Header and calibration bars respect top/bottom margins.

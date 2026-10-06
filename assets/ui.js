@@ -265,7 +265,8 @@
     catch (e) { return []; }
   }
   function persistPresets(list) {
-    try { localStorage.setItem(PRESETS_KEY, JSON.stringify(list)); } catch (e) {}
+    try { localStorage.setItem(PRESETS_KEY, JSON.stringify(list)); return true; }
+    catch (e) { status('Settings could not be saved in this browser. Use Share settings to keep a link instead.'); return false; }
   }
 
   function applyPreset(cfg) {
@@ -299,8 +300,9 @@
       x.title = 'Delete';
       x.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        list.splice(idx, 1);
-        persistPresets(list);
+        var updated = list.slice();
+        updated.splice(idx, 1);
+        if (!persistPresets(updated)) return;
         renderChips();
       });
       b.appendChild(x);
@@ -317,8 +319,9 @@
     var list = loadPresets();
     list.push({ name: name, cfg: cfg });
     if (list.length > 8) list = list.slice(list.length - 8);
-    persistPresets(list);
+    if (!persistPresets(list)) return;
     renderChips();
+    status('Settings saved in this browser.');
   });
 
   on('#dl', 'click', function () {

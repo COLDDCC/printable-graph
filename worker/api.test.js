@@ -461,3 +461,19 @@ test('corrupt saved preset entries do not break the controller', () => {
   }));
   assert.equal(host.hidden,true);
 });
+
+test('saving reports storage failure and success accurately', () => {
+  for (const blocked of [true,false]) {
+    let saveHandler,stored;
+    const message={textContent:''};
+    const save={addEventListener(type,fn){saveHandler=fn;}};
+    runInNewContext(readFileSync(new URL('../assets/ui.js',import.meta.url),'utf8'),{
+      document:{querySelectorAll(){return [];},querySelector(s){return s==='#presetSave'?save:s==='#toolStatus'?message:null;}},
+      window:{},location:{hash:''},GridEngine,prompt(){return 'QA preset';},
+      localStorage:{getItem(){return null;},setItem(key,value){if(blocked)throw new Error('Storage unavailable');stored=value;}}
+    });
+    saveHandler();
+    assert.match(message.textContent,blocked?/could not be saved/:/Settings saved/);
+    assert.equal(!!stored,!blocked);
+  }
+});

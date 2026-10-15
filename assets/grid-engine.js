@@ -121,14 +121,15 @@
       step = Math.min(availW / o.columns, availH / o.rows);
       if (step < 1) throw new Error('Too many squares for this paper: reduce the counts or margins');
     } else if (o.mode !== 'spacing') throw new Error('Unknown sizing mode');
-    if (availW <= step || availH <= step) throw new Error('Margin leaves no room for a grid');
+    var writingPaper=['lined','cornell','handwriting','story'].indexOf(o.style)>=0;
+    if (writingPaper ? (availW <= 0 || availH < step) : (availW <= step || availH <= step)) throw new Error('Margin leaves no room for a grid');
 
     var cols = o.mode === 'count' ? o.columns : Math.floor((availW + 1e-9) / step);
     var rows = o.mode === 'count' ? o.rows : Math.floor((availH + 1e-9) / step);
     if (o.style === 'coordinate') { cols -= cols % 2; rows -= rows % 2; }
-    if (cols < 2 || rows < 2) throw new Error('Choose a smaller spacing or margin');
+    if (writingPaper ? rows < 1 : (cols < 2 || rows < 2)) throw new Error('Choose a smaller spacing or margin');
     if (o.style === 'isometric') cols = Math.floor((availW + 1e-9) / (step * Math.sqrt(3) / 2));
-    var gridW = cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
+    var gridW = writingPaper ? availW : cols * step * (o.style === 'isometric' ? Math.sqrt(3) / 2 : 1);
     var gridH = rows * step;
     var x0 = leftMargin + (availW - gridW) / 2;
     var y0 = margins.top + headerHeight + (availH - gridH) / 2;

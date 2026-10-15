@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { ruledMargin: false, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -93,6 +93,7 @@
     if (mj) mj.value = state.majorEvery;
     if (un) press(un, function (c) { return c.dataset.v === state.unit; });
     pressPresets();
+    syncFamily();
     draw();
   }
 
@@ -112,13 +113,41 @@
     state.style = button.dataset.style;
     if (state.style !== 'square' && state.style !== 'hexagonal') state.cellNumbers = false;
     syncNumbers();
-    if ((state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
+    if ((state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
     if (state.cellNumbers) {
       try { if (GridEngine.computeGrid(Object.assign({},state,{cellNumbers:false})).step < 8) { state.mode='spacing'; state.unit='mm'; state.spacing=10; } } catch (_) {}
     }
     syncControls();
     draw();
   });
+  var familySettings = {};
+  on('#paperFamily', 'click', function (e) {
+    var b = e.target.closest('button[data-family]'); if (!b) return;
+    var current = state.style === 'lined' ? 'lined' : 'graph';
+    if (b.dataset.family === current) return;
+    familySettings[current] = Object.assign({}, state);
+    var next = familySettings[b.dataset.family];
+    if (next) state = Object.assign({}, next);
+    else if (b.dataset.family === 'lined') Object.assign(state, {style:'lined', mode:'spacing', spacing:0.28125, unit:'in', majorEvery:0, cellNumbers:false});
+    else Object.assign(state, {style:'square', mode:'spacing', spacing:5, unit:'mm', majorEvery:5, cellNumbers:false});
+    syncControls(); draw();
+  });
+  on('#linedPresets', 'click', function (e) { var b=e.target.closest('button'); if (b) applyPitch(b.dataset); });
+  on('#ruledMargin', 'change', function () { state.ruledMargin=this.checked; draw(); });
+  function syncFamily() {
+    if (!$('#paperFamily')) return;
+    var lined = state.style === 'lined', tabs = $('#paperFamily');
+    if (tabs) press(tabs, function (b) { return b.dataset.family === (lined ? 'lined' : 'graph'); });
+    if ($('#paperTypes')) $('#paperTypes').hidden = lined;
+    if ($('#presets')) $('#presets').hidden = lined;
+    if ($('#linedFields')) $('#linedFields').hidden = !lined;
+    if ($('#ruledMargin')) $('#ruledMargin').checked = state.ruledMargin;
+    if ($('#spacingLabel')) $('#spacingLabel').textContent = lined ? 'Line spacing' : 'Square size';
+    if ($('#pitchLabel')) $('#pitchLabel').textContent = lined ? 'Line spacing' : 'Square';
+    if ($('#spacing')) $('#spacing').setAttribute('aria-label', lined ? 'Custom line spacing' : 'Custom square size');
+    ['major','sizingMode','cellNumbers'].forEach(function (id) { var el=$('#'+id); if (el) el.closest('.f, .check').hidden=lined; });
+    if ($('#linedPresets')) press($('#linedPresets'), function (b) { return Number(b.dataset.s) === state.spacing && b.dataset.u === state.unit; });
+  }
   function syncPaperTypes() {
     var host = $('#paperTypes');
     if (host) press(host, function (button) { return button.dataset.style === state.style; });
@@ -127,7 +156,7 @@
   on('#columns', 'input', function () { state.columns = Number(this.value); draw(); });
   on('#rows', 'input', function () { state.rows = Number(this.value); draw(); });
   function syncSizing() {
-    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic'; }
+    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic'; }
     if ($('#columns')) $('#columns').value = state.columns;
     if ($('#rows')) $('#rows').value = state.rows;
     if ($('#logFields')) $('#logFields').hidden = state.style !== 'logarithmic';
@@ -185,7 +214,7 @@
     if (!win) { status('Allow pop-ups to print, or download the PDF instead.'); return; }
     var page = GridEngine.computeGrid(state).page;
     win.onload = function () { win.focus(); win.print(); };
-    win.document.write('<!doctype html><html><head><title>Print graph paper</title><style>@page{size:' + page.w + 'mm ' + page.h + 'mm;margin:0}body{margin:0}svg{display:block;width:' + page.w + 'mm;height:' + page.h + 'mm}</style></head><body>' + GridEngine.renderSVG(state) + '</body></html>');
+    win.document.write('<!doctype html><html><head><title>Print paper</title><style>@page{size:' + page.w + 'mm ' + page.h + 'mm;margin:0}body{margin:0}svg{display:block;width:' + page.w + 'mm;height:' + page.h + 'mm}</style></head><body>' + GridEngine.renderSVG(state) + '</body></html>');
     win.document.close();
     status('Choose 100% scale and matching paper size. Print one sheet; use PDF for multiple copies.');
   });
@@ -248,7 +277,7 @@
   on('#paperHeight', 'input', function () { state.paperHeight = Number(this.value); draw(); });
   on('#paper', 'change', function () { state.paper = this.value; syncCustomPaper(); if (state.paper === 'custom' && $('.extra-tools')) $('.extra-tools').open = true; draw(); });
   on('#spacing', 'input', function () {
-    state.spacing = parseFloat(this.value); pressPresets(); draw();
+    state.spacing = parseFloat(this.value); pressPresets(); syncFamily(); draw();
   });
   on('#major', 'input', function () { state.majorEvery = this.value === '' ? NaN : Number(this.value); draw(); });
   on('#calib', 'change', function () { state.calibration = this.checked; draw(); });
@@ -374,6 +403,7 @@
     if ($('#sheetTitle')) $('#sheetTitle').value = state.title;
     if ($('#worksheetHeader')) $('#worksheetHeader').checked = state.worksheetHeader;
     [['style','style'],['margin','margin'],['weight','minorWeight'],['customColor','color']].forEach(function (pair) { var el = $('#' + pair[0]); if (el) el.value = state[pair[1]]; });
+    syncFamily();
     syncPaperTypes();
     syncSizing();
     syncMargins();
@@ -401,7 +431,7 @@
     if ($('#oPitch')) $('#oPitch').textContent = state.mode === 'count' ? g.step.toFixed(3) + ' mm' : state.spacing + ' ' + state.unit;
     if ($('#oSheet')) $('#oSheet').textContent =
       g.page.label + (state.orientation === 'landscape' ? ' \u2014 landscape' : '');
-    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'logarithmic' ? state.decades + ' decades · log ' + (state.logAxes === 'both' ? 'X and Y' : state.logAxes.toUpperCase()) : state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
+    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'lined' ? (g.rows + 1) + ' writing lines' : state.style === 'logarithmic' ? state.decades + ' decades · log ' + (state.logAxes === 'both' ? 'X and Y' : state.logAxes.toUpperCase()) : state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
     if ($('#metaSize')) $('#metaSize').textContent =
       g.page.w.toFixed(1) + ' \u00D7 ' + g.page.h.toFixed(1) + ' mm';
     if ($('#oBytes')) {

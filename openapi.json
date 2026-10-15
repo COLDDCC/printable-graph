@@ -161,7 +161,8 @@
                 "isometric",
                 "hexagonal",
                 "polar",
-                "logarithmic"
+                "logarithmic",
+                "lined"
               ],
               "default": "square"
             }
@@ -430,6 +431,15 @@
               "minimum": 1,
               "maximum": 100,
               "default": 1
+            }
+          },
+          {
+            "name": "ruledMargin",
+            "in": "query",
+            "description": "Add a red left margin line to lined paper.",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           }
         ],

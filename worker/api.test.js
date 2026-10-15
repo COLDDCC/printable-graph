@@ -535,3 +535,30 @@ test('Cornell sections preserve physical dimensions, ruling and export parity', 
   assert.throws(()=>GridEngine.computeGrid({style:'cornell',summaryHeight:250}),/Summary/);
   assert.equal((await get('?style=cornell&cueWidth=999')).status,400);
 });
+
+test('handwriting and story paper export dashed midlines with correct band geometry', async () => {
+  for(const style of ['handwriting','story']) for(const paper of ['a4','letter']) {
+    const o={style,paper,spacing:12,unit:'mm',drawingHeight:90};
+    const g=GridEngine.computeGrid(o), dashed=g.lines.filter(l=>l.dashed);
+    assert.ok(dashed.length>3);
+    assert.ok(Math.abs(dashed[1].y1-dashed[0].y1-18)<1e-8);
+    for(const d of dashed) {
+      assert.ok(g.lines.some(l=>!l.dashed&&Math.abs(l.y1-(d.y1-6))<1e-8&&l.y1===l.y2));
+      assert.ok(g.lines.some(l=>!l.dashed&&Math.abs(l.y1-(d.y1+6))<1e-8&&l.y1===l.y2));
+    }
+    if(style==='story') {
+      assert.ok(g.lines.some(l=>l.x1===l.x2&&Math.abs(l.y2-l.y1-90)<1e-8));
+      assert.ok(dashed[0].y1>108);
+    }
+    assert.match(GridEngine.renderSVG(o),/stroke-dasharray="1.5 1.5"/);
+    const pdf=GridEngine.buildPDF(o);
+    assert.match(new TextDecoder().decode(pdf),/\] 0 d/);
+    const res=await get('?style='+style+'&paper='+paper+'&spacing=12&drawingHeight=90');
+    assert.equal(res.status,200);
+    assert.match(res.headers.get('Content-Disposition'),new RegExp(style+'-paper'));
+    assert.ok((await res.arrayBuffer()).byteLength>500);
+  }
+  assert.throws(()=>GridEngine.computeGrid({style:'story',drawingHeight:999}),/Drawing area/);
+  assert.equal((await get('?style=story&drawingHeight=999')).status,400);
+  assert.equal(parseOptions(new URLSearchParams('style=handwriting')).spacing,12);
+});

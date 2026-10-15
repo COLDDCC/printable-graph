@@ -102,3 +102,6 @@ For lined paper, ruledMarginPosition sets the left guide position in millimetres
 
 ## Cornell notes
 /cornell-notes/ provides printable cue, ruled notes and summary sections. API: /api/pdf?style=cornell&paper=a4&cueWidth=50&summaryHeight=45. Widths and heights are in mm. Standard line spacing presets also apply.
+
+## Handwriting and story paper
+/handwriting-paper/ uses top, dashed middle and baseline guides with gaps between bands. /story-paper/ adds a drawing box. API: /api/pdf?style=handwriting&spacing=12&unit=mm or /api/pdf?style=story&spacing=12&unit=mm&drawingHeight=90. Spacing is full writing band height.

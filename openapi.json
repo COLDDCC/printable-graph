@@ -163,7 +163,9 @@
                 "polar",
                 "logarithmic",
                 "lined",
-                "cornell"
+                "cornell",
+                "handwriting",
+                "story"
               ],
               "default": "square"
             }
@@ -472,6 +474,16 @@
               "type": "number",
               "minimum": 20,
               "default": 45
+            }
+          },
+          {
+            "name": "drawingHeight",
+            "in": "query",
+            "description": "Story paper drawing box height in mm, leaving at least 40 mm for writing.",
+            "schema": {
+              "type": "number",
+              "minimum": 30,
+              "default": 90
             }
           }
         ],

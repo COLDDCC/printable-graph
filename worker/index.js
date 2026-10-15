@@ -101,12 +101,14 @@ export function parseOptions(q) {
   if (q.has('radials')) o.radials = num(q.get('radials'), 'radials', 12, 72);
   if (q.has('title')) o.title = q.get('title');
   if (q.has('worksheetHeader')) o.worksheetHeader = bool(q.get('worksheetHeader'), 'worksheetHeader');
+  if (['handwriting','story'].includes(q.get('style')) && !sizeKey && !q.has('spacing')) { o.spacing=12; o.majorEvery=0; }
+  if (q.has('drawingHeight')) o.drawingHeight=num(q.get('drawingHeight'),'drawingHeight',30,1000);
   if (q.has('cueWidth')) o.cueWidth=num(q.get('cueWidth'), 'cueWidth', 20, 1000);
   if (q.has('summaryHeight')) o.summaryHeight=num(q.get('summaryHeight'), 'summaryHeight', 20, 1000);
   if (q.has('ruledMarginPosition')) o.ruledMarginPosition = num(q.get('ruledMarginPosition'), 'ruledMarginPosition', 0, 1000);
   if (q.has('ruledMargin')) o.ruledMargin = bool(q.get('ruledMargin'), 'ruledMargin');
   if (['lined','cornell'].includes(q.get('style')) && !sizeKey && !q.has('spacing')) { o.spacing = 7.14375; o.majorEvery = 0; }
-  if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic', 'lined', 'cornell'], 'style');
+  if (q.has('style')) o.style = pick(q.get('style'), ['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic', 'lined', 'cornell', 'handwriting', 'story'], 'style');
   if (q.has('separateMargins')) o.separateMargins = bool(q.get('separateMargins'), 'separateMargins');
   for (const side of ['Top','Bottom','Left','Right']) {
     const key = 'margin'+side;

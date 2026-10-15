@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', ruledMargin: false, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -146,9 +146,11 @@
     }
 
     if (o.style === 'lined') {
+      if (!isFinite(o.ruledMarginPosition) || o.ruledMarginPosition < 0 || o.ruledMarginPosition > page.w) throw new Error('Margin line position must be within the page');
+      if (o.ruledMargin && (o.ruledMarginPosition < leftMargin || o.ruledMarginPosition > page.w-margins.right)) throw new Error('Margin line must be within the printable writing area');
       lines = [];
       for (i = 0; i <= rows; i++) lines.push({x1:leftMargin, y1:y0+i*step, x2:page.w-margins.right, y2:y0+i*step, w:o.minorWeight, major:false});
-      if (o.ruledMargin) lines.push({x1:leftMargin+20, y1:y0, x2:leftMargin+20, y2:y0+gridH, w:o.minorWeight, major:false, color:'#C4452F'});
+      if (o.ruledMargin) lines.push({x1:o.ruledMarginPosition, y1:y0, x2:o.ruledMarginPosition, y2:y0+gridH, w:o.minorWeight, major:false, color:'#C4452F'});
     }
     if (o.style === 'isometric') {
       lines = [];

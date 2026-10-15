@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { ruledMargin: false, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -66,6 +66,7 @@
     state.spacing = state.unit === 'in' ? state.spacing / 25.4 : state.spacing * 25.4;
     if (sp) { sp.step = state.unit === 'in' ? '0.125' : '0.5'; sp.value = state.spacing; }
     pressPresets();
+    syncFamily();
   });
 
   on('#swatches', 'click', function (e) {
@@ -132,8 +133,14 @@
     else Object.assign(state, {style:'square', mode:'spacing', spacing:5, unit:'mm', majorEvery:5, cellNumbers:false});
     syncControls(); draw();
   });
+  [].forEach.call(document.querySelectorAll('a[data-lined-spacing]'), function (a) {
+    a.addEventListener('click', function (e) {
+      try { GridEngine.download({style:'lined', spacing:Number(a.dataset.linedSpacing), unit:'in', paper:a.dataset.paper, ruledMargin:true, ruledMarginPosition:31.75, majorEvery:0}); e.preventDefault(); } catch (_) { /* Use PDF API fallback. */ }
+    });
+  });
   on('#linedPresets', 'click', function (e) { var b=e.target.closest('button'); if (b) applyPitch(b.dataset); });
-  on('#ruledMargin', 'change', function () { state.ruledMargin=this.checked; draw(); });
+  on('#ruledMargin', 'change', function () { state.ruledMargin=this.checked; syncFamily(); draw(); });
+  on('#ruledMarginPosition', 'input', function () { state.ruledMarginPosition=Number(this.value); draw(); });
   function syncFamily() {
     if (!$('#paperFamily')) return;
     var lined = state.style === 'lined', tabs = $('#paperFamily');
@@ -142,6 +149,7 @@
     if ($('#presets')) $('#presets').hidden = lined;
     if ($('#linedFields')) $('#linedFields').hidden = !lined;
     if ($('#ruledMargin')) $('#ruledMargin').checked = state.ruledMargin;
+    if ($('#ruledMarginPosition')) { $('#ruledMarginPosition').value=state.ruledMarginPosition; $('#ruledMarginPosition').disabled=!state.ruledMargin; }
     if ($('#spacingLabel')) $('#spacingLabel').textContent = lined ? 'Line spacing' : 'Square size';
     if ($('#pitchLabel')) $('#pitchLabel').textContent = lined ? 'Line spacing' : 'Square';
     if ($('#spacing')) $('#spacing').setAttribute('aria-label', lined ? 'Custom line spacing' : 'Custom square size');

@@ -500,3 +500,16 @@ test('lined paper has exact horizontal spacing and optional red margin in both e
   assert.throws(() => GridEngine.computeGrid({style:'lined',mode:'count'}), /spacing/);
   assert.equal((await get('?style=lined&ruledMargin=invalid')).status,400);
 });
+
+
+test('lined margin position uses physical page coordinates and validates printable bounds', async () => {
+  for (const position of [25,31.75,40]) {
+    const g=GridEngine.computeGrid({style:'lined',ruledMargin:true,ruledMarginPosition:position});
+    assert.equal(g.lines.at(-1).x1,position);
+    assert.equal(g.lines.at(-1).x2,position);
+    const res=await get('?style=lined&ruledMargin=true&ruledMarginPosition='+position);
+    assert.equal(res.status,200);
+  }
+  assert.throws(()=>GridEngine.computeGrid({style:'lined',ruledMargin:true,ruledMarginPosition:5}),/writing area/);
+  assert.equal((await get('?style=lined&ruledMargin=true&ruledMarginPosition=999')).status,400);
+});

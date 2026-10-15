@@ -31,7 +31,7 @@
 
   var DEFAULTS = {
     mode: 'spacing', columns: 20, rows: 30,
-    style: 'square', ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
+    style: 'square', cueWidth: 50, summaryHeight: 45, ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', radials: 24, logAxes: 'y', decades: 2,
     title: '', worksheetHeader: false, bindingMargin: 0,
     paper: 'letter', paperWidth: 210, paperHeight: 297,
     orientation: 'portrait',
@@ -96,7 +96,7 @@
     var step = o.unit === 'in' ? o.spacing * MM_PER_IN : o.spacing;
     if (o.mode !== 'count' && (!isFinite(step) || step < 1)) throw new Error('Spacing too small to print: ' + step + 'mm');
 
-    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic', 'lined'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
+    if (['square', 'dot', 'coordinate', 'isometric', 'hexagonal', 'polar', 'logarithmic', 'lined', 'cornell'].indexOf(o.style) < 0) throw new Error('Unknown grid style');
     if (!isFinite(o.margin) || o.margin < 0 || o.margin > 50) throw new Error('Margin must be 0 to 50 mm');
     if (!isFinite(o.minorWeight) || o.minorWeight < 0.05 || o.minorWeight > 1) throw new Error('Line width must be 0.05 to 1 mm');
     if (!Number.isInteger(o.pages) || o.pages < 1 || o.pages > 25) throw new Error('Copies must be a whole number from 1 to 25');
@@ -114,7 +114,7 @@
     var leftMargin = margins.left + Number(o.bindingMargin);
     var availW = page.w - leftMargin - margins.right;
     var availH = page.h - margins.top - margins.bottom - reserve - headerHeight;
-    if ((o.style === 'lined' || o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar' || o.style === 'logarithmic') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
+    if ((o.style === 'cornell' || o.style === 'lined' || o.style === 'isometric' || o.style === 'hexagonal' || o.style === 'polar' || o.style === 'logarithmic') && o.mode === 'count') throw new Error('This paper type uses edge spacing; choose spacing mode');
     if (o.mode === 'count') {
       if (!Number.isInteger(o.columns) || !Number.isInteger(o.rows) || o.columns < 2 || o.rows < 2 || o.columns > 200 || o.rows > 200) throw new Error('Grid counts must be whole numbers from 2 to 200');
       if (o.style === 'coordinate' && (o.columns % 2 || o.rows % 2)) throw new Error('Coordinate grids need even counts to centre both axes');
@@ -151,6 +151,16 @@
       lines = [];
       for (i = 0; i <= rows; i++) lines.push({x1:leftMargin, y1:y0+i*step, x2:page.w-margins.right, y2:y0+i*step, w:o.minorWeight, major:false});
       if (o.ruledMargin) lines.push({x1:o.ruledMarginPosition, y1:y0, x2:o.ruledMarginPosition, y2:y0+gridH, w:o.minorWeight, major:false, color:'#C4452F'});
+    }
+    if (o.style === 'cornell') {
+      if (!isFinite(o.cueWidth) || o.cueWidth < 20 || o.cueWidth > availW-40) throw new Error('Cue column must be at least 20 mm and leave 40 mm for notes');
+      if (!isFinite(o.summaryHeight) || o.summaryHeight < 20 || o.summaryHeight > availH-40) throw new Error('Summary must be at least 20 mm and leave 40 mm for notes');
+      var right = page.w-margins.right, top = margins.top+headerHeight;
+      var bottom = top+availH, splitY = bottom-o.summaryHeight, splitX = leftMargin+o.cueWidth;
+      lines = [];
+      // Leave a small clear band for writing area labels and start each ruling below it.
+      for (var ly=top+10+step; ly<splitY-1e-8; ly+=step) lines.push({x1:splitX,y1:ly,x2:right,y2:ly,w:o.minorWeight,major:false});
+      [[leftMargin,top,right,top],[leftMargin,bottom,right,bottom],[leftMargin,top,leftMargin,bottom],[right,top,right,bottom],[splitX,top,splitX,splitY],[leftMargin,splitY,right,splitY]].forEach(function (v) { lines.push({x1:v[0],y1:v[1],x2:v[2],y2:v[3],w:o.majorWeight,major:true}); });
     }
     if (o.style === 'isometric') {
       lines = [];
@@ -298,6 +308,11 @@
       labels.push({x: cx + 1, y: cy + 3, size: 2.5, text: '0'});
       labels.push({x: x0 + gridW - 3, y: cy - 2, size: 3, text: 'x'});
       labels.push({x: cx + 2, y: y0 + 3, size: 3, text: 'y'});
+    }
+    if (o.style === 'cornell') {
+      labels.push({x:leftMargin+3,y:top+6,size:3,text:'Cues'});
+      labels.push({x:splitX+3,y:top+6,size:3,text:'Notes'});
+      labels.push({x:leftMargin+3,y:splitY+6,size:3,text:'Summary'});
     }
     return {
       cells: hexCells, dots: dots, labels: labels, circles: circles, rings: ringCount,
@@ -483,7 +498,7 @@
     var g = computeGrid(o);
     var stream = contentStream(g);
     var W = n(mm2pt(g.page.w)), H = n(mm2pt(g.page.h));
-    var title = (o.style === 'lined' ? 'Printable lined paper — ' : 'Printable grid — ') + g.page.label + ' ' + o.orientation +
+    var title = (o.style === 'cornell' ? 'Printable Cornell notes — ' : o.style === 'lined' ? 'Printable lined paper — ' : 'Printable grid — ') + g.page.label + ' ' + o.orientation +
                 ' — ' + (o.mode === 'count' ? o.columns + 'x' + o.rows + ' squares' : o.spacing + o.unit);
     var pages = Math.max(1, Math.floor(o.pages) || 1), i;
 
@@ -532,7 +547,7 @@
   function filename(o) {
     o = opts(o);
     var p = o.paper === 'custom' ? 'custom-' + o.paperWidth + 'x' + o.paperHeight + 'mm' : typeof o.paper === 'string' ? o.paper : 'custom';
-    var f = [o.style, o.style === 'lined' ? 'paper' : 'grid', o.mode === 'count' ? o.columns + 'x' + o.rows : o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
+    var f = [o.style, (o.style === 'lined' || o.style === 'cornell') ? 'paper' : 'grid', o.mode === 'count' ? o.columns + 'x' + o.rows : o.spacing + o.unit, p, o.orientation].join('-') + '.pdf';
     if (Math.max(1, Math.floor(o.pages) || 1) > 1) {
       f = f.replace(/\.pdf$/, '-x' + (Math.floor(o.pages) || 1) + '.pdf');
     }

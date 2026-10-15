@@ -583,3 +583,34 @@ test('Cornell notes reject spacing that leaves no ruled writing lines', async ()
   assert.match(await response.text(),/reduce spacing or summary height/);
   assert.ok(GridEngine.computeGrid({...options,spacing:7}).lines.some(l=>!l.major));
 });
+
+
+test('writing layouts retain separate pitches and reset discards cached session settings', () => {
+  const nodes={};
+  function node(id) {
+    return nodes[id]={children:[],dataset:{},value:'',handlers:{},setAttribute(){},
+      addEventListener(type,fn){this.handlers[type]=fn;}};
+  }
+  ['paperFamily','linedLayout','spacing','resetSheet'].forEach(node);
+  nodes.paperFamily.children=['graph','lined'].map(family=>({dataset:{family},setAttribute(){}}));
+  runInNewContext(readFileSync(new URL('../assets/ui.js',import.meta.url),'utf8'), {
+    document:{querySelectorAll(){return [];},querySelector(s){return nodes[s.slice(1)]||null;}},
+    window:{},location:{hash:''},GridEngine,localStorage:{getItem(){return null;}}
+  });
+  const family=i=>nodes.paperFamily.handlers.click({target:{closest(){return nodes.paperFamily.children[i];}}});
+  const layout=value=>{nodes.linedLayout.value=value;nodes.linedLayout.handlers.change.call(nodes.linedLayout);};
+  const spacing=value=>{nodes.spacing.value=value;nodes.spacing.handlers.input.call(nodes.spacing);};
+  family(1);spacing(0.3);
+  layout('story');spacing(18);
+  layout('handwriting');spacing(15);
+  layout('cornell');spacing(8);
+  layout('story');assert.equal(nodes.spacing.value,18);
+  layout('handwriting');assert.equal(nodes.spacing.value,15);
+  layout('cornell');assert.equal(nodes.spacing.value,8);
+  layout('lined');assert.equal(nodes.spacing.value,0.3);
+  family(0);family(1);assert.equal(nodes.spacing.value,0.3);
+  nodes.resetSheet.handlers.click();
+  assert.equal(nodes.spacing.value,5);
+  family(1);assert.equal(nodes.spacing.value,0.28125);
+  layout('story');assert.equal(nodes.spacing.value,12);
+});

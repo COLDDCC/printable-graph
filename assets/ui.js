@@ -121,7 +121,7 @@
     syncControls();
     draw();
   });
-  var familySettings = {};
+  var familySettings = {}, layoutPitches = {};
   on('#paperFamily', 'click', function (e) {
     var b = e.target.closest('button[data-family]'); if (!b) return;
     var current = (['lined','cornell','handwriting','story'].indexOf(state.style)>=0) ? 'lined' : 'graph';
@@ -141,7 +141,16 @@
   on('#linedPresets', 'click', function (e) { var b=e.target.closest('button'); if (b) applyPitch(b.dataset); });
   on('#ruledMargin', 'change', function () { state.ruledMargin=this.checked; syncFamily(); draw(); });
   on('#ruledMarginPosition', 'input', function () { state.ruledMarginPosition=Number(this.value); draw(); });
-  on('#linedLayout', 'change', function () { var previousPractice=state.style==='handwriting'||state.style==='story'; state.style=this.value; var practice=state.style==='handwriting'||state.style==='story'; if(practice!==previousPractice) {state.spacing=practice?12:7.14375;state.unit='mm';} syncControls(); draw(); });
+  on('#linedLayout', 'change', function () {
+    var nextStyle=this.value;
+    if (nextStyle===state.style) return;
+    layoutPitches[state.style]={spacing:state.spacing,unit:state.unit};
+    var nextPitch=layoutPitches[nextStyle];
+    state.style=nextStyle;
+    if (nextPitch) { state.spacing=nextPitch.spacing; state.unit=nextPitch.unit; }
+    else { state.spacing=(nextStyle==='handwriting'||nextStyle==='story')?12:7.14375; state.unit='mm'; }
+    syncControls(); draw();
+  });
   ['cueWidth','summaryHeight','drawingHeight'].forEach(function (key) { on('#'+key, 'input', function () { state[key]=Number(this.value); draw(); }); });
   function syncFamily() {
     if (!$('#paperFamily')) return;
@@ -318,6 +327,8 @@
   }
 
   function applyPreset(cfg) {
+    // A reset or loaded preset starts a fresh set of in-session layout settings.
+    familySettings={}; layoutPitches={};
     var k;
     for (k in base) state[k] = base[k];
     for (k in cfg) if (cfg[k] !== undefined && cfg[k] !== null) state[k] = cfg[k];

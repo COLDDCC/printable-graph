@@ -275,3 +275,5 @@ main > .hero.compact:first-child{padding-top:22px}
 }
 
 .paper-family{margin:20px 0 10px;max-width:360px}.paper-family button{flex:1;padding:12px 18px}#linedFields .check{margin-top:12px}
+
+.lined-templates{margin:36px 0}.lined-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.lined-card{border:1px solid var(--line);padding:16px;background:#fff}.lined-card svg{display:block;width:100%;border:1px solid var(--line)}.lined-card h3{margin:14px 0 6px}.lined-card p,.ruling-help{font-size:13px;line-height:1.5;color:var(--ink-2)}.lined-downloads{display:flex;flex-wrap:wrap;gap:12px}.lined-downloads a{padding:8px 0;font-weight:600}@media(max-width:650px){.lined-cards{grid-template-columns:1fr}}

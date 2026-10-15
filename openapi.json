@@ -441,6 +441,17 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "name": "ruledMarginPosition",
+            "in": "query",
+            "description": "Lined paper margin line distance from the physical left page edge, in mm. Must remain inside the printable writing area.",
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000,
+              "default": 31.75
+            }
           }
         ],
         "responses": {

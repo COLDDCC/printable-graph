@@ -97,3 +97,5 @@ Cell number step: numberStep=1..100, whole numbers (default 1). Example numberSt
 
 ## Lined paper
 Use /lined-paper/ for college, wide and narrow ruled paper. PDF endpoint: /api/pdf?style=lined&spacing=0.28125&unit=in&paper=a4&ruledMargin=true. Spacing is the distance between horizontal lines; ruledMargin adds an optional red left margin line.
+
+For lined paper, ruledMarginPosition sets the left guide position in millimetres from the physical left page edge (default 31.75). When enabled, the guide must stay within the printable writing area.

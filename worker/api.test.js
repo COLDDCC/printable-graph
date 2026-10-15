@@ -562,3 +562,24 @@ test('handwriting and story paper export dashed midlines with correct band geome
   assert.equal((await get('?style=story&drawingHeight=999')).status,400);
   assert.equal(parseOptions(new URLSearchParams('style=handwriting')).spacing,12);
 });
+
+
+test('writing templates reject malformed dimensions before SVG or PDF rendering', () => {
+  for (const [style,key] of [['cornell','cueWidth'],['cornell','summaryHeight'],['story','drawingHeight'],['lined','ruledMarginPosition']]) {
+    for (const value of ['50',true,{},Infinity,NaN]) {
+      const options={style,[key]:value};
+      assert.throws(()=>GridEngine.computeGrid(options), Error);
+      assert.throws(()=>GridEngine.renderSVG(options), Error);
+      assert.throws(()=>GridEngine.buildPDF(options), Error);
+    }
+  }
+});
+
+test('Cornell notes reject spacing that leaves no ruled writing lines', async () => {
+  const options={style:'cornell',paper:'letter',spacing:50,summaryHeight:200};
+  assert.throws(()=>GridEngine.computeGrid(options), /no writing lines/);
+  const response=await get('?style=cornell&paper=letter&spacing=50&summaryHeight=200');
+  assert.equal(response.status,400);
+  assert.match(await response.text(),/reduce spacing or summary height/);
+  assert.ok(GridEngine.computeGrid({...options,spacing:7}).lines.some(l=>!l.major));
+});

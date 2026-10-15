@@ -160,9 +160,10 @@
     if ($('#ruledMargin')) { $('#ruledMargin').checked = state.ruledMargin; $('#ruledMargin').closest('label').hidden=state.style!=='lined'; }
     if ($('#ruledMarginPosition')) $('#ruledMarginPosition').closest('.f').hidden=state.style!=='lined';
     if ($('#ruledMarginPosition')) { $('#ruledMarginPosition').value=state.ruledMarginPosition; $('#ruledMarginPosition').disabled=!state.ruledMargin; }
-    if ($('#spacingLabel')) $('#spacingLabel').textContent = lined ? 'Line spacing' : 'Square size';
-    if ($('#pitchLabel')) $('#pitchLabel').textContent = lined ? 'Line spacing' : 'Square';
-    if ($('#spacing')) $('#spacing').setAttribute('aria-label', lined ? 'Custom line spacing' : 'Custom square size');
+    var practice=state.style==='handwriting'||state.style==='story';
+    if ($('#spacingLabel')) $('#spacingLabel').textContent = practice ? 'Writing band height' : lined ? 'Line spacing' : 'Square size';
+    if ($('#pitchLabel')) $('#pitchLabel').textContent = practice ? 'Band height' : lined ? 'Line spacing' : 'Square';
+    if ($('#spacing')) $('#spacing').setAttribute('aria-label', practice ? 'Writing band height' : lined ? 'Custom line spacing' : 'Custom square size');
     ['major','sizingMode','cellNumbers'].forEach(function (id) { var el=$('#'+id); if (el) el.closest('.f, .check').hidden=lined; });
     if ($('#linedPresets')) press($('#linedPresets'), function (b) { return Number(b.dataset.s) === state.spacing && b.dataset.u === state.unit; });
   }

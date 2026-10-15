@@ -146,7 +146,7 @@
     }
 
     if (o.style === 'lined') {
-      if (!isFinite(o.ruledMarginPosition) || o.ruledMarginPosition < 0 || o.ruledMarginPosition > page.w) throw new Error('Margin line position must be within the page');
+      if (!Number.isFinite(o.ruledMarginPosition) || o.ruledMarginPosition < 0 || o.ruledMarginPosition > page.w) throw new Error('Margin line position must be within the page');
       if (o.ruledMargin && (o.ruledMarginPosition < leftMargin || o.ruledMarginPosition > page.w-margins.right)) throw new Error('Margin line must be within the printable writing area');
       lines = [];
       for (i = 0; i <= rows; i++) lines.push({x1:leftMargin, y1:y0+i*step, x2:page.w-margins.right, y2:y0+i*step, w:o.minorWeight, major:false});
@@ -156,7 +156,7 @@
       var writingTop = margins.top+headerHeight, writingRight=page.w-margins.right;
       lines=[];
       if (o.style === 'story') {
-        if (!isFinite(o.drawingHeight) || o.drawingHeight < 30 || o.drawingHeight > availH-40) throw new Error('Drawing area must be at least 30 mm and leave 40 mm for writing');
+        if (!Number.isFinite(o.drawingHeight) || o.drawingHeight < 30 || o.drawingHeight > availH-40) throw new Error('Drawing area must be at least 30 mm and leave 40 mm for writing');
         var drawBottom=writingTop+o.drawingHeight;
         [[leftMargin,writingTop,writingRight,writingTop],[leftMargin,drawBottom,writingRight,drawBottom],[leftMargin,writingTop,leftMargin,drawBottom],[writingRight,writingTop,writingRight,drawBottom]].forEach(function(v){lines.push({x1:v[0],y1:v[1],x2:v[2],y2:v[3],w:o.minorWeight,major:false});});
         writingTop=drawBottom+8;
@@ -169,13 +169,14 @@
       if (!lines.some(function(l){return l.dashed;})) throw new Error('Choose smaller writing bands or drawing area');
     }
     if (o.style === 'cornell') {
-      if (!isFinite(o.cueWidth) || o.cueWidth < 20 || o.cueWidth > availW-40) throw new Error('Cue column must be at least 20 mm and leave 40 mm for notes');
-      if (!isFinite(o.summaryHeight) || o.summaryHeight < 20 || o.summaryHeight > availH-40) throw new Error('Summary must be at least 20 mm and leave 40 mm for notes');
+      if (!Number.isFinite(o.cueWidth) || o.cueWidth < 20 || o.cueWidth > availW-40) throw new Error('Cue column must be at least 20 mm and leave 40 mm for notes');
+      if (!Number.isFinite(o.summaryHeight) || o.summaryHeight < 20 || o.summaryHeight > availH-40) throw new Error('Summary must be at least 20 mm and leave 40 mm for notes');
       var right = page.w-margins.right, top = margins.top+headerHeight;
       var bottom = top+availH, splitY = bottom-o.summaryHeight, splitX = leftMargin+o.cueWidth;
       lines = [];
       // Leave a small clear band for writing area labels and start each ruling below it.
       for (var ly=top+10+step; ly<splitY-1e-8; ly+=step) lines.push({x1:splitX,y1:ly,x2:right,y2:ly,w:o.minorWeight,major:false});
+      if (!lines.length) throw new Error('Line spacing leaves no writing lines in the notes area: reduce spacing or summary height');
       [[leftMargin,top,right,top],[leftMargin,bottom,right,bottom],[leftMargin,top,leftMargin,bottom],[right,top,right,bottom],[splitX,top,splitX,splitY],[leftMargin,splitY,right,splitY]].forEach(function (v) { lines.push({x1:v[0],y1:v[1],x2:v[2],y2:v[3],w:o.majorWeight,major:true}); });
     }
     if (o.style === 'isometric') {

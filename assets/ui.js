@@ -19,7 +19,7 @@
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
 
-  var base = { ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
+  var base = { cueWidth: 50, summaryHeight: 45, ruledMargin: false, ruledMarginPosition: 31.75, cellNumbers: false, numberStart: 1, numberEnd: 31, numberStep: 1, numberSize: 3.5, numberOrder: 'rows', numberPosition: 'center', pngDpi: 150, radials: 24, logAxes: 'y', decades: 2, bindingMargin: 0, title: '', worksheetHeader: false, mode: 'spacing', columns: 20, rows: 30, style: 'square', minorWeight: 0.12, majorWeight: 0.30, paper: 'a4', paperWidth: 210, paperHeight: 297, orientation: 'portrait', spacing: 5, unit: 'mm',
                margin: 10, separateMargins: false, marginTop: null, marginBottom: null, marginLeft: null, marginRight: null, majorEvery: 5, calibration: true, color: '#4A7FB5',
                pages: 1, bg: null };
 
@@ -114,7 +114,7 @@
     state.style = button.dataset.style;
     if (state.style !== 'square' && state.style !== 'hexagonal') state.cellNumbers = false;
     syncNumbers();
-    if ((state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
+    if ((state.style === 'cornell' || state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic')) state.mode = 'spacing';
     if (state.cellNumbers) {
       try { if (GridEngine.computeGrid(Object.assign({},state,{cellNumbers:false})).step < 8) { state.mode='spacing'; state.unit='mm'; state.spacing=10; } } catch (_) {}
     }
@@ -124,7 +124,7 @@
   var familySettings = {};
   on('#paperFamily', 'click', function (e) {
     var b = e.target.closest('button[data-family]'); if (!b) return;
-    var current = state.style === 'lined' ? 'lined' : 'graph';
+    var current = (state.style === 'lined' || state.style === 'cornell') ? 'lined' : 'graph';
     if (b.dataset.family === current) return;
     familySettings[current] = Object.assign({}, state);
     var next = familySettings[b.dataset.family];
@@ -141,14 +141,20 @@
   on('#linedPresets', 'click', function (e) { var b=e.target.closest('button'); if (b) applyPitch(b.dataset); });
   on('#ruledMargin', 'change', function () { state.ruledMargin=this.checked; syncFamily(); draw(); });
   on('#ruledMarginPosition', 'input', function () { state.ruledMarginPosition=Number(this.value); draw(); });
+  on('#linedLayout', 'change', function () { state.style=this.value; syncControls(); draw(); });
+  ['cueWidth','summaryHeight'].forEach(function (key) { on('#'+key, 'input', function () { state[key]=Number(this.value); draw(); }); });
   function syncFamily() {
     if (!$('#paperFamily')) return;
-    var lined = state.style === 'lined', tabs = $('#paperFamily');
+    var lined = state.style === 'lined' || state.style === 'cornell', tabs = $('#paperFamily');
     if (tabs) press(tabs, function (b) { return b.dataset.family === (lined ? 'lined' : 'graph'); });
     if ($('#paperTypes')) $('#paperTypes').hidden = lined;
     if ($('#presets')) $('#presets').hidden = lined;
     if ($('#linedFields')) $('#linedFields').hidden = !lined;
-    if ($('#ruledMargin')) $('#ruledMargin').checked = state.ruledMargin;
+    if ($('#linedLayout')) $('#linedLayout').value=state.style === 'cornell' ? 'cornell' : 'lined';
+    if ($('#cornellFields')) $('#cornellFields').hidden=state.style !== 'cornell';
+    ['cueWidth','summaryHeight'].forEach(function (key) { if ($('#'+key)) $('#'+key).value=state[key]; });
+    if ($('#ruledMargin')) { $('#ruledMargin').checked = state.ruledMargin; $('#ruledMargin').closest('label').hidden=state.style==='cornell'; }
+    if ($('#ruledMarginPosition')) $('#ruledMarginPosition').closest('.f').hidden=state.style==='cornell';
     if ($('#ruledMarginPosition')) { $('#ruledMarginPosition').value=state.ruledMarginPosition; $('#ruledMarginPosition').disabled=!state.ruledMargin; }
     if ($('#spacingLabel')) $('#spacingLabel').textContent = lined ? 'Line spacing' : 'Square size';
     if ($('#pitchLabel')) $('#pitchLabel').textContent = lined ? 'Line spacing' : 'Square';
@@ -164,7 +170,7 @@
   on('#columns', 'input', function () { state.columns = Number(this.value); draw(); });
   on('#rows', 'input', function () { state.rows = Number(this.value); draw(); });
   function syncSizing() {
-    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic'; }
+    if ($('#sizingMode')) { $('#sizingMode').value = state.mode; $('#sizingMode').querySelector('option[value=count]').disabled = state.style === 'cornell' || state.style === 'lined' || state.style === 'isometric' || state.style === 'hexagonal' || state.style === 'polar' || state.style === 'logarithmic'; }
     if ($('#columns')) $('#columns').value = state.columns;
     if ($('#rows')) $('#rows').value = state.rows;
     if ($('#logFields')) $('#logFields').hidden = state.style !== 'logarithmic';
@@ -439,7 +445,7 @@
     if ($('#oPitch')) $('#oPitch').textContent = state.mode === 'count' ? g.step.toFixed(3) + ' mm' : state.spacing + ' ' + state.unit;
     if ($('#oSheet')) $('#oSheet').textContent =
       g.page.label + (state.orientation === 'landscape' ? ' \u2014 landscape' : '');
-    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'lined' ? (g.rows + 1) + ' writing lines' : state.style === 'logarithmic' ? state.decades + ' decades · log ' + (state.logAxes === 'both' ? 'X and Y' : state.logAxes.toUpperCase()) : state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
+    if ($('#metaGrid')) $('#metaGrid').textContent = state.style === 'cornell' ? 'Cornell notes · '+state.cueWidth+' mm cues · '+state.summaryHeight+' mm summary' : state.style === 'lined' ? (g.rows + 1) + ' writing lines' : state.style === 'logarithmic' ? state.decades + ' decades · log ' + (state.logAxes === 'both' ? 'X and Y' : state.logAxes.toUpperCase()) : state.style === 'polar' ? g.rings + ' rings · ' + state.radials + ' radials · ' + g.step.toFixed(3) + ' mm ring spacing' : state.style === 'hexagonal' ? g.step.toFixed(3) + ' mm hexagon edges' : state.style === 'isometric' ? g.step.toFixed(3) + ' mm triangle edges' : (state.mode === 'count' ? g.step.toFixed(3) + ' mm · ' : '') + g.cols + ' \u00D7 ' + g.rows + ' squares';
     if ($('#metaSize')) $('#metaSize').textContent =
       g.page.w.toFixed(1) + ' \u00D7 ' + g.page.h.toFixed(1) + ' mm';
     if ($('#oBytes')) {

@@ -162,7 +162,8 @@
                 "hexagonal",
                 "polar",
                 "logarithmic",
-                "lined"
+                "lined",
+                "cornell"
               ],
               "default": "square"
             }
@@ -451,6 +452,26 @@
               "minimum": 0,
               "maximum": 1000,
               "default": 31.75
+            }
+          },
+          {
+            "name": "cueWidth",
+            "in": "query",
+            "description": "Cornell cue column width in mm; must leave 40 mm for notes.",
+            "schema": {
+              "type": "number",
+              "minimum": 20,
+              "default": 50
+            }
+          },
+          {
+            "name": "summaryHeight",
+            "in": "query",
+            "description": "Cornell summary height in mm; must leave 40 mm for notes.",
+            "schema": {
+              "type": "number",
+              "minimum": 20,
+              "default": 45
             }
           }
         ],

@@ -513,3 +513,25 @@ test('lined margin position uses physical page coordinates and validates printab
   assert.throws(()=>GridEngine.computeGrid({style:'lined',ruledMargin:true,ruledMarginPosition:5}),/writing area/);
   assert.equal((await get('?style=lined&ruledMargin=true&ruledMarginPosition=999')).status,400);
 });
+
+test('Cornell sections preserve physical dimensions, ruling and export parity', async () => {
+  for (const paper of ['a4','letter']) for (const orientation of ['portrait','landscape']) {
+    const o={style:'cornell',paper,orientation,cueWidth:50,summaryHeight:45,spacing:7,unit:'mm',title:'Lecture notes'};
+    const g=GridEngine.computeGrid(o), frame=g.lines.filter(l=>l.major), ruling=g.lines.filter(l=>!l.major);
+    assert.equal(frame.length,6);
+    const divider=frame.find(l=>l.x1===60&&l.x2===60);
+    assert.ok(divider);
+    assert.ok(Math.abs(frame[1].y1-divider.y2-45)<1e-8);
+    assert.ok(ruling.every(l=>l.x1===60&&l.y1===l.y2&&l.y1<divider.y2));
+    assert.ok(Math.abs(ruling[1].y1-ruling[0].y1-7)<1e-8);
+    assert.deepEqual(g.labels.map(l=>l.text),['Lecture notes','Cues','Notes','Summary']);
+    assert.match(GridEngine.renderSVG(o),/Summary/);
+    const response=await get('?style=cornell&paper='+paper+'&orientation='+orientation+'&cueWidth=50&summaryHeight=45');
+    assert.equal(response.status,200);
+    assert.match(response.headers.get('Content-Disposition'),/cornell-paper/);
+    assert.ok((await response.arrayBuffer()).byteLength>500);
+  }
+  assert.throws(()=>GridEngine.computeGrid({style:'cornell',cueWidth:180}),/Cue column/);
+  assert.throws(()=>GridEngine.computeGrid({style:'cornell',summaryHeight:250}),/Summary/);
+  assert.equal((await get('?style=cornell&cueWidth=999')).status,400);
+});

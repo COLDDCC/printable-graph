@@ -363,7 +363,12 @@
         x = mx + i * lengthMm / ticksN;
         ticks.push({ x1: x, y1: y, x2: x, y2: y - (i % majorEvery === 0 ? 3.2 : 1.7), w: 0.25 });
       }
-      labels.push({ x: mx + lengthMm + 2, y: y + 1.6, size: 5.6, text: label });
+      var labelX=mx+lengthMm+2, labelSize=5.6;
+      // Courier uses 0.6 em per character. Keep labels inside the printable
+      // width; on narrow sheets put a smaller label just above the ticks.
+      if (labelX+label.length*labelSize*0.6 > g.page.w-g.margins.right) {
+        labels.push({x:mx,y:y-3.8,size:2.2,text:label});
+      } else labels.push({x:labelX,y:y+1.6,size:labelSize,text:label});
       return true;
     }
 
@@ -372,7 +377,7 @@
 
     // Right-aligned reminder, only when there is clear space for it.
     var note = 'Print at 100% / Actual Size';
-    var noteW = note.length * 5.6 * 0.5;
+    var noteW = note.length * 5.6 * 0.6;
     if (right - noteW - 2 > mx + 4 * MM_PER_IN + 34) {
       labels.push({ x: right - noteW, y: g.calibrationY2 + 1.6, size: 5.6, text: note });
     }

@@ -630,3 +630,19 @@ test('writing paper spacing is independent of horizontal square counts', () => {
   assert.equal(oneBand.lines.length,3);
   assert.throws(()=>GridEngine.computeGrid({...narrow,style:'square'}),/smaller spacing/);
 });
+
+
+test('calibration labels stay within narrow printable pages and above tick marks', () => {
+  for (const style of ['lined','cornell','handwriting','story']) for (const width of [125,130,148,210,297]) {
+    const o={style,paper:'custom',paperWidth:width,paperHeight:210,spacing:7};
+    const g=GridEngine.computeGrid(o), marks=GridEngine.calibrationMarks(g);
+    for(const label of marks.labels) {
+      assert.ok(label.x>=g.margins.left);
+      assert.ok(label.x+label.text.length*label.size*0.6<=g.page.w-g.margins.right+1e-8);
+      assert.ok(label.y-label.size>=g.page.h-g.margins.bottom-18-1e-8);
+      assert.ok(label.y<=g.page.h-g.margins.bottom);
+      if(label.size===2.2) assert.ok(marks.ticks.every(t=>Math.abs(t.y1-label.y)>0.5));
+    }
+    assert.ok(GridEngine.buildPDF(o).length>500);
+  }
+});

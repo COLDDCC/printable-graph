@@ -614,3 +614,19 @@ test('writing layouts retain separate pitches and reset discards cached session 
   family(1);assert.equal(nodes.spacing.value,0.28125);
   layout('story');assert.equal(nodes.spacing.value,12);
 });
+
+
+test('writing paper spacing is independent of horizontal square counts', () => {
+  const narrow={style:'lined',paper:'custom',paperWidth:100,paperHeight:210,spacing:50};
+  const g=GridEngine.computeGrid(narrow);
+  assert.equal(g.cols,1);
+  assert.ok(g.lines.length>=2);
+  assert.ok(g.lines.every(l=>l.x1===10&&l.x2===90&&l.y1===l.y2));
+  assert.ok(GridEngine.buildPDF(narrow).length>500);
+  const practice=GridEngine.computeGrid({style:'handwriting',paper:'a4',spacing:100});
+  assert.ok(practice.lines.some(l=>l.dashed));
+  assert.ok(practice.lines.every(l=>l.x1===10&&l.x2===200));
+  const oneBand=GridEngine.computeGrid({style:'handwriting',paper:'custom',paperWidth:100,paperHeight:100,spacing:60,calibration:false});
+  assert.equal(oneBand.lines.length,3);
+  assert.throws(()=>GridEngine.computeGrid({...narrow,style:'square'}),/smaller spacing/);
+});

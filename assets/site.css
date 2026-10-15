@@ -273,3 +273,5 @@ main > .hero.compact:first-child{padding-top:22px}
   .tool.compact>.block{order:-1}
   .tool.compact .sheet-frame{max-width:420px;width:100%;justify-self:center}
 }
+
+.paper-family{margin:20px 0 10px;max-width:360px}.paper-family button{flex:1;padding:12px 18px}#linedFields .check{margin-top:12px}

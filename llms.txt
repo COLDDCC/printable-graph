@@ -94,3 +94,6 @@ Cell number order: numberOrder=rows (default), columns, or snake (alternating le
 Cell number position: numberPosition=center (default), top-left, or top-right. Corner labels are limited to 20% of cell spacing to leave writing room and stay inside square or hexagonal cells.
 
 Cell number step: numberStep=1..100, whole numbers (default 1). Example numberStart=2, numberEnd=10, numberStep=2 generates 2,4,6,8,10. Stops at sheet capacity or before exceeding numberEnd. Supported with every number order and position.
+
+## Lined paper
+Use /lined-paper/ for college, wide and narrow ruled paper. PDF endpoint: /api/pdf?style=lined&spacing=0.28125&unit=in&paper=a4&ruledMargin=true. Spacing is the distance between horizontal lines; ruledMargin adds an optional red left margin line.

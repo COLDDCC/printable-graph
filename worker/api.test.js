@@ -477,3 +477,26 @@ test('saving reports storage failure and success accurately', () => {
     assert.equal(!!stored,!blocked);
   }
 });
+
+
+test('lined paper has exact horizontal spacing and optional red margin in both exports', async () => {
+  for (const paper of ['a4', 'letter']) for (const spacing of [0.28125, 0.34375, 0.25]) {
+    const options = {style:'lined', paper, spacing, unit:'in', ruledMargin:false};
+    const g = GridEngine.computeGrid(options);
+    assert.ok(g.lines.length > 20);
+    assert.ok(g.lines.every(l => l.y1 === l.y2 && !l.major));
+    assert.ok(Math.abs(g.lines[1].y1-g.lines[0].y1-spacing*25.4)<1e-9);
+    assert.equal(g.lines[0].x1, 10);
+    const marked = GridEngine.computeGrid({...options, ruledMargin:true});
+    assert.equal(marked.lines.length, g.lines.length+1);
+    assert.equal(marked.lines.at(-1).color, '#C4452F');
+    assert.match(GridEngine.renderSVG({...options, ruledMargin:true}), /stroke="#C4452F"/);
+    const res = await get('?style=lined&spacing='+spacing+'&unit=in&paper='+paper+'&ruledMargin=true');
+    assert.equal(res.status,200);
+    assert.match(res.headers.get('Content-Disposition'), /lined-paper/);
+    assert.ok((await res.arrayBuffer()).byteLength>500);
+  }
+  assert.equal(parseOptions(new URLSearchParams('style=lined')).spacing, 7.14375);
+  assert.throws(() => GridEngine.computeGrid({style:'lined',mode:'count'}), /spacing/);
+  assert.equal((await get('?style=lined&ruledMargin=invalid')).status,400);
+});

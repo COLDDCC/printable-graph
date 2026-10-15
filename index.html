@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Free Printable Graph Paper Generator - Print Instantly | 1cm, 1/4 inch, Engineering</title>
-<meta name="description" content="Create and print unlimited free graph paper online. Choose from grid sizes: 1cm, 1/4 inch, engineering paper (10 per inch), and more. No signup needed. Print instantly. Perfect for students, teachers, and professionals.">
+<title>Free Printable Graph &amp; Lined Paper Generator</title>
+<meta name="description" content="Create free printable graph and lined paper. Customize spacing, paper size and colors, then print or download a PDF. No signup needed.">
 <link rel="canonical" href="https://printgridpaper.com/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Free Printable Graph Paper Generator - Print Instantly">
-<meta property="og:description" content="Create and print unlimited free graph paper online. Choose from grid sizes: 1cm, 1/4 inch, engineering paper, and more. No signup, print instantly.">
+<meta property="og:title" content="Free Printable Graph &amp; Lined Paper Generator">
+<meta property="og:description" content="Create free printable graph and lined paper. Customize spacing, paper size and colors, then print or download a PDF. No signup needed.">
 <meta property="og:url" content="https://printgridpaper.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://printgridpaper.com/assets/previews/home.png">
@@ -69,6 +69,8 @@
     </div>
   </div>
 
+  <div class="paper-family seg" id="paperFamily" role="group" aria-label="Choose graph or lined paper"><button type="button" data-family="graph" aria-pressed="true">Graph Paper</button><button type="button" data-family="lined" aria-pressed="false">Lined Paper</button></div>
+  <p class="quick-note">Also available: <a href="/lined-paper/">lined paper for note-taking</a>.</p>
   <div class="tool compact">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
@@ -79,14 +81,14 @@
       <div class="block-hd"><span>Your sheet</span><div class="paper-types" id="paperTypes" role="group" aria-label="Paper type"><button type="button" data-style="square" aria-pressed="true">Square grid</button><button type="button" data-style="dot" aria-pressed="false">Dot grid</button><button type="button" data-style="coordinate" aria-pressed="false">Coordinate grid</button><button type="button" data-style="isometric" aria-pressed="false">Isometric</button><button type="button" data-style="hexagonal" aria-pressed="false">Hexagonal</button><button type="button" data-style="polar" aria-pressed="false">Polar</button><button type="button" data-style="logarithmic" aria-pressed="false">Logarithmic</button></div><span id="oBytes">&mdash;</span></div>
       <div class="preset-chips" id="presetChips" hidden></div>
       <div class="cells">
-        <div class="cell"><label>Square</label><output id="oPitch">5 mm</output></div>
+        <div class="cell"><label id="pitchLabel">Square</label><output id="oPitch">5 mm</output></div>
         <div class="cell"><label>Paper</label><output id="oSheet">A4</output></div>
       </div>
 
       <div class="ctrls">
 
         <div class="f">
-          <span>Square size</span>
+          <span id="spacingLabel">Square size</span>
           <div class="presets" id="presets">
             <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
             <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
@@ -97,6 +99,7 @@
           </div>
         </div>
 
+        <div id="linedFields" hidden><div class="presets" id="linedPresets"><button type="button" data-s="0.28125" data-u="in" data-m="0">College ruled</button><button type="button" data-s="0.34375" data-u="in" data-m="0">Wide ruled</button><button type="button" data-s="0.25" data-u="in" data-m="0">Narrow ruled</button></div><label class="check"><input type="checkbox" id="ruledMargin"> Left margin line</label></div>
         <div class="row">
           <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
           <div class="f"><span>Unit</span>
@@ -396,11 +399,11 @@
   "@graph":[
     {
       "@type":"WebApplication",
-      "name":"Printable Graph Paper",
+      "name":"Printable Graph & Lined Paper",
       "url":"https://printgridpaper.com/",
       "applicationCategory":"UtilitiesApplication",
       "operatingSystem":"Any",
-      "description":"Generate free printable graph paper as a PDF in any square size, on A4 or Letter, with a built-in measuring bar to verify the page was not scaled by the printer.",
+      "description":"Generate free printable graph and lined paper as a PDF with custom spacing, on A4 or Letter, with a built-in measuring bar to verify the page was not scaled by the printer.",
       "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
     },
     {

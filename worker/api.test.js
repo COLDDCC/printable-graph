@@ -646,3 +646,21 @@ test('calibration labels stay within narrow printable pages and above tick marks
     assert.ok(GridEngine.buildPDF(o).length>500);
   }
 });
+
+test('template previews, browser downloads and server fallback PDFs use the same presets', () => {
+  for (const page of ['../index.html', '../graph-paper-templates/index.html']) {
+    const html = readFileSync(new URL(page, import.meta.url), 'utf8');
+    const links = [...html.matchAll(/href="\/api\/pdf\?([^"]+)" data-template-pdf='([^']+)'/g)];
+    assert.equal(links.length, 12);
+    for (const [, query, json] of links) {
+      const preset = JSON.parse(json);
+      const fallback = parseOptions(new URLSearchParams(query.replaceAll('&amp;', '&')));
+      assert.deepEqual(GridEngine.buildPDF(fallback), GridEngine.buildPDF(preset));
+    }
+    const images = [...html.matchAll(/src="(\/assets\/templates\/[^"]+\.svg)"/g)];
+    assert.equal(images.length, links.length);
+    images.forEach((image, i) => {
+      assert.equal(readFileSync(new URL('..' + image[1], import.meta.url), 'utf8'), GridEngine.renderSVG(JSON.parse(links[i][2])));
+    });
+  }
+});

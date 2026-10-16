@@ -480,6 +480,17 @@
       if (group && !advanced.contains(group)) advanced.appendChild(group);
     });
   }
+  if (window.addEventListener) window.addEventListener('hashchange', function () {
+    try {
+      var shared = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+      var next = Object.assign({}, base);
+      Object.keys(base).forEach(function (key) { if (shared[key] !== undefined) next[key] = shared[key]; });
+      GridEngine.computeGrid(next);
+      applyPreset(next);
+      if (advanced) advanced.open = false;
+      window.scrollTo(0, 0);
+    } catch (_) { /* Section anchors and invalid fragments leave the sheet unchanged. */ }
+  });
   syncControls();
   draw();
   renderChips();

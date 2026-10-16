@@ -5,7 +5,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '..');
-const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.png':'image/png'};
+const types = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.png':'image/png','.svg':'image/svg+xml'};
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');
   const file = path.resolve(root, '.' + decodeURIComponent(url.pathname) + (url.pathname.endsWith('/') ? 'index.html' : ''));
@@ -53,8 +53,38 @@ const server = http.createServer(async (req,res) => {
       assert.match(await page.locator('#oPitch').textContent(),/7/);
       await page.locator('#paper').selectOption('custom');
       assert(await page.locator('#paperWidth').isVisible());
+      // Every ready-made template must export and load its actual preset.
+      await page.goto(`http://127.0.0.1:${server.address().port}/`);
+      const cards=page.locator('.template-card');
+      await page.locator('.template-library').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+      await page.screenshot({path:`artifacts/core-workflow/templates-${width}x${height}.png`});
+      assert.equal(await cards.count(),12);
+      assert(await page.locator('.template-library').evaluate(el=>el.getBoundingClientRect().top>=document.querySelector('.tool').getBoundingClientRect().bottom));
+      for (let i=0;i<await cards.count();i++) {
+        const card=cards.nth(i), pdf=card.locator('[data-template-pdf]');
+        const preset=JSON.parse(await pdf.getAttribute('data-template-pdf'));
+        const response=await page.request.get(new URL(await card.locator('img').getAttribute('src'),page.url()).href);
+        assert.equal(response.status(),200);
+        const downloadPromise=page.waitForEvent('download'); await pdf.click();
+        const bytes=await fs.readFile(await (await downloadPromise).path());
+        assert.equal(bytes.subarray(0,4).toString(),'%PDF');
+        await card.locator('.template-actions a:last-child').click();
+        await page.waitForFunction(expected=>document.querySelector('#paper').value===expected.paper&&document.querySelector('#spacing').value==expected.spacing&&document.querySelector('#paperTypes [aria-pressed=true]')?.dataset.style===expected.style,preset);
+        assert.equal(await page.locator('#paperTypes [aria-pressed=true]').getAttribute('data-style'),preset.style);
+        await page.waitForFunction(()=>scrollY===0);
+      }
+      await page.locator('[data-template-filter="Specialty grids"]').click();
+      assert.equal(await page.locator('.template-card:visible').count(),4);
+      await page.locator('[data-template-filter="All templates"]').click();
+      assert.equal(await page.locator('.template-card:visible').count(),12);
+      await page.goto(`http://127.0.0.1:${server.address().port}/graph-paper-templates/`);
+      assert.equal(await page.locator('.template-card').count(),12);
+      await page.locator('[data-template-filter="Large format"]').click();
+      assert.equal(await page.locator('.template-card:visible').count(),1);
+      await page.locator('.template-card:visible .template-actions a:last-child').click();
+      await page.waitForFunction(()=>document.querySelector('#paper')?.value==='tabloid');
       assert.deepEqual(errors,[]);
-      console.log(`PASS ${width}x${height}: visible controls, presets, PDF/PNG/SVG, advanced settings`);
+      console.log(`PASS ${width}x${height}: first-screen controls, PDF/PNG/SVG, 12 template downloads and presets, library filters`);
       await page.close();
     }
   } finally { if(browser) await browser.close(); server.close(); }

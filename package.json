@@ -10,7 +10,8 @@
     "gen:sitemap": "node tools/gen-sitemap.js",
     "patch:layout": "node tools/patch-compact-layout.js",
     "test": "node --test worker/api.test.js",
-    "test:ux": "node tools/check-core-workflow.js"
+    "test:ux": "node tools/check-core-workflow.js",
+    "gen:templates": "node tools/gen-template-library.js"
   },
   "repository": {
     "type": "git",

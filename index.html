@@ -39,7 +39,7 @@
   gtag('config', 'G-WFH3F9TQCN');
 </script>
 </head>
-<body>
+<body class="home-workspace">
 
 <header>
   <div class="wrap mast">
@@ -50,7 +50,7 @@
     <span class="mast-tagline">Free &middot; no signup &middot; no watermark &middot; true to size</span>
     <nav>
       <a href="/lined-paper/">Writing paper</a>
-      <a href="#setup">Print settings</a>
+      <a href="#generator">Print settings</a>
       <a href="#sizes">Square sizes</a>
       <a href="/how-to-print-graph-paper/">How to print</a>
       <a href="#faq">FAQ</a>
@@ -62,7 +62,7 @@
 
   <div class="hero size compact">
     <div>
-      <h1>Free Online Graph Paper Generator</h1>
+      <h1>Free Printable Graph Paper</h1>
     </div>
     <div class="quick-dl">
       <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Download 5 mm PDF &middot; A4</a>
@@ -71,8 +71,8 @@
   </div>
 
   <div class="paper-family seg" id="paperFamily" role="group" aria-label="Choose graph or lined paper"><button type="button" data-family="graph" aria-pressed="true">Graph Paper</button><button type="button" data-family="lined" aria-pressed="false">Lined Paper</button></div>
-  <p class="quick-note">Also available: <a href="/lined-paper/">lined paper for note-taking</a>.</p>
-  <div class="tool compact">
+
+  <div class="tool compact" id="generator" aria-label="Graph paper generator">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
       <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
@@ -101,16 +101,6 @@
         </div>
 
         <div id="linedFields" hidden><div class="f"><span>Layout</span><select id="linedLayout" aria-label="Writing paper layout"><option value="lined">Lined paper</option><option value="cornell">Cornell notes</option><option value="handwriting">Handwriting practice</option><option value="story">Story paper (picture + writing)</option></select></div><p id="practiceHelp" hidden>Spacing is the full height of each writing band. Each band has a dashed middle guide and a blank gap below it.</p><div id="drawingFields" class="f" hidden><span>Drawing area height (mm)</span><input id="drawingHeight" aria-label="Drawing area height in millimetres" type="number" min="30" value="90" step="5"></div><div id="cornellFields" hidden><div class="row"><div class="f"><span>Cue column width (mm)</span><input id="cueWidth" type="number" min="20" step="1" value="50"></div><div class="f"><span>Summary height (mm)</span><input id="summaryHeight" type="number" min="20" step="1" value="45"></div></div></div><div class="presets" id="linedPresets"><button type="button" data-s="0.28125" data-u="in" data-m="0">College · 7.14 mm</button><button type="button" data-s="0.34375" data-u="in" data-m="0">Wide · 8.73 mm</button><button type="button" data-s="0.25" data-u="in" data-m="0">Narrow · 6.35 mm</button></div><label class="check"><input type="checkbox" id="ruledMargin"> Left margin line</label><div class="f"><span>Margin line position (mm from left edge)</span><input id="ruledMarginPosition" type="number" min="0" max="1000" step="0.5" value="31.75" aria-label="Margin line position in millimetres"><small>31.75 mm (1¼ in) is a common notebook setting. Keep the line inside your page margins.</small></div><p class="ruling-help">College for everyday notes · Wide for larger handwriting · Narrow for compact notes.</p></div>
-        <div class="row">
-          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
-          <div class="f"><span>Unit</span>
-            <div class="seg" id="unit">
-              <button type="button" data-v="mm" aria-pressed="true">mm</button>
-              <button type="button" data-v="in" aria-pressed="false">inch</button>
-            </div>
-          </div>
-        </div>
-
                 <div class="row">
           <div class="f">
           <span>Paper</span>
@@ -133,11 +123,6 @@
         </div>
 
         <div class="row">
-          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
-          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
-        </div>
-
-        <div class="row">
           <div class="f">
           <span>Line colour</span>
           <div class="swatches" id="swatches">
@@ -148,14 +133,33 @@
             <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
           </div>
         </div>
-          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+
         </div>
 
-        <label class="check"><input type="checkbox" id="calib" checked>
-          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
-        <button class="dl" id="dl" type="button">Download PDF</button>
+        <div class="core-actions">
+          <button class="dl" id="dl" type="button">Download PDF</button>
           <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="downloadSVG">Download SVG</button><button type="button" id="shareSheet">Share settings</button></div>
+          <p class="print-hint">Print at 100% / Actual size for accurate squares.</p>
+        </div>
         <details class="extra-tools"><summary>Advanced settings</summary>
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
+
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
+
 
           <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
           <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>
@@ -184,6 +188,62 @@
 
   <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?size=5mm&amp;paper=a4</a></p>
 
+<!-- template-library:start -->
+<section class="template-library" id="paper-templates" aria-labelledby="template-title">
+ <div class="sec-hd"><h2 id="template-title">Choose a printable paper template</h2><p class="sec-lede">Start with a ready-made sheet. Download its PDF now, or customize the grid, colour and paper size.</p></div>
+ <div class="template-filters" role="group" aria-label="Filter paper templates" hidden><button type="button" data-template-filter="All templates" aria-pressed="true">All templates</button><button type="button" data-template-filter="School & maths" aria-pressed="false">School & maths</button><button type="button" data-template-filter="Design & craft" aria-pressed="false">Design & craft</button><button type="button" data-template-filter="Specialty grids" aria-pressed="false">Specialty grids</button><button type="button" data-template-filter="Large format" aria-pressed="false">Large format</button></div>
+ <p class="template-count" role="status" aria-live="polite" hidden></p>
+ <div class="template-grid"><article class="template-card" data-category="School & maths">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize 5 mm graph paper"><img src="/assets/templates/5mm.svg" width="210" height="297" loading="lazy" alt="5 mm graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">School & maths · A4</span><h3><a href="/5mm-graph-paper/">5 mm graph paper</a></h3><p>Metric squares for homework, plotting and sketching.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=square&amp;major=5" data-template-pdf='{"style":"square","majorEvery":5,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="School & maths">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A4%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.25%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D" aria-label="Customize 1/4 inch graph paper"><img src="/assets/templates/quarter-inch.svg" width="210" height="297" loading="lazy" alt="1/4 inch graph paper: LETTER printable sheet"></a>
+ <div class="template-copy"><span class="template-category">School & maths · LETTER</span><h3><a href="/quarter-inch-graph-paper/">1/4 inch graph paper</a></h3><p>Quad ruled paper for US classroom assignments.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=0.25&amp;unit=in&amp;paper=letter&amp;style=square&amp;major=4" data-template-pdf='{"style":"square","majorEvery":4,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":0.25,"unit":"in","paper":"letter"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A4%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.25%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="School & maths">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A10%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize 1 cm graph paper"><img src="/assets/templates/1cm.svg" width="210" height="297" loading="lazy" alt="1 cm graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">School & maths · A4</span><h3><a href="/1cm-graph-paper/">1 cm graph paper</a></h3><p>Larger squares for clear diagrams and early maths.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=10&amp;unit=mm&amp;paper=a4&amp;style=square&amp;major=5" data-template-pdf='{"style":"square","majorEvery":5,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":10,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A10%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="School & maths">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A2%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.5%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D" aria-label="Customize 1/2 inch graph paper"><img src="/assets/templates/half-inch.svg" width="210" height="297" loading="lazy" alt="1/2 inch graph paper: LETTER printable sheet"></a>
+ <div class="template-copy"><span class="template-category">School & maths · LETTER</span><h3><a href="/half-inch-graph-paper/">1/2 inch graph paper</a></h3><p>Roomy squares for young learners and rough sketches.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=0.5&amp;unit=in&amp;paper=letter&amp;style=square&amp;major=2" data-template-pdf='{"style":"square","majorEvery":2,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":0.5,"unit":"in","paper":"letter"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A2%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.5%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Design & craft">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A10%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.1%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D" aria-label="Customize 10 squares per inch"><img src="/assets/templates/engineering.svg" width="210" height="297" loading="lazy" alt="10 squares per inch: LETTER printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Design & craft · LETTER</span><h3><a href="/10-squares-per-inch-graph-paper/">10 squares per inch</a></h3><p>Fine squares for calculation tables and detailed charts.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=0.1&amp;unit=in&amp;paper=letter&amp;style=square&amp;major=10" data-template-pdf='{"style":"square","majorEvery":10,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":0.1,"unit":"in","paper":"letter"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A10%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.1%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Design & craft">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A8%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.125%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D" aria-label="Customize 1/8 inch graph paper"><img src="/assets/templates/pixel.svg" width="210" height="297" loading="lazy" alt="1/8 inch graph paper: LETTER printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Design & craft · LETTER</span><h3><a href="/eighth-inch-graph-paper/">1/8 inch graph paper</a></h3><p>A compact grid for pixel art and stitch patterns.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=0.125&amp;unit=in&amp;paper=letter&amp;style=square&amp;major=8" data-template-pdf='{"style":"square","majorEvery":8,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":0.125,"unit":"in","paper":"letter"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A8%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.125%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22letter%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Design & craft">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22dot%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize Dot grid paper"><img src="/assets/templates/dot.svg" width="210" height="297" loading="lazy" alt="Dot grid paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Design & craft · A4</span><h3><a href="/dot-grid-paper/">Dot grid paper</a></h3><p>A quiet dotted guide for journals and freehand layouts.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=dot&amp;major=0" data-template-pdf='{"style":"dot","majorEvery":0,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22dot%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Specialty grids">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22coordinate%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize Coordinate graph paper"><img src="/assets/templates/coordinate.svg" width="210" height="297" loading="lazy" alt="Coordinate graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Specialty grids · A4</span><h3><a href="/coordinate-graph-paper/">Coordinate graph paper</a></h3><p>Centred axes with numbered coordinates for plotting.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=coordinate&amp;major=5" data-template-pdf='{"style":"coordinate","majorEvery":5,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22coordinate%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Specialty grids">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22isometric%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize Isometric graph paper"><img src="/assets/templates/isometric.svg" width="210" height="297" loading="lazy" alt="Isometric graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Specialty grids · A4</span><h3><a href="/isometric-graph-paper/">Isometric graph paper</a></h3><p>A 30-degree guide for three-dimensional sketches.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=isometric&amp;major=0" data-template-pdf='{"style":"isometric","majorEvery":0,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22isometric%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Specialty grids">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22hexagonal%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize Hexagonal graph paper"><img src="/assets/templates/hexagonal.svg" width="210" height="297" loading="lazy" alt="Hexagonal graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Specialty grids · A4</span><h3><a href="/hexagonal-graph-paper/">Hexagonal graph paper</a></h3><p>A hex grid for maps, games and geometric patterns.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=hexagonal&amp;major=0" data-template-pdf='{"style":"hexagonal","majorEvery":0,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22hexagonal%22%2C%22majorEvery%22%3A0%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Specialty grids">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22polar%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22radials%22%3A24%2C%22paper%22%3A%22a4%22%7D" aria-label="Customize Polar graph paper"><img src="/assets/templates/polar.svg" width="210" height="297" loading="lazy" alt="Polar graph paper: A4 printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Specialty grids · A4</span><h3><a href="/polar-graph-paper/">Polar graph paper</a></h3><p>Concentric rings and 24 radial lines for angular plots.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=5&amp;unit=mm&amp;paper=a4&amp;style=polar&amp;major=5" data-template-pdf='{"style":"polar","majorEvery":5,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":5,"unit":"mm","radials":24,"paper":"a4"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22polar%22%2C%22majorEvery%22%3A5%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A5%2C%22unit%22%3A%22mm%22%2C%22radials%22%3A24%2C%22paper%22%3A%22a4%22%7D">Customize</a></div></div></article>
+<article class="template-card" data-category="Large format">
+ <a class="template-preview" href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A4%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.25%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22tabloid%22%7D" aria-label="Customize 11 × 17 graph paper"><img src="/assets/templates/tabloid.svg" width="210" height="297" loading="lazy" alt="11 × 17 graph paper: TABLOID printable sheet"></a>
+ <div class="template-copy"><span class="template-category">Large format · TABLOID</span><h3><a href="/tabloid-graph-paper/">11 × 17 graph paper</a></h3><p>Quarter-inch squares on Tabloid paper; use a compatible printer.</p>
+ <div class="template-actions"><a href="/api/pdf?spacing=0.25&amp;unit=in&amp;paper=tabloid&amp;style=square&amp;major=4" data-template-pdf='{"style":"square","majorEvery":4,"color":"#4A7FB5","calibration":true,"margin":10,"spacing":0.25,"unit":"in","paper":"tabloid"}'>Download PDF</a><a href="/#%7B%22style%22%3A%22square%22%2C%22majorEvery%22%3A4%2C%22color%22%3A%22%234A7FB5%22%2C%22calibration%22%3Atrue%2C%22margin%22%3A10%2C%22spacing%22%3A0.25%2C%22unit%22%3A%22in%22%2C%22paper%22%3A%22tabloid%22%7D">Customize</a></div></div></article></div>
+ <p class="quick-note">Need ruled writing sheets? Explore <a href="/lined-paper/">lined paper</a>, <a href="/cornell-notes/">Cornell notes</a> and <a href="/handwriting-paper/">handwriting paper</a>. Print all templates at 100% / Actual size.</p>
+</section>
+<!-- template-library:end -->
 <section class="writing-directory"><h2>Paper for writing and learning</h2><div class="writing-options"><a href="/lined-paper/"><strong>Lined paper</strong><span>College, wide and narrow ruling for everyday notes.</span></a><a href="/cornell-notes/"><strong>Cornell notes</strong><span>Separate cues, ruled notes and a summary area.</span></a><a href="/handwriting-paper/"><strong>Handwriting paper</strong><span>Top and baseline guides with a dashed middle line.</span></a><a href="/story-paper/"><strong>Story paper</strong><span>A drawing box above handwriting practice lines.</span></a></div></section>
   <div class="print-banner" id="printBanner" role="note">
     <div class="pb-copy">
@@ -228,70 +288,6 @@
     </div>
   </section>
 
-  <section id="presets-card">
-    <div class="sec-hd">
-      <h2>Pick a sheet for the job</h2>
-      <p class="sec-lede">Every size below has its own page with the exact measurements, what it is normally used for, and a sheet pre-set to that size.</p>
-    </div>
-    <div class="pcards">
-      <a class="pcard" href="/quarter-inch-graph-paper/">
-        <span class="pcard-ic">&#128218;</span>
-        <strong>Student homework</strong>
-        <em>1/4 inch</em>
-        <p>Quad ruled &mdash; what US classrooms default to.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/1-inch-graph-paper/">
-        <span class="pcard-ic">&#127961;&#65039;</span>
-        <strong>Floor plans &amp; architecture</strong>
-        <em>1 inch</em>
-        <p>1:100 or 1:200 layouts, one square = one foot.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/5mm-graph-paper/">
-        <span class="pcard-ic">&#9999;&#65039;</span>
-        <strong>Sketching &amp; drawing</strong>
-        <em>5 mm</em>
-        <p>The European standard, medium density, pen-friendly.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/10-squares-per-inch-graph-paper/">
-        <span class="pcard-ic">&#128209;</span>
-        <strong>Engineering computation</strong>
-        <em>10 per inch</em>
-        <p>Fine grid for precise calculation work.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/eighth-inch-graph-paper/">
-        <span class="pcard-ic">&#129525;</span>
-        <strong>Cross stitch &amp; pixel art</strong>
-        <em>1/8 inch</em>
-        <p>Bead, pixel and knit chart pattern sheets.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/1cm-graph-paper/">
-        <span class="pcard-ic">&#127891;</span>
-        <strong>Coordinate geometry</strong>
-        <em>1 cm</em>
-        <p>Large, clear squares for plotting graphs.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/half-inch-graph-paper/">
-        <span class="pcard-ic">&#128118;</span>
-        <strong>Young learners</strong>
-        <em>1/2 inch</em>
-        <p>Big squares for handwriting and chunky drawings.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-      <a class="pcard" href="/2mm-graph-paper/">
-        <span class="pcard-ic">&#128300;</span>
-        <strong>Fine detail work</strong>
-        <em>2 mm</em>
-        <p>Dense grid for detailed charts and drafting.</p>
-        <span class="pcard-go">See this size &rarr;</span>
-      </a>
-    </div>
-  </section>
 
   <section id="setup">
     <div class="sec-hd">
@@ -443,5 +439,6 @@
   });
 })();
 </script>
+<script src="/assets/template-library.js"></script>
 </body>
 </html>

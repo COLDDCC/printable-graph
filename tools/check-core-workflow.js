@@ -83,6 +83,20 @@ const server = http.createServer(async (req,res) => {
       assert.equal(await page.locator('.template-card:visible').count(),1);
       await page.locator('.template-card:visible .template-actions a:last-child').click();
       await page.waitForFunction(()=>document.querySelector('#paper')?.value==='tabloid');
+      for (const slug of ['dot-grid-paper','coordinate-graph-paper']) {
+        await page.goto(`http://127.0.0.1:${server.address().port}/${slug}/`);
+        await page.locator('#sizes').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+        await page.screenshot({path:`artifacts/core-workflow/${slug}-${width}x${height}.png`});
+        const presets=await page.locator('#sizes a[href^="/#"]').evaluateAll(links=>links.map(a=>a.getAttribute('href')));
+        assert.equal(presets.length,3);
+        assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+        for(const href of presets) {
+          const preset=JSON.parse(decodeURIComponent(href.slice(2)));
+          await page.goto(`http://127.0.0.1:${server.address().port}${href}`);
+          await page.waitForFunction(preset=>document.querySelector('#paper').value===preset.paper&&document.querySelector('#paperTypes [aria-pressed=true]')?.dataset.style===preset.style,preset);
+          assert.equal(Number(await page.locator('#spacing').inputValue()),preset.spacing);
+        }
+      }
       assert.deepEqual(errors,[]);
       console.log(`PASS ${width}x${height}: first-screen controls, PDF/PNG/SVG, 12 template downloads and presets, library filters`);
       await page.close();

@@ -344,3 +344,14 @@ main > .hero.compact:first-child{padding-top:22px}
 @media(max-width:1000px){.template-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.template-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.template-copy{padding:10px}.template-preview{height:155px}.template-copy h3{font-size:15px}}
 @media(max-width:350px){.template-grid{grid-template-columns:1fr}}
+
+/* Keep specialty preset actions visible on phones without sideways scrolling. */
+@media(max-width:650px){
+ .specialty-presets .facts,.specialty-presets tbody{display:block}
+ .specialty-presets caption{display:block}
+ .specialty-presets thead{display:none}
+ .specialty-presets tr{display:grid;grid-template-columns:minmax(0,1fr) auto;border-bottom:1px solid var(--line)}
+ .specialty-presets .facts th,.specialty-presets .facts td{display:block;border:0;white-space:normal;padding:9px 12px}
+ .specialty-presets td:nth-child(3),.specialty-presets td:nth-child(4){grid-column:1 / -1}
+ .specialty-presets td:last-child a{display:inline-block;padding:8px 12px;background:var(--ink);color:white;text-decoration:none}
+}

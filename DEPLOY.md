@@ -30,6 +30,13 @@
 
 改动 API 后先跑 `npm test`。重新运行 `tools/gen-*.js` 生成页面后，
 要再跑一次 `npm run patch:layout`，把一屏布局补回去。
+随后运行 `npm run gen:templates` 和 `npm run enrich:content`，恢复可视化模板库、
+点阵/坐标页专属内容和用途页导航修复。不要用旧生成脚本覆盖这些内容后直接部署。
+
+提交或合并前运行 `npm run test:site`、`npm test`、`npm run test:ux`。
+站内审计覆盖所有发布页的链接、锚点、资源、canonical、站点地图和首页可达性。
+`artifacts/core-workflow/` 的三个首屏截图必须人工查看。
+GitHub 分支保护应把 `Core workflow / zero-scroll` 设为必需检查。
 
 ## 4. 上线后立刻做
 - Google Search Console 验证域名所有权

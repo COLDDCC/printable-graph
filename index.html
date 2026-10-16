@@ -39,7 +39,7 @@
   gtag('config', 'G-WFH3F9TQCN');
 </script>
 </head>
-<body>
+<body class="home-workspace">
 
 <header>
   <div class="wrap mast">
@@ -50,7 +50,7 @@
     <span class="mast-tagline">Free &middot; no signup &middot; no watermark &middot; true to size</span>
     <nav>
       <a href="/lined-paper/">Writing paper</a>
-      <a href="#setup">Print settings</a>
+      <a href="#generator">Print settings</a>
       <a href="#sizes">Square sizes</a>
       <a href="/how-to-print-graph-paper/">How to print</a>
       <a href="#faq">FAQ</a>
@@ -62,7 +62,7 @@
 
   <div class="hero size compact">
     <div>
-      <h1>Free Online Graph Paper Generator</h1>
+      <h1>Free Printable Graph Paper</h1>
     </div>
     <div class="quick-dl">
       <a class="cta" href="/api/pdf?size=5mm&amp;paper=a4" data-paper="a4">Download 5 mm PDF &middot; A4</a>
@@ -71,8 +71,8 @@
   </div>
 
   <div class="paper-family seg" id="paperFamily" role="group" aria-label="Choose graph or lined paper"><button type="button" data-family="graph" aria-pressed="true">Graph Paper</button><button type="button" data-family="lined" aria-pressed="false">Lined Paper</button></div>
-  <p class="quick-note">Also available: <a href="/lined-paper/">lined paper for note-taking</a>.</p>
-  <div class="tool compact">
+
+  <div class="tool compact" id="generator" aria-label="Graph paper generator">
     <div class="sheet-frame">
       <div id="sheet" class="sheet"></div>
       <div class="sheet-meta"><span id="metaGrid">&mdash;</span><span id="metaSize">&mdash;</span></div>
@@ -101,16 +101,6 @@
         </div>
 
         <div id="linedFields" hidden><div class="f"><span>Layout</span><select id="linedLayout" aria-label="Writing paper layout"><option value="lined">Lined paper</option><option value="cornell">Cornell notes</option><option value="handwriting">Handwriting practice</option><option value="story">Story paper (picture + writing)</option></select></div><p id="practiceHelp" hidden>Spacing is the full height of each writing band. Each band has a dashed middle guide and a blank gap below it.</p><div id="drawingFields" class="f" hidden><span>Drawing area height (mm)</span><input id="drawingHeight" aria-label="Drawing area height in millimetres" type="number" min="30" value="90" step="5"></div><div id="cornellFields" hidden><div class="row"><div class="f"><span>Cue column width (mm)</span><input id="cueWidth" type="number" min="20" step="1" value="50"></div><div class="f"><span>Summary height (mm)</span><input id="summaryHeight" type="number" min="20" step="1" value="45"></div></div></div><div class="presets" id="linedPresets"><button type="button" data-s="0.28125" data-u="in" data-m="0">College · 7.14 mm</button><button type="button" data-s="0.34375" data-u="in" data-m="0">Wide · 8.73 mm</button><button type="button" data-s="0.25" data-u="in" data-m="0">Narrow · 6.35 mm</button></div><label class="check"><input type="checkbox" id="ruledMargin"> Left margin line</label><div class="f"><span>Margin line position (mm from left edge)</span><input id="ruledMarginPosition" type="number" min="0" max="1000" step="0.5" value="31.75" aria-label="Margin line position in millimetres"><small>31.75 mm (1¼ in) is a common notebook setting. Keep the line inside your page margins.</small></div><p class="ruling-help">College for everyday notes · Wide for larger handwriting · Narrow for compact notes.</p></div>
-        <div class="row">
-          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
-          <div class="f"><span>Unit</span>
-            <div class="seg" id="unit">
-              <button type="button" data-v="mm" aria-pressed="true">mm</button>
-              <button type="button" data-v="in" aria-pressed="false">inch</button>
-            </div>
-          </div>
-        </div>
-
                 <div class="row">
           <div class="f">
           <span>Paper</span>
@@ -133,11 +123,6 @@
         </div>
 
         <div class="row">
-          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
-          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
-        </div>
-
-        <div class="row">
           <div class="f">
           <span>Line colour</span>
           <div class="swatches" id="swatches">
@@ -148,14 +133,33 @@
             <button type="button" data-c="#C4452F" style="background:#C4452F" aria-pressed="false" aria-label="Red"></button>
           </div>
         </div>
-          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>
+
         </div>
 
-        <label class="check"><input type="checkbox" id="calib" checked>
-          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
-        <button class="dl" id="dl" type="button">Download PDF</button>
+        <div class="core-actions">
+          <button class="dl" id="dl" type="button">Download PDF</button>
           <div class="export-actions"><button type="button" id="printSheet">Print</button><button type="button" id="downloadPNG">Download PNG</button><button type="button" id="downloadSVG">Download SVG</button><button type="button" id="shareSheet">Share settings</button></div>
+          <p class="print-hint">Print at 100% / Actual size for accurate squares.</p>
+        </div>
         <details class="extra-tools"><summary>Advanced settings</summary>
+        <div class="row">
+          <div class="f"><span>Custom size</span><input id="spacing" type="number" min="0.05" step="0.5" value="5" aria-label="Custom square size"></div>
+          <div class="f"><span>Unit</span>
+            <div class="seg" id="unit">
+              <button type="button" data-v="mm" aria-pressed="true">mm</button>
+              <button type="button" data-v="in" aria-pressed="false">inch</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="f"><span>Heavy line every</span><input id="major" type="number" min="0" max="20" step="1" value="5" aria-label="Heavy line every N squares"></div>
+          <div class="f"><span>Copies per PDF</span><input id="copies" type="number" min="1" max="25" step="1" value="1" aria-label="Copies per PDF"></div>
+        </div>
+
+          <div class="f"><span>Preset</span><button type="button" class="btn-save" id="presetSave">Save settings</button></div>        <label class="check"><input type="checkbox" id="calib" checked>
+          <span>Include the measuring bars (turn off for a clean sheet)</span></label>
+
 
           <div class="f"><span>Sizing mode</span><select id="sizingMode" aria-label="Sizing mode"><option value="spacing">Square spacing</option><option value="count">Exact grid count</option></select></div>
           <div class="row" id="countFields" hidden><div class="f"><span>Columns (squares across)</span><input id="columns" type="number" min="2" max="200" step="1" value="20" aria-label="Columns"></div><div class="f"><span>Rows (squares down)</span><input id="rows" type="number" min="2" max="200" step="1" value="30" aria-label="Rows"></div></div>

@@ -9,7 +9,8 @@
     "gen:previews": "node tools/gen-previews.js",
     "gen:sitemap": "node tools/gen-sitemap.js",
     "patch:layout": "node tools/patch-compact-layout.js",
-    "test": "node --test worker/api.test.js"
+    "test": "node --test worker/api.test.js",
+    "test:ux": "node tools/check-core-workflow.js"
   },
   "repository": {
     "type": "git",

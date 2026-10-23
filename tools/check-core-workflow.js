@@ -35,6 +35,18 @@ const server = http.createServer(async (req,res) => {
       for (const selector of ['#paper','#presets button[data-s="5"]','#presets button[data-s="0.25"]','#dl','#printSheet']) await inScreen(selector);
       assert.equal(await page.evaluate(()=>window.scrollY),0);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Horizontal overflow');
+      // "What are you making?" picker sets the size without moving the core controls.
+      await inScreen('#sizeHelpOpen');
+      await page.locator('#sizeHelpOpen').click();
+      assert(await page.locator('#sizeHelp').isVisible());
+      await page.screenshot({path:`artifacts/core-workflow/size-help-${width}x${height}.png`});
+      await page.locator('#sizeHelp button[data-s="0.125"]').click();
+      assert(!(await page.locator('#sizeHelp').isVisible()));
+      assert.match(await page.locator('#oPitch').textContent(), /0.125|⅛|1\/8/);
+      await page.locator('#sizeHelpOpen').click();
+      await page.locator('#sizeHelp button[data-style="dot"]').click();
+      assert.equal(await page.locator('#paperTypes [aria-pressed=true]').getAttribute('data-style'),'dot');
+      await page.locator('#paperTypes button[data-style="square"]').click();
       await page.locator('#presets button[data-s="0.25"]').click();
       await page.locator('#paper').selectOption('letter');
       assert.match(await page.locator('#oPitch').textContent(), /0.25|¼|1\/4/);

@@ -101,6 +101,27 @@
   on('#presets', 'click', function (e) {
     var b = e.target.closest('button'); if (b) applyPitch(b.dataset);
   });
+  /* --- "what are you making?" size picker -------------------------------- */
+  var sizeHelp = $('#sizeHelp');
+  function closeSizeHelp() {
+    if (!sizeHelp) return;
+    if (sizeHelp.close) sizeHelp.close(); else sizeHelp.removeAttribute('open');
+  }
+  on('#sizeHelpOpen', 'click', function () {
+    if (!sizeHelp) return;
+    if (sizeHelp.showModal) sizeHelp.showModal(); else sizeHelp.setAttribute('open', '');
+  });
+  on('#sizeHelpClose', 'click', closeSizeHelp);
+  on('#sizeHelp', 'click', function (e) {
+    if (e.target === sizeHelp) { closeSizeHelp(); return; } // backdrop click
+    var b = e.target.closest('button[data-s]'); if (!b) return;
+    var styleBtn = $('#paperTypes button[data-style="' + b.dataset.style + '"]');
+    if (styleBtn && state.style !== b.dataset.style) styleBtn.click();
+    applyPitch(b.dataset);
+    closeSizeHelp();
+    status('Set to ' + b.querySelector('em').textContent + ' for ' + b.querySelector('strong').textContent.toLowerCase() + '.');
+  });
+
   on('#pitchGrid', 'click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     applyPitch(b.dataset);
@@ -158,6 +179,7 @@
     if (tabs) press(tabs, function (b) { return b.dataset.family === (lined ? 'lined' : 'graph'); });
     if ($('#paperTypes')) $('#paperTypes').hidden = lined;
     if ($('#presets')) $('#presets').hidden = lined;
+    if ($('#sizeHelpOpen')) $('#sizeHelpOpen').hidden = lined;
     if ($('#linedFields')) $('#linedFields').hidden = !lined;
     if ($('#linedLayout')) $('#linedLayout').value=lined ? state.style : 'lined';
     if ($('#practiceHelp')) $('#practiceHelp').hidden=state.style!=='handwriting'&&state.style!=='story';

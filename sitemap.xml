@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://printgridpaper.com/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/home.png</image:loc></image:image>
@@ -23,7 +23,7 @@
   </url>
   <url>
     <loc>https://printgridpaper.com/1-inch-graph-paper/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/1-inch-graph-paper.png</image:loc></image:image>
@@ -65,7 +65,7 @@
   </url>
   <url>
     <loc>https://printgridpaper.com/1cm-graph-paper/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/1cm-graph-paper.png</image:loc></image:image>
@@ -114,26 +114,26 @@
   </url>
   <url>
     <loc>https://printgridpaper.com/a3-graph-paper/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/a3-graph-paper.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://printgridpaper.com/compare-graph-paper-sizes/</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://printgridpaper.com/coordinate-graph-paper/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://printgridpaper.com/dot-grid-paper/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -220,8 +220,14 @@
     <image:image><image:loc>https://printgridpaper.com/assets/previews/half-inch-graph-paper.png</image:loc></image:image>
   </url>
   <url>
+    <loc>https://printgridpaper.com/how-to-use-graph-paper/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://printgridpaper.com/how-to-print-graph-paper/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -234,7 +240,7 @@
   </url>
   <url>
     <loc>https://printgridpaper.com/print-troubleshooting/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -254,7 +260,7 @@
   </url>
   <url>
     <loc>https://printgridpaper.com/quarter-inch-graph-paper/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image><image:loc>https://printgridpaper.com/assets/previews/quarter-inch-graph-paper.png</image:loc></image:image>
@@ -267,7 +273,7 @@
     <image:image><image:loc>https://printgridpaper.com/assets/previews/tabloid-graph-paper.png</image:loc></image:image>
   </url>
   <url><loc>https://printgridpaper.com/isometric-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://printgridpaper.com/hexagonal-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://printgridpaper.com/hexagonal-graph-paper/</loc><lastmod>2026-10-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://printgridpaper.com/polar-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://printgridpaper.com/logarithmic-graph-paper/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://printgridpaper.com/lined-paper/</loc><lastmod>2026-10-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

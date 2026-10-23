@@ -90,8 +90,9 @@
 
       <div class="ctrls">
 
-        <div class="f">
+        <div class="f size-f">
           <span id="spacingLabel">Square size</span>
+          <button type="button" class="size-help-open" id="sizeHelpOpen" aria-haspopup="dialog" aria-controls="sizeHelp">Not sure? Pick by use</button>
           <div class="presets" id="presets">
             <button type="button" data-s="5" data-u="mm" data-m="5">5 mm</button>
             <button type="button" data-s="10" data-u="mm" data-m="10">1 cm</button>
@@ -188,6 +189,13 @@
     </div>
   </div>
 
+
+  <dialog class="size-help" id="sizeHelp" aria-labelledby="sizeHelpTitle">
+    <div class="size-help-hd"><h2 id="sizeHelpTitle">What are you making?</h2><button type="button" class="size-help-close" id="sizeHelpClose" aria-label="Close">&times;</button></div>
+    <p>Pick a use and the generator switches to the size people normally print for it. Paper size and your other settings stay as they are.</p>
+    <ul class="size-help-list"><li><button type="button" data-style="square" data-s="5" data-u="mm" data-m="5"><strong>Maths homework &amp; notes</strong><span>Metric school grid</span><em>5 mm</em></button><a href="/5mm-graph-paper/" aria-label="More about Maths homework &amp; notes">Details</a></li><li><button type="button" data-style="square" data-s="0.25" data-u="in" data-m="4"><strong>US homework (quad paper)</strong><span>The US classroom default</span><em>1/4 in</em></button><a href="/quarter-inch-graph-paper/" aria-label="More about US homework (quad paper)">Details</a></li><li><button type="button" data-style="square" data-s="0.5" data-u="in" data-m="2"><strong>Young learners</strong><span>Big squares for small hands</span><em>1/2 in</em></button><a href="/graph-paper-for-teachers/" aria-label="More about Young learners">Details</a></li><li><button type="button" data-style="square" data-s="0.25" data-u="in" data-m="4"><strong>Architecture &amp; floor plans</strong><span>1/4 in = 1 ft scale drawings</span><em>1/4 in</em></button><a href="/graph-paper-for-architecture/" aria-label="More about Architecture &amp; floor plans">Details</a></li><li><button type="button" data-style="square" data-s="0.1" data-u="in" data-m="10"><strong>Engineering &amp; calculations</strong><span>Fine 10-per-inch computation grid</span><em>10 per in</em></button><a href="/10-squares-per-inch-graph-paper/" aria-label="More about Engineering &amp; calculations">Details</a></li><li><button type="button" data-style="square" data-s="0.125" data-u="in" data-m="8"><strong>Pixel art &amp; cross stitch</strong><span>One square per pixel or stitch</span><em>1/8 in</em></button><a href="/graph-paper-for-pixel-art/" aria-label="More about Pixel art &amp; cross stitch">Details</a></li><li><button type="button" data-style="square" data-s="0.25" data-u="in" data-m="4"><strong>D&amp;D and tabletop maps</strong><span>Dungeon rooms and corridors</span><em>1/4 in</em></button><a href="/graph-paper-for-dnd-maps/" aria-label="More about D&amp;D and tabletop maps">Details</a></li><li><button type="button" data-style="dot" data-s="5" data-u="mm" data-m="5"><strong>Sketching &amp; bullet journals</strong><span>A quiet 5 mm dot grid</span><em>5 mm dots</em></button><a href="/dot-grid-paper/" aria-label="More about Sketching &amp; bullet journals">Details</a></li></ul>
+    <p class="size-help-foot">Still unsure? <a href="/compare-graph-paper-sizes/">Compare every size side by side</a>.</p>
+  </dialog>
   <p class="quick-note">Direct PDF link for sharing or scripts: <a href="/api/pdf?size=5mm&amp;paper=a4">printgridpaper.com/api/pdf?size=5mm&amp;paper=a4</a></p>
 
 <!-- template-library:start -->

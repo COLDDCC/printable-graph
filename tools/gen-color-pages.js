@@ -335,7 +335,7 @@ function page(size, col) {
 '  <section id="colours">\n' +
 '    <div class="sec-hd">\n' +
 '      <h2>' + size.mono + ' in white, black or cream</h2>\n' +
-'      <p class="sec-lede">The grid geometry never changes between these versions \u2014 only the background. Pick the tint to match the job.</p>\n' +
+'      <p class="sec-lede">The grid geometry never changes between these versions \u2014 only the background. Pick the tint to match the job, or see <a href="/' + col.key + '-graph-paper/">every size of ' + col.key + ' graph paper</a>.</p>\n' +
 '    </div>\n' +
 '    <div class="tscroll">\n' +
 '      <table class="facts">\n' +
@@ -343,9 +343,9 @@ function page(size, col) {
 '          <tr><th scope="col">Background</th><th scope="col">Look</th><th scope="col">Compare</th><th scope="col"></th></tr>\n' +
 '        </thead>\n' +
 '        <tbody>\n' +
-'          <tr><th scope="row">\u26AA White</th><td>' + COLORS.white.tag + '</td><td>' + COLORS.white.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '/">Open white</a></td></tr>\n' +
-'          <tr><th scope="row">\u2B1C Black</th><td>' + COLORS.black.tag + '</td><td>' + COLORS.black.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-black/">Open black</a></td></tr>\n' +
-'          <tr><th scope="row">\u1F7E8 Cream</th><td>' + COLORS.cream.tag + '</td><td>' + COLORS.cream.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-cream/">Open cream</a></td></tr>\n' +
+'          <tr><th scope="row">White</th><td>' + COLORS.white.tag + '</td><td>' + COLORS.white.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '/">Open white</a></td></tr>\n' +
+'          <tr><th scope="row">Black</th><td>' + COLORS.black.tag + '</td><td>' + COLORS.black.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-black/">Open black</a></td></tr>\n' +
+'          <tr><th scope="row">Cream</th><td>' + COLORS.cream.tag + '</td><td>' + COLORS.cream.contrast + '</td><td><a href="' + SITE + '/' + size.slug + '-cream/">Open cream</a></td></tr>\n' +
 '        </tbody>\n' +
 '      </table>\n' +
 '    </div>\n' +
@@ -413,6 +413,8 @@ function page(size, col) {
 }
 
 /* --- generate ------------------------------------------------------------- */
+module.exports = { SIZES: SIZES, COLORS: COLORS, buildFaq: buildFaq };
+if (require.main === module) {
 var made = [];
 SIZES.forEach(function (size) {
   ['black', 'cream'].forEach(function (key) {
@@ -425,3 +427,4 @@ SIZES.forEach(function (size) {
 });
 console.log('Generated ' + made.length + ' pages:');
 made.forEach(function (m) { console.log('  ' + m); });
+}

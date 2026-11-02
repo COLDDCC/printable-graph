@@ -209,7 +209,7 @@ var templatesSections = [
 '      <p class="sec-lede">Beyond the square size, every template can be tuned before you download it. These variants are built into the generator on each page.</p>',
 '    </div>',
 '    <div class="uses">',
-'      <div><h3>Line colour</h3><p>Blue, green, grey, black or red. Every page also has dedicated black-background and cream-coloured variants for low-ink or low-glare printing.</p></div>',
+'      <div><h3>Line colour</h3><p>Blue, green, grey, black or red. Every size also has a dedicated <a href="/black-graph-paper/">black graph paper</a> version and a <a href="/cream-graph-paper/">cream graph paper</a> version for dark designs or low-glare printing.</p></div>',
 '      <div><h3>Paper size</h3><p>A4, Letter, A5, A3, Legal or Tabloid, in portrait or landscape. Dedicated pages exist for <a href="/a3-graph-paper/">A3</a>, <a href="/legal-size-graph-paper/">Legal</a> and <a href="/tabloid-graph-paper/">Tabloid</a>.</p></div>',
 '      <div><h3>Heavy lines</h3><p>Set a heavy line every 5 or 10 squares to mark major divisions &mdash; handy for centimetre blocks, inch blocks or chart regions.</p></div>',
 '      <div><h3>Copies</h3><p>Print 1&ndash;25 identical sheets from a single PDF, and save your settings as a preset to reuse later.</p></div>',
@@ -248,6 +248,24 @@ relatedSizes('All the square sizes'),
    Page 3 — /graph-paper-for-teachers/
    ========================================================================== */
 var teachersSections = [
+'  <section id="worksheets">',
+'    <div class="sec-hd">',
+'      <h2>Worksheet-ready PDFs with Name and Date</h2>',
+'      <p class="sec-lede">Each sheet has a blank Name and Date line above the grid and still prints true to size. Want a whole class set? The second row gives 25 copies in one PDF.</p>',
+'    </div>',
+'    <div class="related">',
+'      <a href="/api/pdf?size=quarter-inch&amp;paper=letter&amp;worksheetHeader=true"><strong>1/4 inch · Letter</strong><span>Quad paper with a Name and Date line, ages 8–13</span></a>',
+'      <a href="/api/pdf?size=half-inch&amp;paper=letter&amp;worksheetHeader=true"><strong>1/2 inch · Letter</strong><span>Big squares for early writers, ages 5–8</span></a>',
+'      <a href="/api/pdf?size=5mm&amp;paper=a4&amp;worksheetHeader=true"><strong>5 mm · A4</strong><span>The metric school grid with a Name and Date line</span></a>',
+'      <a href="/api/pdf?size=1cm&amp;paper=a4&amp;worksheetHeader=true"><strong>1 cm · A4</strong><span>Coordinates and geometry with a Name and Date line</span></a>',
+'      <a href="/api/pdf?size=quarter-inch&amp;paper=letter&amp;worksheetHeader=true&amp;pages=25"><strong>1/4 inch · Letter · 25 copies</strong><span>One PDF for the whole class</span></a>',
+'      <a href="/api/pdf?size=half-inch&amp;paper=letter&amp;worksheetHeader=true&amp;pages=25"><strong>1/2 inch · Letter · 25 copies</strong><span>One PDF for the whole class</span></a>',
+'      <a href="/api/pdf?size=5mm&amp;paper=a4&amp;worksheetHeader=true&amp;pages=25"><strong>5 mm · A4 · 25 copies</strong><span>One PDF for the whole class</span></a>',
+'      <a href="/api/pdf?size=1cm&amp;paper=a4&amp;worksheetHeader=true&amp;pages=25"><strong>1 cm · A4 · 25 copies</strong><span>One PDF for the whole class</span></a>',
+'    </div>',
+'    <p class="pointer">Need a different size or a title on the sheet? Open any size page, then tick <em>Add name and date fields</em> in the advanced settings.</p>',
+'  </section>',
+'',
 '  <section id="uses">',
 '    <div class="sec-hd">',
 '      <h2>Ways to use graph paper in the classroom</h2>',
@@ -281,7 +299,7 @@ var teachersSections = [
 '      <details open><summary>One PDF, twenty-five copies</summary><p>Open any size page, set Copies to the number of students, and download a single PDF with all the sheets. Print it once on the classroom printer.</p></details>',
 '      <details><summary>Keep the scale at 100%</summary><p>If the print dialog shrinks the page, every sheet is wrong. Set Scale to 100% / Actual size once &mdash; the measuring bar on the first page proves it.</p></details>',
 '      <details><summary>Save your favourite settings</summary><p>Hit Save settings after choosing a size, paper and colour, and it becomes a one-click chip for next term.</p></details>',
-'      <details><summary>Low-ink printing</summary><p>Prefer the cream or plain black-and-white variants, or drop the measuring bars for a clean sheet, to stretch toner through a big print run.</p></details>',
+'      <details><summary>Low-ink printing</summary><p>Use the plain white sheet with grey lines, not the cream or black versions (their tinted backgrounds cover the whole page), and print in your printer&rsquo;s draft mode to stretch toner through a big print run.</p></details>',
 '    </div>',
 '  </section>',
 '',
@@ -309,7 +327,7 @@ function faqJson(items) {
   var parts = items.map(function (q) {
     return '      {"@type":"Question","name":"' + q[0] + '","acceptedAnswer":{"@type":"Answer","text":"' + q[1] + '"}}';
   });
-  return '[\n' + parts.join(',\n') + '\n    ]';
+  return FAQ_LD.join('\n') + '\n' + parts.join(',\n') + '\n    ]\n  }';
 }
 
 var PAGES = [
@@ -347,8 +365,8 @@ var PAGES = [
   },
   {
     slug: 'graph-paper-for-teachers',
-    title: 'Graph Paper for Teachers - Free Printable Lesson Resources',
-    desc: 'Free printable graph paper for classroom use. Perfect for math lessons, design projects, and student activities. Print unlimited sheets.',
+    title: 'Graph Paper for Teachers — Free Printable Worksheets with Name &amp; Date',
+    desc: 'Free printable graph paper for the classroom: 1/4 inch, 1/2 inch, 5 mm and 1 cm sheets with a Name and Date line, or a whole class set of up to 25 pages in one PDF. A4 or Letter, no signup.',
     eyebrow: 'For teachers &middot; classroom-ready, free, unlimited',
     h1: 'Graph paper for teachers',
     lede: 'Free printable graph paper sized for the classroom, with lesson ideas and a fast way to print a whole class set in one PDF.',

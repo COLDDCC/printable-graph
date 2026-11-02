@@ -13,7 +13,8 @@
     "test:ux": "node tools/check-core-workflow.js",
     "gen:templates": "node tools/gen-template-library.js",
     "test:site": "python3 tools/check-site.py",
-    "enrich:content": "node tools/enrich-specialty-pages.js"
+    "enrich:content": "node tools/enrich-specialty-pages.js",
+    "gen:redirects": "node tools/gen-redirects.js"
   },
   "repository": {
     "type": "git",

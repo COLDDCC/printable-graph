@@ -10,7 +10,7 @@ var path = require('path');
 var ROOT = path.join(__dirname, '..');
 var SITE = 'https://printgridpaper.com';
 
-var EXCLUDE_DIRS = ['.git', '.wrangler', 'tools', 'assets', 'node_modules'];
+var EXCLUDE_DIRS = ['.git', '.wrangler', 'tools', 'assets', 'node_modules', 'worker', 'artifacts'];
 
 // Preview screenshots keyed by slug ('' = home), written by tools/gen-previews.js.
 var previewManifestPath = path.join(ROOT, 'assets', 'previews', 'manifest.json');
@@ -25,15 +25,40 @@ function priority(urlPath) {
   return '0.6';                                                // tool + paper + use pages
 }
 
-var urls = [{ path: '/', slug: '', lastmod: fs.statSync(path.join(ROOT, 'index.html')).mtime.toISOString().slice(0, 10) }];
+// lastmod = the date the page last really changed, not the file's mtime (a fresh
+// clone or CI checkout gives every file today's mtime, which tells Google that
+// all 50 pages changed at once). Uncommitted edits count as today; committed
+// pages use their last commit date; otherwise keep the date already in sitemap.xml.
+var execSync = require('child_process').execSync;
+var today = new Date().toISOString().slice(0, 10);
+var previous = {};
+var oldMap = path.join(ROOT, 'sitemap.xml');
+if (fs.existsSync(oldMap)) {
+  var re = /<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g, m;
+  var xml = fs.readFileSync(oldMap, 'utf8');
+  while ((m = re.exec(xml))) previous[m[1]] = m[2];
+}
+function git(cmd) {
+  try { return execSync(cmd, { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); }
+  catch (e) { return null; }
+}
+function lastmodFor(file, urlPath) {
+  var rel = path.relative(ROOT, file);
+  var dirty = git('git status --porcelain -- "' + rel + '"');
+  if (dirty === null) return fs.statSync(file).mtime.toISOString().slice(0, 10);
+  if (dirty) return today;
+  return git('git log -1 --format=%cs -- "' + rel + '"') || previous[SITE + urlPath] ||
+         fs.statSync(file).mtime.toISOString().slice(0, 10);
+}
+
+var urls = [{ path: '/', slug: '', lastmod: lastmodFor(path.join(ROOT, 'index.html'), '/') }];
 
 fs.readdirSync(ROOT, { withFileTypes: true }).forEach(function (d) {
   if (!d.isDirectory()) return;
   if (EXCLUDE_DIRS.indexOf(d.name) !== -1) return;
   var idx = path.join(ROOT, d.name, 'index.html');
   if (!fs.existsSync(idx)) return;
-  var lastmod = fs.statSync(idx).mtime.toISOString().slice(0, 10);
-  urls.push({ path: '/' + d.name + '/', slug: d.name, lastmod: lastmod });
+  urls.push({ path: '/' + d.name + '/', slug: d.name, lastmod: lastmodFor(idx, '/' + d.name + '/') });
 });
 
 urls.sort(function (a, b) { return a.path < b.path ? -1 : a.path > b.path ? 1 : 0; });

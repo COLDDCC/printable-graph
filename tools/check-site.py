@@ -33,9 +33,25 @@ class Page(HTMLParser):
             (self.h1s if tag == 'h1' else self.titles).append(''.join(self.text).strip())
             self.active = None
         if tag == 'script' and self.active == 'json':
-            try: json.loads(''.join(self.text))
+            try: self.errors.extend(check_ld(json.loads(''.join(self.text))))
             except ValueError: self.errors.append('invalid JSON-LD')
             self.active = None
+
+def check_ld(data):
+    """Each JSON-LD block must be a schema.org object (or an array of them) with a top-level @type.
+    A bare array of Question items, for example, is valid JSON but Google ignores it."""
+    blocks = data if isinstance(data, list) else [data]
+    errs = []
+    for b in blocks:
+        if not isinstance(b, dict):
+            errs.append('JSON-LD item is not an object'); continue
+        if b.get('@context') not in ('https://schema.org', 'http://schema.org', 'https://schema.org/'):
+            errs.append('JSON-LD missing schema.org @context')
+        if '@type' not in b and '@graph' not in b:
+            errs.append('JSON-LD missing top-level @type')
+        if b.get('@type') == 'FAQPage' and not b.get('mainEntity'):
+            errs.append('FAQPage JSON-LD has no mainEntity')
+    return errs
 files = [ROOT/'index.html'] + sorted(p for p in ROOT.glob('*/index.html') if p.parent.name not in ('node_modules', 'worker', 'tools'))
 pages = {('/' if p.parent == ROOT else '/' + p.parent.name + '/'): Page(p) for p in files}
 errors, titles, descriptions, graph = [], defaultdict(list), defaultdict(list), defaultdict(set)
@@ -67,6 +83,15 @@ sitemap={e.text for e in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)}
 expected={SITE + route for route in pages}
 for missing in expected - sitemap: errors.append('missing from sitemap: '+missing)
 for extra in sitemap - expected: errors.append('sitemap target absent: '+extra)
+redirect_file = ROOT / '_redirects'
+rules = set()
+if redirect_file.is_file():
+    for line in redirect_file.read_text().splitlines():
+        parts = line.split()
+        if len(parts) == 3 and not line.startswith('#'): rules.add(tuple(parts))
+for route in pages:
+    if route != '/' and (route.rstrip('/'), route, '301') not in rules:
+        errors.append(f'missing 301 in _redirects: {route.rstrip("/")} -> {route} (npm run gen:redirects)')
 seen, pending = set(), ['/']
 while pending:
     route=pending.pop()

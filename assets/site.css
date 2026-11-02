@@ -355,3 +355,9 @@ main > .hero.compact:first-child{padding-top:22px}
  .specialty-presets td:nth-child(3),.specialty-presets td:nth-child(4){grid-column:1 / -1}
  .specialty-presets td:last-child a{display:inline-block;padding:8px 12px;background:var(--ink);color:white;text-decoration:none}
 }
+/* Colour hub pages (/black-graph-paper/, /cream-graph-paper/) */
+.hub-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;margin:22px 0 0}
+.hub-gallery a{display:block;text-align:center;text-decoration:none;color:var(--ink-2);font:500 12px/1.3 var(--mono)}
+.hub-gallery img{display:block;width:100%;height:auto;margin:0 0 7px;border:1px solid var(--line);box-shadow:0 10px 24px -16px rgba(18,23,27,.4)}
+.hub-gallery a:hover span{color:var(--rule);text-decoration:underline;text-underline-offset:2px}
+.hub-specs{margin-top:16px}
